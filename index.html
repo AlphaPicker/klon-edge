@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="fr" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>KLON Edge</title>
+<meta name="theme-color" content="#10b981">
+<style>
+  :root[data-theme="dark"]{
+    --bg:#0d1117; --card:#161b22; --border:#30363d;
+    --text:#c9d1d9; --text-bright:#f0f6fc;
+    --brand:#10b981; --brand-bright:#34d399;
+    --blue:#58a6ff; --green:#238636; --green-bright:#7ee787; --amber:#d29922;
+    --red:#da3633; --gray:#6e7681; --badge-bg:rgba(16,185,129,.14);
+  }
+  :root[data-theme="light"]{
+    --bg:#f0f2f5; --card:#ffffff; --border:#d0d7de;
+    --text:#24292f; --text-bright:#1f2328;
+    --brand:#0d9488; --brand-bright:#0f766e;
+    --blue:#0969da; --green:#1f883d; --green-bright:#1a7f37; --amber:#9a6700;
+    --red:#cf222e; --gray:#6e7681; --badge-bg:rgba(13,148,136,.14);
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{
+    background:var(--bg); color:var(--text);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
+    display:flex; flex-direction:column; align-items:center; min-height:100vh;
+    padding-bottom:env(safe-area-inset-bottom);
+  }
+  .app{width:100%; max-width:850px; padding:16px; display:flex; flex-direction:column; gap:16px;}
+  header{text-align:center; padding:10px 8px 2px;}
+  header h1{font-size:1.6rem; font-weight:800; color:var(--text-bright); letter-spacing:-.5px;}
+  header h1 a{text-decoration:none; color:inherit;}
+  header h1 span{color:var(--brand);}
+  .subtitle{font-size:.92rem; color:var(--brand); font-weight:600; margin-top:2px;}
+  .desc{font-size:.8rem; opacity:.8; margin-top:6px; line-height:1.4;}
+  .header-controls{position:absolute; top:14px; right:14px; display:flex; gap:6px; align-items:center;}
+  .theme-toggle{background:var(--card); border:1px solid var(--border);
+    border-radius:20px; padding:5px 10px; font-size:.75rem; cursor:pointer; color:var(--text);}
+  .lang-select{width:auto; background:var(--card); border:1px solid var(--border); color:var(--text);
+    padding:5px 8px; border-radius:20px; font-size:.75rem; font-weight:700; cursor:pointer;}
+  nav{display:flex; background:var(--card); border:1px solid var(--border); border-radius:8px; overflow:hidden;}
+  .nav-btn{flex:1; padding:11px 6px; background:none; border:none; color:var(--text); font-weight:700;
+    cursor:pointer; font-size:.82rem; display:flex; flex-direction:column; align-items:center; gap:3px;}
+  .nav-btn .ic{font-size:1.2rem;}
+  .nav-btn.active{background:#21262d; color:var(--brand-bright); border-bottom:3px solid var(--brand-bright);}
+  :root[data-theme="light"] .nav-btn.active{background:#e1e4e8;}
+  .tab{display:none; flex-direction:column; gap:14px;}
+  .tab.active{display:flex;}
+  .card{background:var(--card); border:1px solid var(--border); border-radius:8px; padding:14px;
+    display:flex; flex-direction:column; gap:10px;}
+  .hero{display:grid; grid-template-columns:1fr 1fr; gap:10px;}
+  .hero-box{background:var(--card); border:1px solid var(--border); border-radius:8px; padding:12px; text-align:center;}
+  .hero-box .label{font-size:.68rem; font-weight:800; color:var(--brand-bright); letter-spacing:.4px;}
+  .hero-box .val{font-size:1.5rem; font-weight:900; color:var(--text-bright); margin-top:2px;}
+  .filters{display:flex; gap:8px; flex-wrap:wrap;}
+  input[type=text],select,textarea,input[type=number]{
+    background:var(--bg); border:1px solid var(--border); color:var(--text-bright);
+    padding:9px 11px; border-radius:6px; font-size:.9rem; font-family:inherit; width:100%;
+  }
+  .filters input[type=text]{flex:2; min-width:160px;}
+  .filters select{flex:1; min-width:130px;}
+  .edge-card{background:var(--card); border:1px solid var(--border); border-left:4px solid var(--gray);
+    border-radius:8px; padding:13px 14px; display:flex; flex-direction:column; gap:8px;}
+  .edge-card.st-favori{border-left-color:var(--blue);}
+  .edge-card.st-realise{border-left-color:var(--green-bright);}
+  .edge-card.st-non_realise{border-left-color:var(--amber);}
+  .edge-card.st-poubelle{border-left-color:var(--border); opacity:.55;}
+  .edge-top{display:flex; justify-content:space-between; align-items:flex-start; gap:8px;}
+  .edge-title{font-weight:700; color:var(--text-bright); font-size:.98rem;}
+  .edge-cat{font-size:.68rem; padding:2px 8px; border-radius:10px; background:var(--badge-bg);
+    color:var(--brand-bright); border:1px solid var(--brand); white-space:nowrap; font-weight:700;}
+  .edge-desc{font-size:.85rem; line-height:1.45; opacity:.9;}
+  .edge-meta{font-size:.72rem; opacity:.65; font-style:italic;}
+  .price-tiers{display:flex; gap:6px; flex-wrap:wrap;}
+  .price-pill{font-size:.72rem; font-weight:700; padding:3px 9px; border-radius:12px;
+    background:var(--bg); border:1px solid var(--border); color:var(--text-bright);}
+  .status-row{display:flex; gap:6px; flex-wrap:wrap; margin-top:4px;}
+  .status-btn{flex:1; min-width:78px; font-size:.72rem; font-weight:700; padding:7px 6px; border-radius:6px;
+    border:1px solid var(--border); background:var(--bg); color:var(--text); cursor:pointer;}
+  .status-btn.on-favori{background:var(--blue); color:#fff; border-color:var(--blue);}
+  .status-btn.on-realise{background:var(--green); color:#fff; border-color:var(--green);}
+  .status-btn.on-non_realise{background:var(--amber); color:#1a1300; border-color:var(--amber);}
+  .status-btn.on-poubelle{background:var(--gray); color:#fff; border-color:var(--gray);}
+  .custom-tag{font-size:.65rem; color:var(--blue); font-weight:700;}
+  .btn-primary{background:var(--green); color:#fff; border:none; padding:10px 14px; border-radius:6px;
+    font-weight:700; cursor:pointer; font-size:.92rem;}
+  .btn-secondary{background:var(--bg); color:var(--brand); border:1px solid var(--border); padding:8px 12px;
+    border-radius:6px; cursor:pointer; font-size:.82rem; font-weight:700;}
+  .btn-danger{background:transparent; color:var(--red); border:1px solid var(--border); padding:6px 10px;
+    border-radius:6px; cursor:pointer; font-weight:700; font-size:.78rem;}
+  .section-title{font-size:.95rem; font-weight:700; color:var(--text-bright); display:flex;
+    align-items:center; justify-content:space-between;}
+  .empty{font-size:.85rem; opacity:.6; text-align:center; padding:14px 0;}
+  .cat-group{background:var(--card); border:1px solid var(--border); border-radius:8px; overflow:hidden;}
+  .cat-group summary{list-style:none; cursor:pointer; padding:12px 14px; display:flex; justify-content:space-between;
+    align-items:center; font-weight:700; color:var(--text-bright); font-size:.9rem;}
+  .cat-group summary::-webkit-details-marker{display:none;}
+  .cat-group summary .count{font-size:.72rem; font-weight:700; color:var(--brand-bright); background:var(--badge-bg);
+    border:1px solid var(--brand); border-radius:10px; padding:2px 8px;}
+  .cat-group summary::after{content:"▾"; margin-left:8px; opacity:.6; transition:transform .15s;}
+  .cat-group[open] summary::after{transform:rotate(180deg);}
+  .cat-group .cat-body{padding:0 12px 12px; display:flex; flex-direction:column; gap:10px;}
+  .eco-link{display:flex; align-items:center; justify-content:space-between; width:100%; padding:13px 14px;
+    background:var(--bg); color:var(--text-bright); text-decoration:none; border-radius:8px;
+    border:1px solid var(--border); font-weight:700; font-size:.92rem;}
+  .eco-link small{display:block; font-size:.72rem; font-weight:400; opacity:.7; margin-top:2px;}
+  .eco-link:hover{border-color:var(--brand);}
+  footer{margin-top:10px; padding-top:14px; border-top:1px solid var(--border); text-align:center;
+    font-size:.72rem; opacity:.7; line-height:1.4;}
+  @media(max-width:480px){.hero{grid-template-columns:1fr 1fr;}}
+</style>
+</head>
+<body>
+<div class="app">
+  <header style="position:relative;">
+    <div class="header-controls">
+      <select id="lang-select" class="lang-select" onchange="changeLanguage(this.value)">
+        <option value="fr">FR</option>
+        <option value="en">EN</option>
+      </select>
+      <button class="theme-toggle" onclick="toggleTheme()">🌓</button>
+    </div>
+    <h1><a href="https://alphapicker.github.io/klon/" title="Écosystème KLON">KLON <span>EDGE</span></a></h1>
+    <div class="subtitle" data-i18n="subtitle">L'avantage asymétrique du quotidien</div>
+    <p class="desc" data-i18n="desc">Réduis ton OPEX sans sacrifier ton confort ni ton temps, et réinjecte le FCF libéré dans ton capital.</p>
+  </header>
+
+  <nav>
+    <button class="nav-btn active" id="tabbtn-1" onclick="switchTab(1)">
+      <span class="ic">🔍</span><span data-i18n="nav_library">Bibliothèque</span>
+    </button>
+    <button class="nav-btn" id="tabbtn-2" onclick="switchTab(2)">
+      <span class="ic">📋</span><span data-i18n="nav_plan">Mon Plan</span>
+    </button>
+    <button class="nav-btn" id="tabbtn-3" onclick="switchTab(3)">
+      <span class="ic">🌐</span><span data-i18n="nav_eco">Écosystème</span>
+    </button>
+  </nav>
+
+  <div class="hero">
+    <div class="hero-box">
+      <div class="label" data-i18n="hero_active">FICHES ACTIVES</div>
+      <div class="val" id="hero-fav">0</div>
+    </div>
+    <div class="hero-box">
+      <div class="label" data-i18n="hero_done">FICHES RÉALISÉES</div>
+      <div class="val" id="hero-done">0</div>
+    </div>
+  </div>
+
+  <!-- ONGLET 1 : BIBLIOTHÈQUE (Core Edge + Custom Edge) -->
+  <div id="tab-1" class="tab active">
+    <div class="card">
+      <div class="filters">
+        <input type="text" id="search" data-i18n-ph="search_ph" placeholder="🔍 Rechercher (téléphone, cashback, jointoyage...)" oninput="renderLibrary()">
+        <select id="filter-cat" onchange="renderLibrary()">
+          <option value="all" data-i18n="filter_cat_all">Tous les domaines</option>
+          <option value="logement" data-i18n="cat_logement">🏠 Logement</option>
+          <option value="vehicule" data-i18n="cat_vehicule">🚗 Véhicule</option>
+          <option value="nourriture" data-i18n="cat_nourriture">🛒 Nourriture</option>
+          <option value="achat" data-i18n="cat_achat">🛍️ Achat / Tech</option>
+        </select>
+        <select id="filter-source" onchange="renderLibrary()">
+          <option value="all" data-i18n="filter_source_all">Toutes les fiches</option>
+          <option value="core" data-i18n="filter_source_core">Bibliothèque officielle</option>
+          <option value="custom" data-i18n="filter_source_custom">Mes astuces</option>
+          <option value="poubelle" data-i18n="filter_source_poubelle">🗑️ Poubelle</option>
+        </select>
+      </div>
+    </div>
+
+    <div id="library-list" style="display:flex; flex-direction:column; gap:10px;"></div>
+
+    <div class="card">
+      <div class="section-title" data-i18n="add_title">🛠️ Ajouter ma propre astuce</div>
+      <input type="text" id="in-title" data-i18n-ph="in_title_ph" placeholder="Titre de l'astuce">
+      <select id="in-cat">
+        <option value="logement" data-i18n="cat_logement">🏠 Logement</option>
+        <option value="vehicule" data-i18n="cat_vehicule">🚗 Véhicule</option>
+        <option value="nourriture" data-i18n="cat_nourriture">🛒 Nourriture</option>
+        <option value="achat" data-i18n="cat_achat">🛍️ Achat / Tech</option>
+      </select>
+      <textarea id="in-desc" rows="3" data-i18n-ph="in_desc_ph" placeholder="Description, sans corvée inutile..."></textarea>
+      <button class="btn-primary" onclick="addCustomEdge()" data-i18n="btn_add">Ajouter à ma bibliothèque</button>
+    </div>
+
+    <div class="card">
+      <div class="section-title" data-i18n="share_title">💾 Partager mes astuces</div>
+      <div style="display:flex; gap:8px; flex-wrap:wrap;">
+        <button class="btn-secondary" style="flex:1;" onclick="exportJSON()" data-i18n="btn_export">Exporter mes astuces (JSON)</button>
+        <label class="btn-secondary" style="flex:1; text-align:center;">
+          <span data-i18n="btn_import">Importer un JSON</span>
+          <input type="file" accept=".json" style="display:none;" onchange="importJSON(event)">
+        </label>
+      </div>
+      <div class="edge-meta" data-i18n="share_note">L'import n'affecte que ta bibliothèque personnelle, jamais le socle officiel.</div>
+    </div>
+  </div>
+
+  <!-- ONGLET 2 : MON PLAN (favori / réalisé / non réalisable) -->
+  <div id="tab-2" class="tab">
+    <div class="card">
+      <div class="section-title" data-i18n="plan_favori_title">🔄 Favoris — récurrents</div>
+      <div id="plan-favori" style="display:flex; flex-direction:column; gap:10px;"></div>
+    </div>
+    <div class="card">
+      <div class="section-title" data-i18n="plan_realise_title">✅ Réalisé — pour le plaisir d'avoir fait</div>
+      <div id="plan-realise" style="display:flex; flex-direction:column; gap:10px;"></div>
+    </div>
+    <div class="card">
+      <div class="section-title" data-i18n="plan_non_realise_title">🕓 Non réalisé — à faire plus tard</div>
+      <div id="plan-non_realise" style="display:flex; flex-direction:column; gap:10px;"></div>
+    </div>
+    <div class="card">
+      <div class="section-title" data-i18n="plan_poubelle_title">🗑️ Poubelle — ne compte pas dans tes stats</div>
+      <div id="plan-poubelle" style="display:flex; flex-direction:column; gap:10px;"></div>
+    </div>
+  </div>
+
+  <!-- ONGLET 3 : ÉCOSYSTÈME -->
+  <div id="tab-3" class="tab">
+    <div class="card">
+      <div class="section-title" data-i18n="eco_suite_title">🌐 La Suite KLON</div>
+      <a class="eco-link" href="https://alphapicker.github.io/klon/">⚡ KLON<small data-i18n="eco_klon_sub">Simulateur de liberté financière</small></a>
+      <a class="eco-link" href="https://alphapicker.github.io/klon-corp/">🏢 KLON Corp<small data-i18n="eco_corp_sub">Ton compte de résultat personnel</small></a>
+      <a class="eco-link" href="https://alphapicker.github.io/klon-stake/">🔑 KLON Stake<small data-i18n="eco_stake_sub">Simulateur de propriété réelle</small></a>
+      <a class="eco-link" href="https://alphapicker.github.io/klon-pulse/">💝 KLON Pulse<small data-i18n="eco_pulse_sub">Transmission vivante encadrée</small></a>
+    </div>
+    <div class="card">
+      <div class="section-title" data-i18n="eco_author_title">✍️ Alpha Picker</div>
+      <a class="eco-link" href="#">📰 Substack<small data-i18n="eco_substack_sub">Thèses d'investissement gratuites</small></a>
+      <a class="eco-link" href="#">📊 Wikifolio<small data-i18n="eco_wiki_sub">Suivi des performances réelles</small></a>
+    </div>
+  </div>
+
+  <footer>
+    <div><strong>KLON Edge</strong> <span data-i18n="footer_dev">— développé par Alpha Picker.</span></div>
+    <div data-i18n="footer_local">Tout reste stocké localement dans ton navigateur, rien n'est envoyé à un serveur.</div>
+  </footer>
+</div>
+
+<script>
+// ---------- I18N (chrome de l'interface uniquement — les fiches restent en français) ----------
+const I18N = {
+  fr:{
+    subtitle:"L'avantage asymétrique du quotidien",
+    desc:"Réduis ton OPEX sans sacrifier ton confort ni ton temps, et réinjecte le FCF libéré dans ton capital.",
+    nav_library:"Bibliothèque", nav_plan:"Mon Plan", nav_eco:"Écosystème",
+    hero_active:"FICHES ACTIVES", hero_done:"FICHES RÉALISÉES",
+    search_ph:"🔍 Rechercher (téléphone, cashback, jointoyage...)",
+    filter_cat_all:"Tous les domaines",
+    cat_logement:"🏠 Logement", cat_vehicule:"🚗 Véhicule", cat_nourriture:"🛒 Nourriture", cat_achat:"🛍️ Achat / Tech",
+    filter_source_all:"Toutes les fiches", filter_source_core:"Bibliothèque officielle",
+    filter_source_custom:"Mes astuces", filter_source_poubelle:"🗑️ Poubelle",
+    add_title:"🛠️ Ajouter ma propre astuce", in_title_ph:"Titre de l'astuce",
+    in_desc_ph:"Description, sans corvée inutile...", btn_add:"Ajouter à ma bibliothèque",
+    share_title:"💾 Partager mes astuces", btn_export:"Exporter mes astuces (JSON)",
+    btn_import:"Importer un JSON", share_note:"L'import n'affecte que ta bibliothèque personnelle, jamais le socle officiel.",
+    plan_favori_title:"🔄 Favoris — récurrents", plan_realise_title:"✅ Réalisé — pour le plaisir d'avoir fait",
+    plan_non_realise_title:"🕓 Non réalisé — à faire plus tard", plan_poubelle_title:"🗑️ Poubelle — ne compte pas dans tes stats",
+    eco_suite_title:"🌐 La Suite KLON", eco_klon_sub:"Simulateur de liberté financière",
+    eco_corp_sub:"Ton compte de résultat personnel", eco_stake_sub:"Simulateur de propriété réelle",
+    eco_pulse_sub:"Transmission vivante encadrée", eco_author_title:"✍️ Alpha Picker",
+    eco_substack_sub:"Thèses d'investissement gratuites", eco_wiki_sub:"Suivi des performances réelles",
+    footer_dev:"— développé par Alpha Picker.",
+    footer_local:"Tout reste stocké localement dans ton navigateur, rien n'est envoyé à un serveur.",
+    status_favori:"🔄 Favori", status_realise:"✅ Réalisé", status_non_realise:"🕓 Non réalisé", status_poubelle:"🗑️ Poubelle",
+    btn_delete:"Suppr.", custom_tag:"· perso",
+    empty_search:"Aucune fiche ne correspond à ta recherche.", empty_plan:"Rien ici pour l'instant.",
+    alert_need_title:"Donne un titre à ton astuce.",
+    alert_import_error:"Le fichier importé n'est pas un JSON valide de fiches KLON Edge."
+  },
+  en:{
+    subtitle:"Your asymmetric daily edge",
+    desc:"Cut your OPEX without sacrificing comfort or time, and reinvest the freed-up cash flow into your capital.",
+    nav_library:"Library", nav_plan:"My Plan", nav_eco:"Ecosystem",
+    hero_active:"ACTIVE TIPS", hero_done:"COMPLETED TIPS",
+    search_ph:"🔍 Search (phone, cashback, sealing...)",
+    filter_cat_all:"All categories",
+    cat_logement:"🏠 Housing", cat_vehicule:"🚗 Vehicle", cat_nourriture:"🛒 Food", cat_achat:"🛍️ Shopping / Tech",
+    filter_source_all:"All tips", filter_source_core:"Official library",
+    filter_source_custom:"My tips", filter_source_poubelle:"🗑️ Trash",
+    add_title:"🛠️ Add my own tip", in_title_ph:"Tip title",
+    in_desc_ph:"Description, no needless chores...", btn_add:"Add to my library",
+    share_title:"💾 Share my tips", btn_export:"Export my tips (JSON)",
+    btn_import:"Import a JSON", share_note:"Importing only affects your personal library, never the official core.",
+    plan_favori_title:"🔄 Favorites — recurring", plan_realise_title:"✅ Done — just for the satisfaction",
+    plan_non_realise_title:"🕓 Not done yet — for later", plan_poubelle_title:"🗑️ Trash — doesn't count in your stats",
+    eco_suite_title:"🌐 The KLON Suite", eco_klon_sub:"Financial freedom simulator",
+    eco_corp_sub:"Your personal P&L", eco_stake_sub:"Real ownership simulator",
+    eco_pulse_sub:"Guided living inheritance", eco_author_title:"✍️ Alpha Picker",
+    eco_substack_sub:"Free investment theses", eco_wiki_sub:"Real performance tracking",
+    footer_dev:"— built by Alpha Picker.",
+    footer_local:"Everything stays stored locally in your browser, nothing is sent to a server.",
+    status_favori:"🔄 Favorite", status_realise:"✅ Done", status_non_realise:"🕓 Not done", status_poubelle:"🗑️ Trash",
+    btn_delete:"Delete", custom_tag:"· custom",
+    empty_search:"No tip matches your search.", empty_plan:"Nothing here yet.",
+    alert_need_title:"Give your tip a title.",
+    alert_import_error:"The imported file isn't a valid KLON Edge JSON."
+  }
+};
+
+function loadLang(){ try{ return localStorage.getItem("klonedge_lang") || "fr"; }catch(e){ return "fr"; } }
+let currentLang = loadLang();
+
+function t(key, params){
+  let text = (I18N[currentLang] && I18N[currentLang][key]) || I18N.fr[key] || key;
+  if(params){ Object.keys(params).forEach(function(p){ text = text.replace(new RegExp("\\{"+p+"\\}","g"), params[p]); }); }
+  return text;
+}
+
+function changeLanguage(lang){
+  currentLang = lang;
+  try{ localStorage.setItem("klonedge_lang", lang); }catch(e){}
+  document.documentElement.lang = lang;
+  document.getElementById("lang-select").value = lang;
+  document.querySelectorAll("[data-i18n]").forEach(function(el){ el.innerHTML = t(el.getAttribute("data-i18n")); });
+  document.querySelectorAll("[data-i18n-ph]").forEach(function(el){ el.placeholder = t(el.getAttribute("data-i18n-ph")); });
+  renderAll();
+}
+
+// ---------- BIBLIOTHÈQUE OFFICIELLE (CORE EDGE) — lecture seule, modifiée uniquement dans le code ----------
+const CORE_EDGE = [
+  {
+    id:"core-telephone",
+    title:"Téléphone : le juste prix, pas le superflu",
+    cat:"achat",
+    desc:"Achète le téléphone qui te convient au meilleur prix plutôt que le dernier modèle à la mode. La différence investie en bourse fait que tes prochains téléphones deviennent mécaniquement gratuits. Bonus : plus besoin de le protéger comme un objet précieux — s'il tient 2 à 3 ans, c'est suffisant.",
+    tiers:[150,250,400]
+  },
+  {
+    id:"core-cashback",
+    title:"Marge de prix + optimisation maximale",
+    cat:"achat",
+    desc:"Fixe-toi une marge de prix plutôt qu'un budget fixe (ex. 300-350€), choisis dans cette marge ce qui te plaît le plus, puis optimise ce choix précis : cashback, comparateurs de prix, meilleures réductions. Exemple de site de cashback : iGraal (lien de parrainage) — il y en a d'autres sur le marché, les meilleurs taux varient selon les sites.",
+    tiers:[]
+  },
+  {
+    id:"core-jointoyage",
+    title:"Vérifier le jointoyage des entrées d'air",
+    cat:"logement",
+    desc:"Démonte et vérifie que les entrées d'air sont bien jointoyées (silicone ou mastic). Une action ponctuelle qui évite des pertes de chaleur continues.",
+    tiers:[]
+  },
+  {
+    id:"core-ecoconduite",
+    title:"Éco-conduite",
+    cat:"vehicule",
+    desc:"Anticipation, régime moteur bas, pneus bien gonflés. Pour beaucoup, ce n'est pas une action qu'on coche une fois : c'est une discipline de chaque trajet.",
+    tiers:[]
+  }
+];
+
+function catLabel(cat){ return t("cat_"+cat); }
+
+// ---------- STOCKAGE LOCAL ----------
+function loadCustom(){ try{ return JSON.parse(localStorage.getItem("klonedge_custom")||"[]"); }catch(e){ return []; } }
+function saveCustom(list){ localStorage.setItem("klonedge_custom", JSON.stringify(list)); }
+function loadStatus(){ try{ return JSON.parse(localStorage.getItem("klonedge_status")||"{}"); }catch(e){ return {}; } }
+function saveStatus(map){ localStorage.setItem("klonedge_status", JSON.stringify(map)); }
+
+let customEdges = loadCustom();
+let statusMap = loadStatus();
+
+function allEdges(){ return CORE_EDGE.concat(customEdges); }
+
+// ---------- STATUTS ----------
+function setStatus(id, status){
+  if(statusMap[id] === status){ delete statusMap[id]; } // re-cliquer annule
+  else { statusMap[id] = status; }
+  saveStatus(statusMap);
+  renderAll();
+}
+
+// ---------- RENDU ----------
+function edgeCardHTML(edge, context){
+  const st = statusMap[edge.id] || null;
+  const isCustom = edge.id.startsWith("custom-");
+  let tiersHTML = "";
+  if(edge.tiers && edge.tiers.length){
+    tiersHTML = '<div class="price-tiers">' + edge.tiers.map(function(t){
+      return '<span class="price-pill">≈ '+t+' €</span>';
+    }).join("") + '</div>';
+  }
+  const statusClass = st ? ("st-"+st) : "";
+  const delBtn = isCustom ? '<button class="btn-danger" onclick="deleteCustom(\''+edge.id+'\')">'+t("btn_delete")+'</button>' : "";
+  return (
+    '<div class="edge-card '+statusClass+'">'+
+      '<div class="edge-top">'+
+        '<div>'+
+          '<div class="edge-title">'+edge.title+(isCustom?' <span class="custom-tag">'+t("custom_tag")+'</span>':'')+'</div>'+
+        '</div>'+
+        '<span class="edge-cat">'+catLabel(edge.cat)+'</span>'+
+      '</div>'+
+      '<div class="edge-desc">'+edge.desc+'</div>'+
+      tiersHTML+
+      '<div class="status-row">'+
+        '<button class="status-btn '+(st==='favori'?'on-favori':'')+'" onclick="setStatus(\''+edge.id+'\',\'favori\')">'+t("status_favori")+'</button>'+
+        '<button class="status-btn '+(st==='realise'?'on-realise':'')+'" onclick="setStatus(\''+edge.id+'\',\'realise\')">'+t("status_realise")+'</button>'+
+        '<button class="status-btn '+(st==='non_realise'?'on-non_realise':'')+'" onclick="setStatus(\''+edge.id+'\',\'non_realise\')">'+t("status_non_realise")+'</button>'+
+        '<button class="status-btn '+(st==='poubelle'?'on-poubelle':'')+'" onclick="setStatus(\''+edge.id+'\',\'poubelle\')">'+t("status_poubelle")+'</button>'+
+        delBtn+
+      '</div>'+
+    '</div>'
+  );
+}
+
+function renderLibrary(){
+  const q = document.getElementById("search").value.toLowerCase();
+  const cat = document.getElementById("filter-cat").value;
+  const src = document.getElementById("filter-source").value;
+  let list = allEdges();
+  if(cat !== "all") list = list.filter(function(e){ return e.cat === cat; });
+  if(src === "core") list = list.filter(function(e){ return !e.id.startsWith("custom-"); });
+  if(src === "custom") list = list.filter(function(e){ return e.id.startsWith("custom-"); });
+  if(q) list = list.filter(function(e){ return (e.title+" "+e.desc).toLowerCase().includes(q); });
+
+  // La poubelle ne s'affiche jamais dans la bibliothèque normale, sauf si on la
+  // sélectionne explicitement dans le filtre, pour aller y repêcher un oubli.
+  if(src === "poubelle"){
+    list = list.filter(function(e){ return statusMap[e.id] === "poubelle"; });
+  } else {
+    list = list.filter(function(e){ return statusMap[e.id] !== "poubelle"; });
+  }
+
+  const container = document.getElementById("library-list");
+  if(list.length === 0){
+    container.innerHTML = '<div class="empty">'+t("empty_search")+'</div>';
+    return;
+  }
+
+  // Au-delà d'un petit nombre de fiches, ou dès qu'aucun filtre précis n'est actif,
+  // on regroupe par domaine (accordéon) plutôt que d'afficher une liste brute à rallonge.
+  const shouldGroup = (cat === "all") && list.length > 6;
+  if(!shouldGroup){
+    container.innerHTML = list.map(function(e){ return edgeCardHTML(e); }).join("");
+    return;
+  }
+
+  const order = ["logement","vehicule","nourriture","achat"];
+  const html = order.map(function(c){
+    const items = list.filter(function(e){ return e.cat === c; });
+    if(items.length === 0) return "";
+    return (
+      '<details class="cat-group" open>'+
+        '<summary>'+catLabel(c)+' <span class="count">'+items.length+'</span></summary>'+
+        '<div class="cat-body">'+items.map(function(e){ return edgeCardHTML(e); }).join("")+'</div>'+
+      '</details>'
+    );
+  }).join("");
+  container.innerHTML = html;
+}
+
+function renderPlan(){
+  const groups = {favori:[], realise:[], non_realise:[], poubelle:[]};
+  allEdges().forEach(function(e){
+    const st = statusMap[e.id];
+    if(st && groups[st]) groups[st].push(e);
+  });
+  ["favori","realise","non_realise","poubelle"].forEach(function(key){
+    const el = document.getElementById("plan-"+key);
+    el.innerHTML = groups[key].length
+      ? groups[key].map(function(e){ return edgeCardHTML(e); }).join("")
+      : '<div class="empty">'+t("empty_plan")+'</div>';
+  });
+  document.getElementById("hero-fav").textContent = groups.favori.length;
+  document.getElementById("hero-done").textContent = groups.realise.length;
+}
+
+function renderAll(){ renderLibrary(); renderPlan(); }
+
+// ---------- CUSTOM EDGE ----------
+function addCustomEdge(){
+  const title = document.getElementById("in-title").value.trim();
+  const cat = document.getElementById("in-cat").value;
+  const desc = document.getElementById("in-desc").value.trim();
+  if(!title){ alert(t("alert_need_title")); return; }
+  const id = "custom-" + Date.now();
+  customEdges.push({id:id, title:title, cat:cat, desc:desc, tiers:[]});
+  saveCustom(customEdges);
+  document.getElementById("in-title").value = "";
+  document.getElementById("in-desc").value = "";
+  renderAll();
+}
+
+function deleteCustom(id){
+  customEdges = customEdges.filter(function(e){ return e.id !== id; });
+  saveCustom(customEdges);
+  delete statusMap[id];
+  saveStatus(statusMap);
+  renderAll();
+}
+
+function exportJSON(){
+  const blob = new Blob([JSON.stringify(customEdges, null, 2)], {type:"application/json"});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url; a.download = "klon-edge-mes-astuces.json"; a.click();
+  URL.revokeObjectURL(url);
+}
+
+function importJSON(evt){
+  const file = evt.target.files[0];
+  if(!file) return;
+  const reader = new FileReader();
+  reader.onload = function(e){
+    try{
+      const imported = JSON.parse(e.target.result);
+      if(!Array.isArray(imported)) throw new Error("format invalide");
+      imported.forEach(function(item){
+        if(item && item.title){
+          item.id = "custom-" + Date.now() + "-" + Math.floor(Math.random()*1000);
+          customEdges.push(item);
+        }
+      });
+      saveCustom(customEdges);
+      renderAll();
+    }catch(err){
+      alert(t("alert_import_error"));
+    }
+  };
+  reader.readAsText(file);
+}
+
+// ---------- NAVIGATION ----------
+function switchTab(n){
+  for(let i=1;i<=3;i++){
+    document.getElementById("tab-"+i).classList.toggle("active", i===n);
+    document.getElementById("tabbtn-"+i).classList.toggle("active", i===n);
+  }
+}
+
+function toggleTheme(){
+  const root = document.documentElement;
+  const next = root.getAttribute("data-theme")==="dark" ? "light" : "dark";
+  root.setAttribute("data-theme", next);
+  try{ localStorage.setItem("klonedge_theme", next); }catch(e){}
+}
+
+// ---------- INIT ----------
+(function initTheme(){
+  try{
+    const saved = localStorage.getItem("klonedge_theme");
+    if(saved) document.documentElement.setAttribute("data-theme", saved);
+  }catch(e){}
+})();
+
+changeLanguage(currentLang);
+</script>
+</body>
+</html>
