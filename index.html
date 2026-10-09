@@ -1,552 +1,1324 @@
 <!DOCTYPE html>
 <html lang="fr" data-theme="dark">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>KLON Edge</title>
-<meta name="theme-color" content="#10b981">
-<style>
-  :root[data-theme="dark"]{
-    --bg:#0d1117; --card:#161b22; --border:#30363d;
-    --text:#c9d1d9; --text-bright:#f0f6fc;
-    --brand:#10b981; --brand-bright:#34d399;
-    --blue:#58a6ff; --green:#238636; --green-bright:#7ee787; --amber:#d29922;
-    --red:#da3633; --gray:#6e7681; --badge-bg:rgba(16,185,129,.14);
-  }
-  :root[data-theme="light"]{
-    --bg:#f0f2f5; --card:#ffffff; --border:#d0d7de;
-    --text:#24292f; --text-bright:#1f2328;
-    --brand:#0d9488; --brand-bright:#0f766e;
-    --blue:#0969da; --green:#1f883d; --green-bright:#1a7f37; --amber:#9a6700;
-    --red:#cf222e; --gray:#6e7681; --badge-bg:rgba(13,148,136,.14);
-  }
-  *{box-sizing:border-box;margin:0;padding:0;}
-  body{
-    background:var(--bg); color:var(--text);
-    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
-    display:flex; flex-direction:column; align-items:center; min-height:100vh;
-    padding-bottom:env(safe-area-inset-bottom);
-  }
-  .app{width:100%; max-width:850px; padding:16px; display:flex; flex-direction:column; gap:16px;}
-  header{text-align:center; padding:10px 8px 2px;}
-  header h1{font-size:1.6rem; font-weight:800; color:var(--text-bright); letter-spacing:-.5px;}
-  header h1 a{text-decoration:none; color:inherit;}
-  header h1 span{color:var(--brand);}
-  .subtitle{font-size:.92rem; color:var(--brand); font-weight:600; margin-top:2px;}
-  .desc{font-size:.8rem; opacity:.8; margin-top:6px; line-height:1.4;}
-  .header-controls{position:absolute; top:14px; right:14px; display:flex; gap:6px; align-items:center;}
-  .theme-toggle{background:var(--card); border:1px solid var(--border);
-    border-radius:20px; padding:5px 10px; font-size:.75rem; cursor:pointer; color:var(--text);}
-  .lang-select{width:auto; background:var(--card); border:1px solid var(--border); color:var(--text);
-    padding:5px 8px; border-radius:20px; font-size:.75rem; font-weight:700; cursor:pointer;}
-  nav{display:flex; background:var(--card); border:1px solid var(--border); border-radius:8px; overflow:hidden;}
-  .nav-btn{flex:1; padding:11px 6px; background:none; border:none; color:var(--text); font-weight:700;
-    cursor:pointer; font-size:.82rem; display:flex; flex-direction:column; align-items:center; gap:3px;}
-  .nav-btn .ic{font-size:1.2rem;}
-  .nav-btn.active{background:#21262d; color:var(--brand-bright); border-bottom:3px solid var(--brand-bright);}
-  :root[data-theme="light"] .nav-btn.active{background:#e1e4e8;}
-  .tab{display:none; flex-direction:column; gap:14px;}
-  .tab.active{display:flex;}
-  .card{background:var(--card); border:1px solid var(--border); border-radius:8px; padding:14px;
-    display:flex; flex-direction:column; gap:10px;}
-  .hero{display:grid; grid-template-columns:1fr 1fr; gap:10px;}
-  .hero-box{background:var(--card); border:1px solid var(--border); border-radius:8px; padding:12px; text-align:center;}
-  .hero-box .label{font-size:.68rem; font-weight:800; color:var(--brand-bright); letter-spacing:.4px;}
-  .hero-box .val{font-size:1.5rem; font-weight:900; color:var(--text-bright); margin-top:2px;}
-  .filters{display:flex; gap:8px; flex-wrap:wrap;}
-  input[type=text],select,textarea,input[type=number]{
-    background:var(--bg); border:1px solid var(--border); color:var(--text-bright);
-    padding:9px 11px; border-radius:6px; font-size:.9rem; font-family:inherit; width:100%;
-  }
-  .filters input[type=text]{flex:2; min-width:160px;}
-  .filters select{flex:1; min-width:130px;}
-  .edge-card{background:var(--card); border:1px solid var(--border); border-left:4px solid var(--gray);
-    border-radius:8px; padding:13px 14px; display:flex; flex-direction:column; gap:8px;}
-  .edge-card.st-favori{border-left-color:var(--blue);}
-  .edge-card.st-realise{border-left-color:var(--green-bright);}
-  .edge-card.st-non_realise{border-left-color:var(--amber);}
-  .edge-card.st-poubelle{border-left-color:var(--border); opacity:.55;}
-  .edge-top{display:flex; justify-content:space-between; align-items:flex-start; gap:8px;}
-  .edge-title{font-weight:700; color:var(--text-bright); font-size:.98rem;}
-  .edge-cat{font-size:.68rem; padding:2px 8px; border-radius:10px; background:var(--badge-bg);
-    color:var(--brand-bright); border:1px solid var(--brand); white-space:nowrap; font-weight:700;}
-  .edge-desc{font-size:.85rem; line-height:1.45; opacity:.9;}
-  .edge-meta{font-size:.72rem; opacity:.65; font-style:italic;}
-  .price-tiers{display:flex; gap:6px; flex-wrap:wrap;}
-  .price-pill{font-size:.72rem; font-weight:700; padding:3px 9px; border-radius:12px;
-    background:var(--bg); border:1px solid var(--border); color:var(--text-bright);}
-  .status-row{display:flex; gap:6px; flex-wrap:wrap; margin-top:4px;}
-  .status-btn{flex:1; min-width:78px; font-size:.72rem; font-weight:700; padding:7px 6px; border-radius:6px;
-    border:1px solid var(--border); background:var(--bg); color:var(--text); cursor:pointer;}
-  .status-btn.on-favori{background:var(--blue); color:#fff; border-color:var(--blue);}
-  .status-btn.on-realise{background:var(--green); color:#fff; border-color:var(--green);}
-  .status-btn.on-non_realise{background:var(--amber); color:#1a1300; border-color:var(--amber);}
-  .status-btn.on-poubelle{background:var(--gray); color:#fff; border-color:var(--gray);}
-  .custom-tag{font-size:.65rem; color:var(--blue); font-weight:700;}
-  .btn-primary{background:var(--green); color:#fff; border:none; padding:10px 14px; border-radius:6px;
-    font-weight:700; cursor:pointer; font-size:.92rem;}
-  .btn-secondary{background:var(--bg); color:var(--brand); border:1px solid var(--border); padding:8px 12px;
-    border-radius:6px; cursor:pointer; font-size:.82rem; font-weight:700;}
-  .btn-danger{background:transparent; color:var(--red); border:1px solid var(--border); padding:6px 10px;
-    border-radius:6px; cursor:pointer; font-weight:700; font-size:.78rem;}
-  .section-title{font-size:.95rem; font-weight:700; color:var(--text-bright); display:flex;
-    align-items:center; justify-content:space-between;}
-  .empty{font-size:.85rem; opacity:.6; text-align:center; padding:14px 0;}
-  .cat-group{background:var(--card); border:1px solid var(--border); border-radius:8px; overflow:hidden;}
-  .cat-group summary{list-style:none; cursor:pointer; padding:12px 14px; display:flex; justify-content:space-between;
-    align-items:center; font-weight:700; color:var(--text-bright); font-size:.9rem;}
-  .cat-group summary::-webkit-details-marker{display:none;}
-  .cat-group summary .count{font-size:.72rem; font-weight:700; color:var(--brand-bright); background:var(--badge-bg);
-    border:1px solid var(--brand); border-radius:10px; padding:2px 8px;}
-  .cat-group summary::after{content:"▾"; margin-left:8px; opacity:.6; transition:transform .15s;}
-  .cat-group[open] summary::after{transform:rotate(180deg);}
-  .cat-group .cat-body{padding:0 12px 12px; display:flex; flex-direction:column; gap:10px;}
-  .eco-link{display:flex; align-items:center; justify-content:space-between; width:100%; padding:13px 14px;
-    background:var(--bg); color:var(--text-bright); text-decoration:none; border-radius:8px;
-    border:1px solid var(--border); font-weight:700; font-size:.92rem;}
-  .eco-link small{display:block; font-size:.72rem; font-weight:400; opacity:.7; margin-top:2px;}
-  .eco-link:hover{border-color:var(--brand);}
-  footer{margin-top:10px; padding-top:14px; border-top:1px solid var(--border); text-align:center;
-    font-size:.72rem; opacity:.7; line-height:1.4;}
-  @media(max-width:480px){.hero{grid-template-columns:1fr 1fr;}}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>KLON Edge</title>
+
+  <meta name="color-scheme" content="dark light">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="theme-color" content="#10b981">
+ 
+  <link rel="manifest" href="./manifest.json">
+  <link rel="icon" href="./icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="./icon.svg">
+  
+  <style>
+    html {
+      background-color: var(--bg-color);
+      min-height: 100%;
+      scrollbar-gutter: stable;
+    }
+
+    :root[data-theme="dark"] {
+      color-scheme: dark;
+      --bg-color: #0d1117;
+      --card-bg: #161b22;
+      --border-color: #30363d;
+      --text-main: #c9d1d9;
+      --text-bright: #f0f6fc;
+      --brand: #10b981;
+      --brand-bright: #34d399;
+      --accent-blue: #58a6ff;
+      --accent-green: #238636;
+      --accent-green-bright: #7ee787;
+      --accent-orange: #f0883e;
+      --accent-red: #da3633;
+      --accent-purple: #a371f7;
+      --nav-active-bg: #21262d;
+      --nav-active-text: #34d399;
+      --btn-paypal-bg: #238636;
+      --btn-paypal-text: #ffffff;
+      --badge-bg: rgba(16, 185, 129, 0.14);
+      --gray-card: #6e7681;
+    }
+
+    :root[data-theme="light"] {
+      color-scheme: light;
+      --bg-color: #f0f2f5;
+      --card-bg: #ffffff;
+      --border-color: #d0d7de;
+      --text-main: #24292f;
+      --text-bright: #1f2328;
+      --brand: #059669;
+      --brand-bright: #047857;
+      --accent-blue: #0969da;
+      --accent-green: #1f883d;
+      --accent-green-bright: #1a7f37;
+      --accent-orange: #bc4c00;
+      --accent-red: #cf222e;
+      --accent-purple: #8250df;
+      --nav-active-bg: #e1e4e8;
+      --nav-active-text: #059669;
+      --btn-paypal-bg: #1f883d;
+      --btn-paypal-text: #ffffff;
+      --badge-bg: rgba(5, 150, 105, 0.14);
+      --gray-card: #8c959f;
+    }
+
+    :root[data-theme="colorblind"] {
+      color-scheme: dark;
+      --bg-color: #000000;
+      --card-bg: #121212;
+      --border-color: #ffffff;
+      --text-main: #ffffff;
+      --text-bright: #ffff00;
+      --brand: #00ffff;
+      --brand-bright: #00ffff;
+      --accent-blue: #00ffff;
+      --accent-green: #0d6efd;
+      --accent-green-bright: #ffcc00;
+      --accent-orange: #ff8000;
+      --accent-red: #ffcc00;
+      --accent-purple: #ffff00;
+      --nav-active-bg: #2a2a2a;
+      --nav-active-text: #00ffff;
+      --btn-paypal-bg: #0d6efd;
+      --btn-paypal-text: #ffffff;
+      --badge-bg: rgba(0, 255, 255, 0.2);
+      --gray-card: #a0a0a0;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background-color: var(--bg-color);
+      color: var(--text-main);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+      transition: background-color 0.2s, color 0.2s;
+      padding-bottom: env(safe-area-inset-bottom);
+    }
+
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: var(--bg-color); border-radius: 4px; }
+    ::-webkit-scrollbar-thumb { background: var(--border-color); border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: var(--brand); }
+    * { scrollbar-width: thin; scrollbar-color: var(--border-color) var(--bg-color); }
+
+    .app-container {
+      width: 100%;
+      max-width: 600px;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .app-header { text-align: center; padding: 12px 8px 4px 8px; }
+    .app-header h1 { font-size: 1.6rem; color: var(--text-bright); font-weight: 800; letter-spacing: -0.5px; }
+    .app-header h1 a { transition: opacity 0.2s, transform 0.2s; display: inline-block; text-decoration: none; color: inherit; }
+    .app-header h1 a:hover { opacity: 0.85; transform: scale(1.02); }
+    .app-header h1 a span { color: var(--brand-bright); }
+    .app-header .subtitle { font-size: 0.95rem; color: var(--brand-bright); font-weight: 600; margin-top: 2px; }
+    .app-header .description { font-size: 0.82rem; color: var(--text-main); opacity: 0.8; margin-top: 6px; line-height: 1.35; }
+
+    nav { display: flex; background-color: var(--card-bg); border: 1px solid var(--border-color); border-radius: 8px; overflow: hidden; }
+    .nav-btn {
+      flex: 1; padding: 12px 6px; background: none; border: none; color: var(--text-main);
+      font-weight: bold; cursor: pointer; font-size: 0.85rem; transition: background-color 0.2s, color 0.2s;
+      display: flex; align-items: center; justify-content: center; gap: 6px; text-align: center;
+    }
+    .nav-btn .nav-icon { font-size: 1.1rem; line-height: 1; }
+    .nav-btn.active { background-color: var(--nav-active-bg); color: var(--nav-active-text); border-bottom: 3px solid var(--nav-active-text); }
+    @media (max-width: 500px) {
+      .nav-btn { flex-direction: column; gap: 3px; padding: 10px 4px; font-size: 0.75rem; }
+      .nav-btn .nav-icon { font-size: 1.25rem; }
+    }
+
+    .tab-content { display: none; flex-direction: column; gap: 14px; }
+    .tab-content.active { display: flex; }
+
+    .card {
+      background-color: var(--card-bg); border: 1px solid var(--border-color);
+      border-radius: 8px; padding: 14px 16px; display: flex; flex-direction: column; gap: 10px; position: relative;
+    }
+    .card-title { font-size: 1.05rem; color: var(--text-bright); font-weight: 600; display: flex; align-items: center; justify-content: space-between; }
+
+    .inline-firstname-input {
+      background-color: var(--bg-color); border: 1px solid var(--border-color); color: var(--text-bright);
+      padding: 10px 12px; border-radius: 6px; font-size: 0.95rem; font-weight: 700; width: 100%;
+    }
+
+    .edge-hero-card {
+      background: linear-gradient(135deg, var(--card-bg) 0%, rgba(16, 185, 129, 0.08) 100%);
+      border: 1px solid var(--brand); border-radius: 10px; padding: 12px 14px; display: flex; flex-direction: column; gap: 8px;
+    }
+    .edge-hero-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; text-align: center; }
+    .hero-box {
+      display: flex; flex-direction: column; gap: 3px; justify-content: center; padding: 8px;
+      border-radius: 8px; cursor: pointer; transition: background-color 0.15s, transform 0.15s;
+    }
+    .hero-box:hover { background-color: rgba(16, 185, 129, 0.1); transform: translateY(-1px); }
+    .hero-box .label { font-size: 0.72rem; font-weight: 800; color: var(--brand-bright); letter-spacing: 0.5px; }
+    .hero-box .val { font-size: 1.7rem; font-weight: 900; color: var(--text-bright); }
+    .hero-box-right { border-left: 1px solid var(--border-color); padding-left: 10px; }
+    @media (max-width: 500px) {
+      .edge-hero-grid { grid-template-columns: 1fr; }
+      .hero-box-right { border-left: none; border-top: 1px solid var(--border-color); padding-left: 0; padding-top: 8px; }
+    }
+
+    /* FILTRES MINIMALISTES SUR 2 NIVEAUX */
+    .filters-box-slim {
+      background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 8px;
+      padding: 8px 10px; display: flex; flex-direction: column; gap: 6px;
+    }
+    .filters-select-row {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 6px;
+    }
+
+    /* CONTENEUR DE SCROLL DE LA BIBLIOTHÈQUE POUR GARDER LE FORMULAIRE ACCESSIBLE */
+    .scrollable-cards-box {
+      max-height: 500px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      padding-right: 2px;
+    }
+
+    .scrollable-plan-box {
+      max-height: 380px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      padding-right: 2px;
+    }
+
+    input[type="text"], select, textarea {
+      background-color: var(--bg-color); border: 1px solid var(--border-color); color: var(--text-bright);
+      padding: 9px 11px; border-radius: 6px; font-size: 0.88rem; font-family: inherit; width: 100%;
+    }
+    select { cursor: pointer; font-weight: bold; color: var(--brand-bright) !important; }
+
+    /* CARTES DÉPLIABLES */
+    .edge-card {
+      background: var(--card-bg); border: 1px solid var(--border-color); border-left: 4px solid var(--gray-card);
+      border-radius: 8px; padding: 0; display: flex; flex-direction: column; transition: border-color 0.2s;
+      overflow: hidden; flex-shrink: 0;
+    }
+    .edge-card.st-favori { border-left-color: var(--accent-blue) !important; }
+    .edge-card.st-realise { border-left-color: var(--accent-green-bright) !important; }
+    .edge-card.st-non_realise { border-left-color: var(--accent-orange) !important; }
+    .edge-card.st-poubelle { border-left-color: var(--border-color) !important; opacity: 0.55; }
+
+    .edge-summary-row {
+      padding: 10px 12px; display: flex; justify-content: space-between; align-items: center;
+      gap: 8px; cursor: pointer; user-select: none;
+    }
+    .edge-summary-row:hover { background: rgba(255, 255, 255, 0.02); }
+    .edge-title-text {
+      font-weight: 700; color: var(--text-bright); font-size: 0.92rem; line-height: 1.35;
+    }
+    .edge-cat-badge {
+      font-size: 0.68rem; padding: 2px 7px; border-radius: 10px; background: var(--badge-bg);
+      color: var(--brand-bright); border: 1px solid var(--brand); white-space: nowrap; font-weight: 700;
+    }
+    .edge-chevron-btn {
+      font-size: 0.85rem; color: var(--text-main); opacity: 0.6; transition: transform 0.2s ease;
+      display: inline-flex; align-items: center; justify-content: center; width: 18px; height: 18px;
+    }
+    .edge-card.expanded .edge-chevron-btn {
+      transform: rotate(180deg); opacity: 1; color: var(--brand-bright);
+    }
+
+    .edge-body-expanded {
+      display: none; padding: 0 12px 12px 12px; flex-direction: column; gap: 8px;
+      border-top: 1px dashed rgba(48, 54, 61, 0.6); margin-top: 2px; padding-top: 8px;
+    }
+    .edge-card.expanded .edge-body-expanded {
+      display: flex;
+    }
+    .edge-desc { font-size: 0.84rem; line-height: 1.5; color: var(--text-main); opacity: 0.9; }
+
+    .price-tiers { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 2px; }
+    .price-pill {
+      font-size: 0.72rem; font-weight: 700; padding: 2px 8px; border-radius: 12px;
+      background: var(--bg-color); border: 1px solid var(--border-color); color: var(--text-bright);
+    }
+
+    .edge-action-row {
+      display: flex; justify-content: space-between; align-items: center; margin-top: 4px; gap: 6px;
+    }
+    .edge-icons-group {
+      display: flex; align-items: center; gap: 6px; margin-left: auto;
+    }
+    .icon-action-btn {
+      width: 32px; height: 32px; border-radius: 6px; border: 1px solid var(--border-color);
+      background: var(--bg-color); font-size: 0.95rem; cursor: pointer; display: flex;
+      align-items: center; justify-content: center; transition: all 0.15s ease; user-select: none;
+    }
+    .icon-action-btn:hover { border-color: var(--brand-bright); transform: translateY(-1px); }
+    .icon-action-btn.on-favori { background: var(--accent-blue); border-color: var(--accent-blue); color: #fff; }
+    .icon-action-btn.on-realise { background: var(--accent-green); border-color: var(--accent-green); color: #fff; }
+    .icon-action-btn.on-non_realise { background: var(--accent-orange); border-color: var(--accent-orange); color: #fff; }
+    .icon-action-btn.on-poubelle { background: var(--gray-card); border-color: var(--gray-card); color: #fff; }
+
+    .tooltip-btn {
+      background: var(--bg-color); border: 1px solid var(--border-color); color: var(--brand-bright);
+      border-radius: 50%; width: 22px; height: 22px; font-size: 0.75rem; font-weight: bold; cursor: pointer;
+      display: inline-flex; align-items: center; justify-content: center; line-height: 1; padding: 0; flex-shrink: 0;
+    }
+    .tooltip-btn:hover { border-color: var(--brand-bright); color: var(--text-bright); }
+
+    .cat-group { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 8px; overflow: hidden; flex-shrink: 0; }
+    .cat-group summary {
+      list-style: none; cursor: pointer; padding: 10px 12px; display: flex; justify-content: space-between;
+      align-items: center; font-weight: 700; color: var(--text-bright); font-size: 0.88rem; user-select: none;
+    }
+    .cat-group summary::-webkit-details-marker { display: none; }
+    .cat-group summary .count {
+      font-size: 0.72rem; font-weight: 700; color: var(--brand-bright); background: var(--badge-bg);
+      border: 1px solid var(--brand); border-radius: 10px; padding: 2px 8px;
+    }
+    .cat-group summary::after { content: "▾"; margin-left: 8px; opacity: 0.6; transition: transform 0.15s; }
+    .cat-group[open] summary::after { transform: rotate(180deg); }
+    .cat-group .cat-body { padding: 0 10px 10px; display: flex; flex-direction: column; gap: 8px; }
+
+    button.btn-primary {
+      background-color: var(--accent-green); color: #ffffff !important; border: none; padding: 10px 16px;
+      border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 0.95rem;
+    }
+    button.btn-secondary, label.btn-secondary {
+      background-color: var(--bg-color); color: var(--brand-bright); border: 1px solid var(--border-color);
+      padding: 8px 12px; border-radius: 6px; cursor: pointer; font-size: 0.8rem; font-weight: bold;
+      display: inline-flex; align-items: center; justify-content: center; gap: 4px; box-sizing: border-box; text-align: center;
+    }
+    button.btn-secondary:hover, label.btn-secondary:hover { border-color: var(--brand-bright); color: var(--text-bright); }
+    button.btn-danger { background-color: transparent; color: var(--accent-red); border: 1px solid var(--border-color); padding: 4px 8px; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 0.75rem; }
+    button.btn-danger:hover { background-color: rgba(218, 54, 51, 0.15); }
+    button.btn-reset {
+      background-color: transparent; color: var(--accent-red); border: 1px solid var(--accent-red);
+      padding: 8px 12px; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 0.8rem;
+    }
+    button.btn-reset:hover { background-color: var(--accent-red); color: white; }
+
+    .modal-overlay {
+      display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.85); z-index: 200; align-items: center; justify-content: center; padding: 12px;
+    }
+    .modal-overlay.active { display: flex; }
+    .modal-card {
+      background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 12px;
+      width: 100%; max-width: 400px; padding: 18px; display: flex; flex-direction: column; gap: 12px; position: relative;
+    }
+
+    .link-btn {
+      display: flex; align-items: center; justify-content: center; width: 100%; padding: 12px;
+      background-color: var(--bg-color); color: var(--brand-bright); text-align: center; text-decoration: none;
+      border-radius: 6px; font-size: 0.95rem; font-weight: bold; border: 1px solid var(--border-color); cursor: pointer;
+    }
+    .link-btn:hover { border-color: var(--brand-bright); color: var(--text-bright); }
+    .link-btn-blue { color: var(--accent-blue) !important; }
+    .link-btn-blue:hover { border-color: var(--accent-blue) !important; color: var(--text-bright) !important; }
+    .link-btn-purple { color: var(--accent-purple) !important; }
+    .link-btn-purple:hover { border-color: var(--accent-purple) !important; color: var(--text-bright) !important; }
+    .link-btn-orange { color: var(--accent-orange) !important; }
+    .link-btn-orange:hover { border-color: var(--accent-orange) !important; color: var(--text-bright) !important; }
+    .link-btn-yellow { color: #f5a60b !important; }
+    .link-btn-yellow:hover { border-color: #f5a60b !important; color: var(--text-bright) !important; }
+    .link-btn-paypal { background-color: var(--btn-paypal-bg) !important; color: var(--btn-paypal-text) !important; }
+
+    .backup-warning-badge {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 18px; height: 18px; background-color: var(--accent-orange); color: #ffffff;
+      border-radius: 50%; font-size: 0.75rem; font-weight: bold; cursor: pointer;
+      margin-left: 6px; animation: pulse-warning 2s infinite;
+    }
+    @keyframes pulse-warning { 0% { transform: scale(1); } 50% { transform: scale(1.18); } 100% { transform: scale(1); } }
+
+    .site-footer { margin-top: 24px; padding-top: 16px; border-top: 1px solid var(--border-color); text-align: center; font-size: 0.75rem; color: var(--text-main); opacity: 0.75; display: flex; flex-direction: column; gap: 8px; line-height: 1.4; }
+  </style>
 </head>
 <body>
-<div class="app">
-  <header style="position:relative;">
-    <div class="header-controls">
-      <select id="lang-select" class="lang-select" onchange="changeLanguage(this.value)">
-        <option value="fr">FR</option>
-        <option value="en">EN</option>
-      </select>
-      <button class="theme-toggle" onclick="toggleTheme()">🌓</button>
-    </div>
-    <h1><a href="https://alphapicker.github.io/klon/" title="Écosystème KLON">KLON <span>EDGE</span></a></h1>
-    <div class="subtitle" data-i18n="subtitle">L'avantage asymétrique du quotidien</div>
-    <p class="desc" data-i18n="desc">Réduis ton OPEX sans sacrifier ton confort ni ton temps, et réinjecte le FCF libéré dans ton capital.</p>
-  </header>
 
-  <nav>
-    <button class="nav-btn active" id="tabbtn-1" onclick="switchTab(1)">
-      <span class="ic">🔍</span><span data-i18n="nav_library">Bibliothèque</span>
-    </button>
-    <button class="nav-btn" id="tabbtn-2" onclick="switchTab(2)">
-      <span class="ic">📋</span><span data-i18n="nav_plan">Mon Plan</span>
-    </button>
-    <button class="nav-btn" id="tabbtn-3" onclick="switchTab(3)">
-      <span class="ic">🌐</span><span data-i18n="nav_eco">Écosystème</span>
-    </button>
-  </nav>
+  <div class="app-container">
+    
+    <header class="app-header">
+      <h1>
+        <a href="https://alphapicker.github.io/klon/" title="Écosystème KLON">
+          KLON <span>EDGE</span>
+        </a>
+      </h1>
+      <div class="subtitle" data-i18n="subtitle">L'avantage asymétrique du quotidien</div>
+      <p class="description" data-i18n="desc">
+        Réduis ton OPEX sans sacrifier ton confort ni ton temps, et réinjecte le FCF libéré dans ton capital.
+      </p>
+    </header>
 
-  <div class="hero">
-    <div class="hero-box">
-      <div class="label" data-i18n="hero_active">FICHES ACTIVES</div>
-      <div class="val" id="hero-fav">0</div>
-    </div>
-    <div class="hero-box">
-      <div class="label" data-i18n="hero_done">FICHES RÉALISÉES</div>
-      <div class="val" id="hero-done">0</div>
-    </div>
-  </div>
+    <nav>
+      <button class="nav-btn active" id="nav-tab1" onclick="switchTab('tab1', event)">
+        <span class="nav-icon">🔍</span>
+        <span data-i18n="nav_library">Bibliothèque</span>
+      </button>
+      <button class="nav-btn" id="nav-tab2" onclick="switchTab('tab2', event)">
+        <span class="nav-icon">📋</span>
+        <span data-i18n="nav_plan">Plan KLON</span>
+      </button>
+      <button class="nav-btn" id="nav-tab3" onclick="switchTab('tab3', event)">
+        <span class="nav-icon">🌐</span>
+        <span data-i18n="nav_eco">Écosystème</span>
+      </button>
+    </nav>
 
-  <!-- ONGLET 1 : BIBLIOTHÈQUE (Core Edge + Custom Edge) -->
-  <div id="tab-1" class="tab active">
-    <div class="card">
-      <div class="filters">
-        <input type="text" id="search" data-i18n-ph="search_ph" placeholder="🔍 Rechercher (téléphone, cashback, jointoyage...)" oninput="renderLibrary()">
-        <select id="filter-cat" onchange="renderLibrary()">
-          <option value="all" data-i18n="filter_cat_all">Tous les domaines</option>
+    <!-- ONGLET 1 : BIBLIOTHÈQUE -->
+    <div id="tab1" class="tab-content active">
+      
+      <!-- BANDEAU TITULAIRE & THÈMES (DANS L'ONGLET 1) -->
+      <div class="card" style="padding: 10px 14px;">
+        <div style="display: flex; justify-content: space-between; align-items: center; gap: 8px;">
+          <div style="flex: 1;">
+            <input type="text" id="user-name-input" class="inline-firstname-input" placeholder="Alpha Picker" onblur="saveUserName()" onkeydown="if(event.key==='Enter') this.blur()">
+          </div>
+          
+          <div style="display: flex; align-items: center; gap: 6px; flex-shrink: 0;">
+            <select id="lang-select" onchange="changeLanguage(this.value)" style="width: auto; padding: 6px 8px; font-size: 0.85rem;">
+              <option value="fr">FR</option>
+              <option value="en">EN</option>
+            </select>
+
+            <select id="theme-select" onchange="changeTheme(this.value)" style="width: auto; padding: 6px 8px; font-size: 0.85rem;">
+              <option value="dark" data-i18n="theme_dark">🌙 Sombre</option>
+              <option value="light" data-i18n="theme_light">☀️ Clair</option>
+              <option value="colorblind" data-i18n="theme_cb">👁️ Daltonien</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- FILTRES MINIMALISTES SUR 2 LIGNES -->
+      <div class="filters-box-slim">
+        <input type="text" id="search" data-i18n-ph="search_ph" placeholder="🔍 Rechercher une astuce..." oninput="renderLibrary()">
+        <div class="filters-select-row">
+          <select id="filter-cat" onchange="renderLibrary()">
+            <option value="all" data-i18n="filter_cat_all">Domaine : Tous</option>
+            <option value="logement" data-i18n="cat_logement">🏠 Logement</option>
+            <option value="vehicule" data-i18n="cat_vehicule">🚗 Véhicule</option>
+            <option value="nourriture" data-i18n="cat_nourriture">🛒 Nourriture</option>
+            <option value="achat" data-i18n="cat_achat">🛍️ Achat / Tech</option>
+          </select>
+          <select id="filter-source" onchange="renderLibrary()">
+            <option value="all" data-i18n="filter_source_all">Source : Toutes</option>
+            <option value="core" data-i18n="filter_source_core">Officielle</option>
+            <option value="custom" data-i18n="filter_source_custom">Mes astuces</option>
+            <option value="poubelle" data-i18n="filter_source_poubelle">🗑️ Poubelle</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- LISTE DÉFILANTE PLAFONNÉE DE LA BIBLIOTHÈQUE -->
+      <div id="library-list" class="scrollable-cards-box"></div>
+
+      <!-- AJOUTER UNE ASTUCE PERSO (TOUJOURS RAPIDEMENT ACCESSIBLE) -->
+      <div class="card">
+        <div class="card-title">
+          <span data-i18n="add_title">🛠️ Ajouter ma propre astuce</span>
+        </div>
+        <input type="text" id="in-title" data-i18n-ph="in_title_ph" placeholder="Titre de l'astuce">
+        <select id="in-cat">
           <option value="logement" data-i18n="cat_logement">🏠 Logement</option>
           <option value="vehicule" data-i18n="cat_vehicule">🚗 Véhicule</option>
           <option value="nourriture" data-i18n="cat_nourriture">🛒 Nourriture</option>
           <option value="achat" data-i18n="cat_achat">🛍️ Achat / Tech</option>
         </select>
-        <select id="filter-source" onchange="renderLibrary()">
-          <option value="all" data-i18n="filter_source_all">Toutes les fiches</option>
-          <option value="core" data-i18n="filter_source_core">Bibliothèque officielle</option>
-          <option value="custom" data-i18n="filter_source_custom">Mes astuces</option>
-          <option value="poubelle" data-i18n="filter_source_poubelle">🗑️ Poubelle</option>
-        </select>
+        <textarea id="in-desc" rows="3" data-i18n-ph="in_desc_ph" placeholder="Description, sans corvée inutile..." style="resize: vertical;"></textarea>
+        <button class="btn-primary" onclick="addCustomEdge()" data-i18n="btn_add">Ajouter à ma bibliothèque</button>
+      </div>
+
+      <!-- GESTION DES DONNÉES -->
+      <div class="card">
+        <div class="card-title">
+          <div style="display: inline-flex; align-items: center;">
+            <span data-i18n="data_mgmt_title">💾 Gestion des Données</span>
+            <span id="backup-warning" class="backup-warning-badge" style="display: none;" onclick="showBackupWarningInfo()" title="Modifications non sauvegardées">!</span>
+          </div>
+        </div>
+        <div style="display: flex; gap: 8px; margin-top: 2px; flex-wrap: wrap;">
+          <button class="btn-secondary" style="flex: 1; min-width: 90px;" onclick="exportJSON()" data-i18n="btn_export">💾 Exporter</button>
+          <label class="btn-secondary" style="flex: 1; min-width: 90px;">
+            <span data-i18n="btn_import">📂 Importer</span>
+            <input type="file" accept=".json" style="display: none;" onchange="importJSON(event)">
+          </label>
+          <button class="btn-reset" style="flex: 1; min-width: 110px;" onclick="confirmResetDialog()" data-i18n="btn_reset">Réinitialiser</button>
+        </div>
       </div>
     </div>
 
-    <div id="library-list" style="display:flex; flex-direction:column; gap:10px;"></div>
-
-    <div class="card">
-      <div class="section-title" data-i18n="add_title">🛠️ Ajouter ma propre astuce</div>
-      <input type="text" id="in-title" data-i18n-ph="in_title_ph" placeholder="Titre de l'astuce">
-      <select id="in-cat">
-        <option value="logement" data-i18n="cat_logement">🏠 Logement</option>
-        <option value="vehicule" data-i18n="cat_vehicule">🚗 Véhicule</option>
-        <option value="nourriture" data-i18n="cat_nourriture">🛒 Nourriture</option>
-        <option value="achat" data-i18n="cat_achat">🛍️ Achat / Tech</option>
-      </select>
-      <textarea id="in-desc" rows="3" data-i18n-ph="in_desc_ph" placeholder="Description, sans corvée inutile..."></textarea>
-      <button class="btn-primary" onclick="addCustomEdge()" data-i18n="btn_add">Ajouter à ma bibliothèque</button>
-    </div>
-
-    <div class="card">
-      <div class="section-title" data-i18n="share_title">💾 Partager mes astuces</div>
-      <div style="display:flex; gap:8px; flex-wrap:wrap;">
-        <button class="btn-secondary" style="flex:1;" onclick="exportJSON()" data-i18n="btn_export">Exporter mes astuces (JSON)</button>
-        <label class="btn-secondary" style="flex:1; text-align:center;">
-          <span data-i18n="btn_import">Importer un JSON</span>
-          <input type="file" accept=".json" style="display:none;" onchange="importJSON(event)">
-        </label>
+    <!-- ONGLET 2 : PLAN KLON -->
+    <div id="tab2" class="tab-content">
+      
+      <!-- HERO DASHBOARD EXCLUSIF AU PLAN KLON -->
+      <div class="edge-hero-card">
+        <div class="edge-hero-grid">
+          <div class="hero-box" onclick="openHeroHabitsModal()" title="Cliquer pour voir tes habitudes actives">
+            <span class="label" data-i18n="hero_active">⭐ HABITUDES ACTIVES</span>
+            <div class="val" id="hero-fav" style="color: var(--accent-blue);">0</div>
+          </div>
+          <div class="hero-box hero-box-right" onclick="openHeroDoneModal()" title="Cliquer pour voir tes actions One-Shot validées">
+            <span class="label" data-i18n="hero_done">✅ ACTIONS VALIDÉES</span>
+            <div class="val" id="hero-done" style="color: var(--accent-green-bright);">0</div>
+          </div>
+        </div>
       </div>
-      <div class="edge-meta" data-i18n="share_note">L'import n'affecte que ta bibliothèque personnelle, jamais le socle officiel.</div>
+
+      <div class="card">
+        <div class="card-title">
+          <span style="color: var(--accent-blue);" data-i18n="plan_favori_title">⭐ Habitudes — récurrentes</span>
+        </div>
+        <div id="plan-favori" class="scrollable-plan-box"></div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">
+          <span style="color: var(--accent-green-bright);" data-i18n="plan_realise_title">✅ Validé — One-Shot réalisé</span>
+        </div>
+        <div id="plan-realise" class="scrollable-plan-box"></div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">
+          <span style="color: var(--accent-orange);" data-i18n="plan_non_realise_title">🕓 À faire — pour plus tard</span>
+        </div>
+        <div id="plan-non_realise" class="scrollable-plan-box"></div>
+      </div>
+    </div>
+
+    <!-- ONGLET 3 : ÉCOSYSTÈME COMPLET -->
+    <div id="tab3" class="tab-content">
+      <div class="card" style="border-left: 4px solid var(--brand);">
+        <div style="font-size: 0.85rem; line-height: 1.5; color: var(--text-main);" data-i18n="eco_disclaimer">
+          <strong>🤝 Transparence & Parrainage :</strong> Les liens ci-dessous sont des liens d'affiliation et de parrainage. En ouvrant un compte via ces accès, vous pouvez bénéficier des bonus de bienvenue proposés par les plateformes tout en soutenant le développement gratuit de la suite KLON.
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title" data-i18n="eco_brokers">📈 Banques & Courtiers</div>
+        <div style="display: flex; flex-direction: column; gap: 10px;">
+          <a href="https://dub.sh/klon-traderepublic" target="_blank" rel="noopener noreferrer" class="link-btn">Trade Republic</a>
+          <a href="https://dub.sh/klon-ibkr" target="_blank" rel="noopener noreferrer" class="link-btn">Interactive Brokers (IBKR)</a>
+          <a href="https://dub.sh/klon-boursobank" target="_blank" rel="noopener noreferrer" class="link-btn">BoursoBank</a>
+          <button class="link-btn" id="fortuneo-btn" onclick="copyFortuneoCode()">Fortuneo (Code Parrain : 12874482)</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title" data-i18n="eco_crypto">🪙 Crypto & Rendement Alternatif</div>
+        <div style="display: flex; flex-direction: column; gap: 10px;">
+          <a href="https://dub.sh/klon-coinbase" target="_blank" rel="noopener noreferrer" class="link-btn">Coinbase</a>
+          <a href="https://crypto.com/app/wu2sfywjnt" target="_blank" rel="noopener noreferrer" class="link-btn">Crypto.com</a>
+          <a href="https://dub.sh/klon-mintos" target="_blank" rel="noopener noreferrer" class="link-btn">Mintos</a>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title" data-i18n="eco_portfolio">🎯 Portefeuille & Performances</div>
+        <a href="https://dub.sh/klon-wikifolio" target="_blank" rel="noopener noreferrer" class="link-btn" data-i18n="eco_wikifolio">Suivre le Wikifolio Alpha Picker</a>
+      </div>
+
+      <div class="card">
+        <div class="card-title" data-i18n="eco_theses">🔬 Analyses & Thèses</div>
+        <a href="https://dub.sh/klon-substack" target="_blank" rel="noopener noreferrer" class="link-btn" data-i18n="eco_substack">Suivre le Substack Alpha Picker</a>
+      </div>
+
+      <div class="card">
+        <div class="card-title" data-i18n="eco_suite">🧰 La Suite KLON</div>
+        <div style="display: flex; flex-direction: column; gap: 10px;">
+          <a href="https://alphapicker.github.io/klon/" target="_blank" rel="noopener noreferrer" class="link-btn link-btn-blue">KLON — Simulateur de liberté financière</a>
+          <a href="https://alphapicker.github.io/klon-corp/" target="_blank" rel="noopener noreferrer" class="link-btn link-btn-purple">KLON Corp — Simulateur de capacité financière</a>
+          <a href="https://alphapicker.github.io/klon-stake/" target="_blank" rel="noopener noreferrer" class="link-btn link-btn-orange">KLON Stake — Simulateur de propriété réelle</a>
+          <a href="https://alphapicker.github.io/klon-pulse/" target="_blank" rel="noopener noreferrer" class="link-btn link-btn-yellow">KLON Pulse — Simulateur de transmission vivante</a>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title" data-i18n="eco_support">☕ Soutenir le Projet</div>
+        <p style="font-size: 0.9rem; line-height: 1.4;" data-i18n="eco_support_desc">
+          Si cet outil vous aide dans votre parcours d'optimisation financière et de liberté, vous pouvez soutenir le projet via les liens ci-dessus ou par un don.
+        </p>
+        <a href="https://www.paypal.me/AlphaPicker" target="_blank" rel="noopener noreferrer" class="link-btn link-btn-paypal" data-i18n="eco_paypal">Faire un don via PayPal</a>
+      </div>
+    </div>
+
+    <!-- FOOTER OFFICIEL BILINGUE -->
+    <footer class="site-footer">
+      <div data-i18n="footer_dev"><strong>KLON Edge</strong> — Application gratuite & Open Source développée par <strong>Alpha Picker</strong> et hébergée sur GitHub Pages.</div>
+      <div data-i18n="footer_privacy">🛡️ <strong>Confidentialité :</strong> Aucun cookie de suivi, aucune collecte de données. Toutes vos saisies restent exclusivement stockées dans votre navigateur.</div>
+      <div data-i18n="footer_disclaimer">⚠️ <strong>Avertissement :</strong> Cet outil me sert de simulation personnelle et éducative. Il ne constitue en aucun cas un conseil en investissement ou une incitation financière.</div>
+    </footer>
+  </div>
+
+  <!-- MODALE D'AIDE : EXPLICATION DES 4 ICÔNES -->
+  <div id="help-icons-modal" class="modal-overlay" onclick="if(event.target === this) closeHelpIconsModal();">
+    <div class="modal-card">
+      <div class="card-title" style="justify-content: center; font-size: 1.15rem;" data-i18n="m_help_title">🎯 Comment classer tes fiches ?</div>
+      <div style="font-size: 0.85rem; line-height: 1.6; color: var(--text-main); display: flex; flex-direction: column; gap: 8px;">
+        <div><strong style="color: var(--accent-blue);">⭐ Habitude récurrente :</strong> <span data-i18n="m_help_fav">Une discipline ou un réflexe que tu pratiques régulièrement dans ton quotidien.</span></div>
+        <div><strong style="color: var(--accent-green-bright);">✅ Action One-Shot :</strong> <span data-i18n="m_help_done">Fait une fois pour toutes ! L'avantage tourne tout seul en continu.</span></div>
+        <div><strong style="color: var(--accent-orange);">🕓 À faire plus tard :</strong> <span data-i18n="m_help_todo">Une idée mise de côté pour quand tu auras un moment.</span></div>
+        <div><strong style="color: var(--gray-card);">🗑️ Poubelle / Ignoré :</strong> <span data-i18n="m_help_trash">Ne correspond pas à ta situation personnelle (masqué de la bibliothèque).</span></div>
+      </div>
+      <button class="btn-primary" onclick="closeHelpIconsModal()" style="margin-top: 4px; width: 100%;" data-i18n="btn_understood">Compris !</button>
     </div>
   </div>
 
-  <!-- ONGLET 2 : MON PLAN (favori / réalisé / non réalisable) -->
-  <div id="tab-2" class="tab">
-    <div class="card">
-      <div class="section-title" data-i18n="plan_favori_title">🔄 Favoris — récurrents</div>
-      <div id="plan-favori" style="display:flex; flex-direction:column; gap:10px;"></div>
-    </div>
-    <div class="card">
-      <div class="section-title" data-i18n="plan_realise_title">✅ Réalisé — pour le plaisir d'avoir fait</div>
-      <div id="plan-realise" style="display:flex; flex-direction:column; gap:10px;"></div>
-    </div>
-    <div class="card">
-      <div class="section-title" data-i18n="plan_non_realise_title">🕓 Non réalisé — à faire plus tard</div>
-      <div id="plan-non_realise" style="display:flex; flex-direction:column; gap:10px;"></div>
-    </div>
-    <div class="card">
-      <div class="section-title" data-i18n="plan_poubelle_title">🗑️ Poubelle — ne compte pas dans tes stats</div>
-      <div id="plan-poubelle" style="display:flex; flex-direction:column; gap:10px;"></div>
+  <!-- MODALE HERO HABITUDES ACTIVES (AVEC PRÉNOM) -->
+  <div id="hero-habits-modal" class="modal-overlay" onclick="if(event.target === this) closeHeroHabitsModal();">
+    <div class="modal-card">
+      <div style="font-size: 2.6rem; text-align: center;">⭐</div>
+      <div class="card-title" style="justify-content: center; font-size: 1.2rem;" id="m-habits-title">Habitudes en place</div>
+      <div style="font-size: 0.88rem; line-height: 1.5; color: var(--text-bright); font-weight: bold; text-align: center;" id="m-habits-greeting"></div>
+      <p style="font-size: 0.82rem; line-height: 1.5; color: var(--text-main); opacity: 0.9;" data-i18n="m_habits_text">
+        La vraie asymétrie ne vient pas de coups d'éclat isolés, mais de petites routines indolores répétées chaque semaine. Chaque habitude en place réduit tes coûts cachés sans aucun effort mental !
+      </p>
+      <div id="m-habits-list" style="display: flex; flex-direction: column; gap: 6px; max-height: 180px; overflow-y: auto;"></div>
+      <button class="btn-primary" onclick="closeHeroHabitsModal()" style="margin-top: 4px; width: 100%;" data-i18n="btn_continue">Continuer comme ça !</button>
     </div>
   </div>
 
-  <!-- ONGLET 3 : ÉCOSYSTÈME -->
-  <div id="tab-3" class="tab">
-    <div class="card">
-      <div class="section-title" data-i18n="eco_suite_title">🌐 La Suite KLON</div>
-      <a class="eco-link" href="https://alphapicker.github.io/klon/">⚡ KLON<small data-i18n="eco_klon_sub">Simulateur de liberté financière</small></a>
-      <a class="eco-link" href="https://alphapicker.github.io/klon-corp/">🏢 KLON Corp<small data-i18n="eco_corp_sub">Ton compte de résultat personnel</small></a>
-      <a class="eco-link" href="https://alphapicker.github.io/klon-stake/">🔑 KLON Stake<small data-i18n="eco_stake_sub">Simulateur de propriété réelle</small></a>
-      <a class="eco-link" href="https://alphapicker.github.io/klon-pulse/">💝 KLON Pulse<small data-i18n="eco_pulse_sub">Transmission vivante encadrée</small></a>
-    </div>
-    <div class="card">
-      <div class="section-title" data-i18n="eco_author_title">✍️ Alpha Picker</div>
-      <a class="eco-link" href="#">📰 Substack<small data-i18n="eco_substack_sub">Thèses d'investissement gratuites</small></a>
-      <a class="eco-link" href="#">📊 Wikifolio<small data-i18n="eco_wiki_sub">Suivi des performances réelles</small></a>
+  <!-- MODALE HERO ACTIONS VALIDÉES (AVEC PRÉNOM) -->
+  <div id="hero-done-modal" class="modal-overlay" onclick="if(event.target === this) closeHeroDoneModal();">
+    <div class="modal-card">
+      <div style="font-size: 2.6rem; text-align: center;">🏆</div>
+      <div class="card-title" style="justify-content: center; font-size: 1.2rem;" id="m-done-title">Actions One-Shot Validées</div>
+      <div style="font-size: 0.88rem; line-height: 1.5; color: var(--accent-green-bright); font-weight: bold; text-align: center;" id="m-done-greeting"></div>
+      <p style="font-size: 0.82rem; line-height: 1.5; color: var(--text-main); opacity: 0.9;" data-i18n="m_done_text">
+        C'est le retour sur investissement ultime : tu y as passé quelques minutes une seule fois, et l'économie tourne pour toujours en arrière-plan. Zéro charge mentale, du cash libéré à vie !
+      </p>
+      <div id="m-done-list" style="display: flex; flex-direction: column; gap: 6px; max-height: 180px; overflow-y: auto;"></div>
+      <button class="btn-primary" onclick="closeHeroDoneModal()" style="margin-top: 4px; width: 100%;" data-i18n="btn_awesome">Génial !</button>
     </div>
   </div>
 
-  <footer>
-    <div><strong>KLON Edge</strong> <span data-i18n="footer_dev">— développé par Alpha Picker.</span></div>
-    <div data-i18n="footer_local">Tout reste stocké localement dans ton navigateur, rien n'est envoyé à un serveur.</div>
-  </footer>
-</div>
+  <!-- MODALE DIALOGUE UNIFIÉE -->
+  <div id="custom-dialog-modal" class="modal-overlay" onclick="if(event.target === this) closeCustomDialog();">
+    <div class="modal-card" style="text-align: center;">
+      <div style="font-size: 2.6rem; line-height: 1;" id="dialog-icon">ℹ️</div>
+      <div class="card-title" style="justify-content: center; font-size: 1.15rem; margin: 4px 0;" id="dialog-title">Notification</div>
+      <div style="font-size: 0.85rem; line-height: 1.5; color: var(--text-main); margin-bottom: 6px;" id="dialog-message">Message</div>
+      <div style="display: flex; gap: 8px; justify-content: center; margin-top: 6px;" id="dialog-buttons">
+        <button class="btn-primary" onclick="closeCustomDialog()" style="width: 100%; padding: 10px;">OK</button>
+      </div>
+    </div>
+  </div>
 
-<script>
-// ---------- I18N (chrome de l'interface uniquement — les fiches restent en français) ----------
-const I18N = {
-  fr:{
-    subtitle:"L'avantage asymétrique du quotidien",
-    desc:"Réduis ton OPEX sans sacrifier ton confort ni ton temps, et réinjecte le FCF libéré dans ton capital.",
-    nav_library:"Bibliothèque", nav_plan:"Mon Plan", nav_eco:"Écosystème",
-    hero_active:"FICHES ACTIVES", hero_done:"FICHES RÉALISÉES",
-    search_ph:"🔍 Rechercher (téléphone, cashback, jointoyage...)",
-    filter_cat_all:"Tous les domaines",
-    cat_logement:"🏠 Logement", cat_vehicule:"🚗 Véhicule", cat_nourriture:"🛒 Nourriture", cat_achat:"🛍️ Achat / Tech",
-    filter_source_all:"Toutes les fiches", filter_source_core:"Bibliothèque officielle",
-    filter_source_custom:"Mes astuces", filter_source_poubelle:"🗑️ Poubelle",
-    add_title:"🛠️ Ajouter ma propre astuce", in_title_ph:"Titre de l'astuce",
-    in_desc_ph:"Description, sans corvée inutile...", btn_add:"Ajouter à ma bibliothèque",
-    share_title:"💾 Partager mes astuces", btn_export:"Exporter mes astuces (JSON)",
-    btn_import:"Importer un JSON", share_note:"L'import n'affecte que ta bibliothèque personnelle, jamais le socle officiel.",
-    plan_favori_title:"🔄 Favoris — récurrents", plan_realise_title:"✅ Réalisé — pour le plaisir d'avoir fait",
-    plan_non_realise_title:"🕓 Non réalisé — à faire plus tard", plan_poubelle_title:"🗑️ Poubelle — ne compte pas dans tes stats",
-    eco_suite_title:"🌐 La Suite KLON", eco_klon_sub:"Simulateur de liberté financière",
-    eco_corp_sub:"Ton compte de résultat personnel", eco_stake_sub:"Simulateur de propriété réelle",
-    eco_pulse_sub:"Transmission vivante encadrée", eco_author_title:"✍️ Alpha Picker",
-    eco_substack_sub:"Thèses d'investissement gratuites", eco_wiki_sub:"Suivi des performances réelles",
-    footer_dev:"— développé par Alpha Picker.",
-    footer_local:"Tout reste stocké localement dans ton navigateur, rien n'est envoyé à un serveur.",
-    status_favori:"🔄 Favori", status_realise:"✅ Réalisé", status_non_realise:"🕓 Non réalisé", status_poubelle:"🗑️ Poubelle",
-    btn_delete:"Suppr.", custom_tag:"· perso",
-    empty_search:"Aucune fiche ne correspond à ta recherche.", empty_plan:"Rien ici pour l'instant.",
-    alert_need_title:"Donne un titre à ton astuce.",
-    alert_import_error:"Le fichier importé n'est pas un JSON valide de fiches KLON Edge."
-  },
-  en:{
-    subtitle:"Your asymmetric daily edge",
-    desc:"Cut your OPEX without sacrificing comfort or time, and reinvest the freed-up cash flow into your capital.",
-    nav_library:"Library", nav_plan:"My Plan", nav_eco:"Ecosystem",
-    hero_active:"ACTIVE TIPS", hero_done:"COMPLETED TIPS",
-    search_ph:"🔍 Search (phone, cashback, sealing...)",
-    filter_cat_all:"All categories",
-    cat_logement:"🏠 Housing", cat_vehicule:"🚗 Vehicle", cat_nourriture:"🛒 Food", cat_achat:"🛍️ Shopping / Tech",
-    filter_source_all:"All tips", filter_source_core:"Official library",
-    filter_source_custom:"My tips", filter_source_poubelle:"🗑️ Trash",
-    add_title:"🛠️ Add my own tip", in_title_ph:"Tip title",
-    in_desc_ph:"Description, no needless chores...", btn_add:"Add to my library",
-    share_title:"💾 Share my tips", btn_export:"Export my tips (JSON)",
-    btn_import:"Import a JSON", share_note:"Importing only affects your personal library, never the official core.",
-    plan_favori_title:"🔄 Favorites — recurring", plan_realise_title:"✅ Done — just for the satisfaction",
-    plan_non_realise_title:"🕓 Not done yet — for later", plan_poubelle_title:"🗑️ Trash — doesn't count in your stats",
-    eco_suite_title:"🌐 The KLON Suite", eco_klon_sub:"Financial freedom simulator",
-    eco_corp_sub:"Your personal P&L", eco_stake_sub:"Real ownership simulator",
-    eco_pulse_sub:"Guided living inheritance", eco_author_title:"✍️ Alpha Picker",
-    eco_substack_sub:"Free investment theses", eco_wiki_sub:"Real performance tracking",
-    footer_dev:"— built by Alpha Picker.",
-    footer_local:"Everything stays stored locally in your browser, nothing is sent to a server.",
-    status_favori:"🔄 Favorite", status_realise:"✅ Done", status_non_realise:"🕓 Not done", status_poubelle:"🗑️ Trash",
-    btn_delete:"Delete", custom_tag:"· custom",
-    empty_search:"No tip matches your search.", empty_plan:"Nothing here yet.",
-    alert_need_title:"Give your tip a title.",
-    alert_import_error:"The imported file isn't a valid KLON Edge JSON."
-  }
-};
+  <script>
+    const I18N = {
+      fr: {
+        subtitle: "L'avantage asymétrique du quotidien",
+        desc: "Réduis ton OPEX sans sacrifier ton confort ni ton temps, et réinjecte le FCF libéré dans ton capital.",
+        nav_library: "Bibliothèque",
+        nav_plan: "Plan KLON",
+        nav_eco: "Écosystème",
+        theme_dark: "🌙 Sombre",
+        theme_light: "☀️ Clair",
+        theme_cb: "👁️ Daltonien",
+        user_name_placeholder: "Alpha Picker",
+        hero_active: "⭐ HABITUDES ACTIVES",
+        hero_done: "✅ ACTIONS VALIDÉES",
+        search_ph: "🔍 Rechercher une astuce...",
+        filter_cat_all: "Domaine : Tous",
+        cat_logement: "🏠 Logement",
+        cat_vehicule: "🚗 Véhicule",
+        cat_nourriture: "🛒 Nourriture",
+        cat_achat: "🛍️ Achat / Tech",
+        filter_source_all: "Source : Toutes",
+        filter_source_core: "Officielle",
+        filter_source_custom: "Mes astuces",
+        filter_source_poubelle: "🗑️ Poubelle",
+        add_title: "🛠️ Ajouter ma propre astuce",
+        in_title_ph: "Titre de l'astuce",
+        in_desc_ph: "Description, sans corvée inutile...",
+        btn_add: "Ajouter à ma bibliothèque",
+        data_mgmt_title: "💾 Gestion des Données",
+        btn_export: "💾 Exporter",
+        btn_import: "📂 Importer",
+        btn_reset: "Réinitialiser",
+        plan_favori_title: "⭐ Habitudes — récurrentes",
+        plan_realise_title: "✅ Validé — One-Shot réalisé",
+        plan_non_realise_title: "🕓 À faire — pour plus tard",
+        btn_delete: "Suppr",
+        custom_tag: "· perso",
+        empty_search: "Aucune fiche ne correspond à ta recherche.",
+        empty_plan: "Rien ici pour l'instant.",
+        alert_need_title: "Veuillez donner un titre à votre astuce.",
+        alert_import_error: "Le fichier importé n'est pas un JSON valide de fiches KLON Edge.",
+        confirm_delete_title: "Supprimer l'astuce",
+        confirm_delete_msg: "Es-tu sûr de vouloir supprimer définitivement cette astuce personnelle ?",
+        confirm_trash_title: "Mettre à la poubelle",
+        confirm_trash_msg: "Déplacer « {title} » vers la poubelle ? Elle sera masquée de ta bibliothèque.",
+        btn_trash: "Mettre à la poubelle",
+        backup_unsaved_title: "Sauvegarde Recommandée",
+        backup_unsaved_msg: "De nouvelles modifications ont été enregistrées localement dans ton navigateur, mais n'ont pas encore été exportées en fichier JSON de sauvegarde.",
+        m_help_title: "🎯 Comment classer tes fiches ?",
+        m_help_fav: "Une discipline ou un réflexe que tu pratiques régulièrement dans ton quotidien.",
+        m_help_done: "Fait une fois pour toutes ! L'avantage tourne tout seul en continu.",
+        m_help_todo: "Une idée mise de côté pour quand tu auras un moment.",
+        m_help_trash: "Ne correspond pas à ta situation personnelle (masqué de la bibliothèque).",
+        btn_understood: "Compris !",
+        btn_awesome: "Génial !",
+        btn_continue: "Continuer comme ça !",
+        m_habits_named: "Bravo {name} ! Tu as {n} habitude{s} active{s} en place.",
+        m_habits_unnamed: "Bravo ! Tu as {n} habitude{s} active{s} en place.",
+        m_done_named: "Félicitations {name} ! Tu as verrouillé {n} action{s} One-Shot.",
+        m_done_unnamed: "Félicitations ! Tu as verrouillé {n} action{s} One-Shot.",
+        m_habits_text: "La vraie asymétrie ne vient pas de coups d'éclat isolés, mais de petites routines indolores répétées chaque semaine. Chaque habitude en place réduit tes coûts cachés sans aucun effort mental !",
+        m_done_text: "C'est le retour sur investissement ultime : tu y as passé quelques minutes une seule fois, et l'économie tourne pour toujours en arrière-plan. Zéro charge mentale, du cash libéré à vie !",
+        eco_disclaimer: "<strong>🤝 Transparence & Parrainage :</strong> Les liens ci-dessous sont des liens d'affiliation et de parrainage. En ouvrant un compte via ces accès, vous pouvez bénéficier des bonus de bienvenue proposés par les plateformes tout en soutenant le développement gratuit de la suite KLON.",
+        eco_brokers: "📈 Banques & Courtiers",
+        eco_crypto: "🪙 Crypto & Rendement Alternatif",
+        eco_portfolio: "🎯 Portefeuille & Performances",
+        eco_wikifolio: "Suivre le Wikifolio Alpha Picker",
+        eco_theses: "🔬 Analyses & Thèses",
+        eco_substack: "Suivre le Substack Alpha Picker",
+        eco_suite: "🧰 La Suite KLON",
+        eco_support: "☕ Soutenir le Projet",
+        eco_support_desc: "Si cet outil vous aide dans votre parcours d'optimisation financière et de liberté, vous pouvez soutenir le projet via les liens ci-dessus ou par un don.",
+        eco_paypal: "Faire un don via PayPal",
+        footer_dev: "<strong>KLON Edge</strong> — Application gratuite & Open Source développée par <strong>Alpha Picker</strong> et hébergée sur GitHub Pages.",
+        footer_privacy: "🛡️ <strong>Confidentialité :</strong> Aucun cookie de suivi, aucune collecte de données. Toutes vos saisies restent exclusivement stockées dans votre navigateur.",
+        footer_disclaimer: "⚠️ <strong>Avertissement :</strong> Cet outil me sert de simulation personnelle et éducative. Il ne constitue en aucun cas un conseil en investissement ou une incitation financière."
+      },
+      en: {
+        subtitle: "Your asymmetric daily edge",
+        desc: "Cut your OPEX without sacrificing comfort or time, and reinvest the freed-up cash flow into your capital.",
+        nav_library: "Library",
+        nav_plan: "KLON Plan",
+        nav_eco: "Ecosystem",
+        theme_dark: "🌙 Dark",
+        theme_light: "☀️ Light",
+        theme_cb: "👁️ Colorblind",
+        user_name_placeholder: "Alpha Picker",
+        hero_active: "⭐ ACTIVE HABITS",
+        hero_done: "✅ VALIDATED ACTIONS",
+        search_ph: "🔍 Search a tip...",
+        filter_cat_all: "Category: All",
+        cat_logement: "🏠 Housing",
+        cat_vehicule: "🚗 Vehicle",
+        cat_nourriture: "🛒 Food",
+        cat_achat: "🛍️ Shopping / Tech",
+        filter_source_all: "Source: All",
+        filter_source_core: "Official",
+        filter_source_custom: "My tips",
+        filter_source_poubelle: "🗑️ Trash",
+        add_title: "🛠️ Add my own tip",
+        in_title_ph: "Tip title",
+        in_desc_ph: "Description, no needless chores...",
+        btn_add: "Add to my library",
+        data_mgmt_title: "💾 Data Management",
+        btn_export: "💾 Export",
+        btn_import: "📂 Import",
+        btn_reset: "Reset",
+        plan_favori_title: "⭐ Habits — recurring",
+        plan_realise_title: "✅ Validated — One-Shot done",
+        plan_non_realise_title: "🕓 To do — for later",
+        btn_delete: "Delete",
+        custom_tag: "· custom",
+        empty_search: "No tip matches your search.",
+        empty_plan: "Nothing here yet.",
+        alert_need_title: "Please give your tip a title.",
+        alert_import_error: "The imported file is not a valid KLON Edge JSON.",
+        confirm_delete_title: "Delete Tip",
+        confirm_delete_msg: "Are you sure you want to permanently delete this personal tip?",
+        confirm_trash_title: "Move to Trash",
+        confirm_trash_msg: "Move \"{title}\" to trash? It will be hidden from your library.",
+        btn_trash: "Trash it",
+        backup_unsaved_title: "Unsaved Changes",
+        backup_unsaved_msg: "New updates have been saved in your browser, but not exported to a JSON file yet.",
+        m_help_title: "🎯 How to organize your tips?",
+        m_help_fav: "A discipline or reflex you practice regularly in your daily life.",
+        m_help_done: "Done once and for all! The advantage keeps compounding in the background.",
+        m_help_todo: "An idea set aside for when you have time.",
+        m_help_trash: "Doesn't fit your personal situation (hidden from library).",
+        btn_understood: "Got it!",
+        btn_awesome: "Awesome!",
+        btn_continue: "Keep it up!",
+        m_habits_named: "Well done {name}! You have {n} active habit{s} in place.",
+        m_habits_unnamed: "Well done! You have {n} active habit{s} in place.",
+        m_done_named: "Congratulations {name}! You have locked in {n} One-Shot action{s}.",
+        m_done_unnamed: "Congratulations! You have locked in {n} One-Shot action{s}.",
+        m_habits_text: "True asymmetry doesn't come from isolated heroic acts, but from effortless routines repeated every week. Each habit reduces hidden costs without any cognitive load!",
+        m_done_text: "This is the ultimate ROI: you spent a few minutes once, and the savings compound forever in the background. Zero ongoing stress, lifetime cash freed up!",
+        eco_disclaimer: "<strong>🤝 Transparency & Referrals :</strong> Links below are affiliate/referral links. Opening an account provides welcome bonuses while supporting free development of the KLON suite.",
+        eco_brokers: "📈 Banks & Brokers",
+        eco_crypto: "🪙 Crypto & Alternative Yield",
+        eco_portfolio: "🎯 Portfolio & Track Record",
+        eco_wikifolio: "Follow Alpha Picker Wikifolio",
+        eco_theses: "🔬 Theses & Analysis",
+        eco_substack: "Follow Alpha Picker Substack",
+        eco_suite: "🧰 The KLON Suite",
+        eco_support: "☕ Support the Project",
+        eco_support_desc: "If this tool helps you on your path to financial optimization and freedom, you can support development with a donation.",
+        eco_paypal: "Donate via PayPal",
+        footer_dev: "<strong>KLON Edge</strong> — Free & Open Source app developed by <strong>Alpha Picker</strong> and hosted on GitHub Pages.",
+        footer_privacy: "🛡️ <strong>Privacy:</strong> No tracking cookies, no data collection. All inputs remain exclusively stored in your browser.",
+        footer_disclaimer: "⚠️ <strong>Disclaimer:</strong> This tool serves personal and educational simulation purposes only. It does not constitute investment advice or financial solicitation."
+      }
+    };
 
-function loadLang(){ try{ return localStorage.getItem("klonedge_lang") || "fr"; }catch(e){ return "fr"; } }
-let currentLang = loadLang();
-
-function t(key, params){
-  let text = (I18N[currentLang] && I18N[currentLang][key]) || I18N.fr[key] || key;
-  if(params){ Object.keys(params).forEach(function(p){ text = text.replace(new RegExp("\\{"+p+"\\}","g"), params[p]); }); }
-  return text;
-}
-
-function changeLanguage(lang){
-  currentLang = lang;
-  try{ localStorage.setItem("klonedge_lang", lang); }catch(e){}
-  document.documentElement.lang = lang;
-  document.getElementById("lang-select").value = lang;
-  document.querySelectorAll("[data-i18n]").forEach(function(el){ el.innerHTML = t(el.getAttribute("data-i18n")); });
-  document.querySelectorAll("[data-i18n-ph]").forEach(function(el){ el.placeholder = t(el.getAttribute("data-i18n-ph")); });
-  renderAll();
-}
-
-// ---------- BIBLIOTHÈQUE OFFICIELLE (CORE EDGE) — lecture seule, modifiée uniquement dans le code ----------
-const CORE_EDGE = [
-  {
-    id:"core-telephone",
-    title:"Téléphone : le juste prix, pas le superflu",
-    cat:"achat",
-    desc:"Achète le téléphone qui te convient au meilleur prix plutôt que le dernier modèle à la mode. La différence investie en bourse fait que tes prochains téléphones deviennent mécaniquement gratuits. Bonus : plus besoin de le protéger comme un objet précieux — s'il tient 2 à 3 ans, c'est suffisant.",
-    tiers:[150,250,400]
-  },
-  {
-    id:"core-cashback",
-    title:"Marge de prix + optimisation maximale",
-    cat:"achat",
-    desc:"Fixe-toi une marge de prix plutôt qu'un budget fixe (ex. 300-350€), choisis dans cette marge ce qui te plaît le plus, puis optimise ce choix précis : cashback, comparateurs de prix, meilleures réductions. Exemple de site de cashback : iGraal (lien de parrainage) — il y en a d'autres sur le marché, les meilleurs taux varient selon les sites.",
-    tiers:[]
-  },
-  {
-    id:"core-jointoyage",
-    title:"Vérifier le jointoyage des entrées d'air",
-    cat:"logement",
-    desc:"Démonte et vérifie que les entrées d'air sont bien jointoyées (silicone ou mastic). Une action ponctuelle qui évite des pertes de chaleur continues.",
-    tiers:[]
-  },
-  {
-    id:"core-ecoconduite",
-    title:"Éco-conduite",
-    cat:"vehicule",
-    desc:"Anticipation, régime moteur bas, pneus bien gonflés. Pour beaucoup, ce n'est pas une action qu'on coche une fois : c'est une discipline de chaque trajet.",
-    tiers:[]
-  }
-];
-
-function catLabel(cat){ return t("cat_"+cat); }
-
-// ---------- STOCKAGE LOCAL ----------
-function loadCustom(){ try{ return JSON.parse(localStorage.getItem("klonedge_custom")||"[]"); }catch(e){ return []; } }
-function saveCustom(list){ localStorage.setItem("klonedge_custom", JSON.stringify(list)); }
-function loadStatus(){ try{ return JSON.parse(localStorage.getItem("klonedge_status")||"{}"); }catch(e){ return {}; } }
-function saveStatus(map){ localStorage.setItem("klonedge_status", JSON.stringify(map)); }
-
-let customEdges = loadCustom();
-let statusMap = loadStatus();
-
-function allEdges(){ return CORE_EDGE.concat(customEdges); }
-
-// ---------- STATUTS ----------
-function setStatus(id, status){
-  if(statusMap[id] === status){ delete statusMap[id]; } // re-cliquer annule
-  else { statusMap[id] = status; }
-  saveStatus(statusMap);
-  renderAll();
-}
-
-// ---------- RENDU ----------
-function edgeCardHTML(edge, context){
-  const st = statusMap[edge.id] || null;
-  const isCustom = edge.id.startsWith("custom-");
-  let tiersHTML = "";
-  if(edge.tiers && edge.tiers.length){
-    tiersHTML = '<div class="price-tiers">' + edge.tiers.map(function(t){
-      return '<span class="price-pill">≈ '+t+' €</span>';
-    }).join("") + '</div>';
-  }
-  const statusClass = st ? ("st-"+st) : "";
-  const delBtn = isCustom ? '<button class="btn-danger" onclick="deleteCustom(\''+edge.id+'\')">'+t("btn_delete")+'</button>' : "";
-  return (
-    '<div class="edge-card '+statusClass+'">'+
-      '<div class="edge-top">'+
-        '<div>'+
-          '<div class="edge-title">'+edge.title+(isCustom?' <span class="custom-tag">'+t("custom_tag")+'</span>':'')+'</div>'+
-        '</div>'+
-        '<span class="edge-cat">'+catLabel(edge.cat)+'</span>'+
-      '</div>'+
-      '<div class="edge-desc">'+edge.desc+'</div>'+
-      tiersHTML+
-      '<div class="status-row">'+
-        '<button class="status-btn '+(st==='favori'?'on-favori':'')+'" onclick="setStatus(\''+edge.id+'\',\'favori\')">'+t("status_favori")+'</button>'+
-        '<button class="status-btn '+(st==='realise'?'on-realise':'')+'" onclick="setStatus(\''+edge.id+'\',\'realise\')">'+t("status_realise")+'</button>'+
-        '<button class="status-btn '+(st==='non_realise'?'on-non_realise':'')+'" onclick="setStatus(\''+edge.id+'\',\'non_realise\')">'+t("status_non_realise")+'</button>'+
-        '<button class="status-btn '+(st==='poubelle'?'on-poubelle':'')+'" onclick="setStatus(\''+edge.id+'\',\'poubelle\')">'+t("status_poubelle")+'</button>'+
-        delBtn+
-      '</div>'+
-    '</div>'
-  );
-}
-
-function renderLibrary(){
-  const q = document.getElementById("search").value.toLowerCase();
-  const cat = document.getElementById("filter-cat").value;
-  const src = document.getElementById("filter-source").value;
-  let list = allEdges();
-  if(cat !== "all") list = list.filter(function(e){ return e.cat === cat; });
-  if(src === "core") list = list.filter(function(e){ return !e.id.startsWith("custom-"); });
-  if(src === "custom") list = list.filter(function(e){ return e.id.startsWith("custom-"); });
-  if(q) list = list.filter(function(e){ return (e.title+" "+e.desc).toLowerCase().includes(q); });
-
-  // La poubelle ne s'affiche jamais dans la bibliothèque normale, sauf si on la
-  // sélectionne explicitement dans le filtre, pour aller y repêcher un oubli.
-  if(src === "poubelle"){
-    list = list.filter(function(e){ return statusMap[e.id] === "poubelle"; });
-  } else {
-    list = list.filter(function(e){ return statusMap[e.id] !== "poubelle"; });
-  }
-
-  const container = document.getElementById("library-list");
-  if(list.length === 0){
-    container.innerHTML = '<div class="empty">'+t("empty_search")+'</div>';
-    return;
-  }
-
-  // Au-delà d'un petit nombre de fiches, ou dès qu'aucun filtre précis n'est actif,
-  // on regroupe par domaine (accordéon) plutôt que d'afficher une liste brute à rallonge.
-  const shouldGroup = (cat === "all") && list.length > 6;
-  if(!shouldGroup){
-    container.innerHTML = list.map(function(e){ return edgeCardHTML(e); }).join("");
-    return;
-  }
-
-  const order = ["logement","vehicule","nourriture","achat"];
-  const html = order.map(function(c){
-    const items = list.filter(function(e){ return e.cat === c; });
-    if(items.length === 0) return "";
-    return (
-      '<details class="cat-group" open>'+
-        '<summary>'+catLabel(c)+' <span class="count">'+items.length+'</span></summary>'+
-        '<div class="cat-body">'+items.map(function(e){ return edgeCardHTML(e); }).join("")+'</div>'+
-      '</details>'
-    );
-  }).join("");
-  container.innerHTML = html;
-}
-
-function renderPlan(){
-  const groups = {favori:[], realise:[], non_realise:[], poubelle:[]};
-  allEdges().forEach(function(e){
-    const st = statusMap[e.id];
-    if(st && groups[st]) groups[st].push(e);
-  });
-  ["favori","realise","non_realise","poubelle"].forEach(function(key){
-    const el = document.getElementById("plan-"+key);
-    el.innerHTML = groups[key].length
-      ? groups[key].map(function(e){ return edgeCardHTML(e); }).join("")
-      : '<div class="empty">'+t("empty_plan")+'</div>';
-  });
-  document.getElementById("hero-fav").textContent = groups.favori.length;
-  document.getElementById("hero-done").textContent = groups.realise.length;
-}
-
-function renderAll(){ renderLibrary(); renderPlan(); }
-
-// ---------- CUSTOM EDGE ----------
-function addCustomEdge(){
-  const title = document.getElementById("in-title").value.trim();
-  const cat = document.getElementById("in-cat").value;
-  const desc = document.getElementById("in-desc").value.trim();
-  if(!title){ alert(t("alert_need_title")); return; }
-  const id = "custom-" + Date.now();
-  customEdges.push({id:id, title:title, cat:cat, desc:desc, tiers:[]});
-  saveCustom(customEdges);
-  document.getElementById("in-title").value = "";
-  document.getElementById("in-desc").value = "";
-  renderAll();
-}
-
-function deleteCustom(id){
-  customEdges = customEdges.filter(function(e){ return e.id !== id; });
-  saveCustom(customEdges);
-  delete statusMap[id];
-  saveStatus(statusMap);
-  renderAll();
-}
-
-function exportJSON(){
-  const blob = new Blob([JSON.stringify(customEdges, null, 2)], {type:"application/json"});
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement("a");
-  a.href = url; a.download = "klon-edge-mes-astuces.json"; a.click();
-  URL.revokeObjectURL(url);
-}
-
-function importJSON(evt){
-  const file = evt.target.files[0];
-  if(!file) return;
-  const reader = new FileReader();
-  reader.onload = function(e){
-    try{
-      const imported = JSON.parse(e.target.result);
-      if(!Array.isArray(imported)) throw new Error("format invalide");
-      imported.forEach(function(item){
-        if(item && item.title){
-          item.id = "custom-" + Date.now() + "-" + Math.floor(Math.random()*1000);
-          customEdges.push(item);
-        }
+    function t(key, params = {}) {
+      const lang = db.lang || 'fr';
+      let text = I18N[lang]?.[key] || I18N.fr?.[key] || key;
+      Object.keys(params).forEach(p => {
+        text = text.replace(new RegExp(`\\{${p}\\}`, 'g'), params[p]);
       });
-      saveCustom(customEdges);
-      renderAll();
-    }catch(err){
-      alert(t("alert_import_error"));
+      return text;
     }
-  };
-  reader.readAsText(file);
-}
 
-// ---------- NAVIGATION ----------
-function switchTab(n){
-  for(let i=1;i<=3;i++){
-    document.getElementById("tab-"+i).classList.toggle("active", i===n);
-    document.getElementById("tabbtn-"+i).classList.toggle("active", i===n);
-  }
-}
+    const CORE_EDGE = [
+      {
+        id: "core-telephone",
+        title: "Téléphone : le juste prix, pas le superflu",
+        cat: "achat",
+        desc: "Achète le téléphone qui te convient au meilleur prix plutôt que le dernier modèle à la mode. La différence investie en bourse fait que tes prochains téléphones deviennent mécaniquement gratuits. S'il tient 2 à 3 ans sans coque blindée, c'est suffisant.",
+        tiers: [150, 250, 400]
+      },
+      {
+        id: "core-cashback",
+        title: "Marge de prix + optimisation maximale",
+        cat: "achat",
+        desc: "Fixe-toi une fourchette de prix plutôt qu'un budget fixe, choisis ce qui te convient le mieux, puis optimise ce choix précis : cashback, comparateurs de prix et réductions.",
+        tiers: []
+      },
+      {
+        id: "core-jointoyage",
+        title: "Vérifier le jointoyage des entrées d'air",
+        cat: "logement",
+        desc: "Démonte et vérifie que les entrées d'air sont bien jointoyées au mastic ou silicone. Une action ponctuelle qui élimine des pertes de chaleur continues chaque hiver.",
+        tiers: []
+      },
+      {
+        id: "core-ecoconduite",
+        title: "Éco-conduite prédictive",
+        cat: "vehicule",
+        desc: "Anticipation des ralentissements, frein moteur, pression des pneus optimale. Une discipline passive qui réduit l'usure des freins et la consommation de 15 %.",
+        tiers: []
+      }
+    ];
 
-function toggleTheme(){
-  const root = document.documentElement;
-  const next = root.getAttribute("data-theme")==="dark" ? "light" : "dark";
-  root.setAttribute("data-theme", next);
-  try{ localStorage.setItem("klonedge_theme", next); }catch(e){}
-}
+    let dialogConfirmCallback = null;
+    let expandedCardIds = new Set();
 
-// ---------- INIT ----------
-(function initTheme(){
-  try{
-    const saved = localStorage.getItem("klonedge_theme");
-    if(saved) document.documentElement.setAttribute("data-theme", saved);
-  }catch(e){}
-})();
+    let localData = JSON.parse(localStorage.getItem('klon_edge_db'));
+    if (!localData || typeof localData !== 'object') {
+      localData = {
+        theme: 'dark',
+        lang: 'fr',
+        userName: '',
+        hasUnsavedChanges: false,
+        customEdges: [],
+        statusMap: {}
+      };
+      localStorage.setItem('klon_edge_db', JSON.stringify(localData));
+    }
+    let db = localData;
+    if (!db.theme) db.theme = 'dark';
+    if (!db.lang) db.lang = 'fr';
+    if (db.userName === undefined) db.userName = '';
+    if (!Array.isArray(db.customEdges)) db.customEdges = [];
+    if (!db.statusMap || typeof db.statusMap !== 'object') db.statusMap = {};
+    if (db.hasUnsavedChanges === undefined) db.hasUnsavedChanges = false;
 
-changeLanguage(currentLang);
-</script>
+    function saveData() { localStorage.setItem('klon_edge_db', JSON.stringify(db)); }
+
+    function updateBackupWarningUI() {
+      const badge = document.getElementById('backup-warning');
+      if (badge) badge.style.display = db.hasUnsavedChanges ? 'inline-flex' : 'none';
+    }
+
+    function markUnsavedChanges() {
+      db.hasUnsavedChanges = true;
+      saveData();
+      updateBackupWarningUI();
+    }
+
+    function showBackupWarningInfo() {
+      showCustomDialog('💾', t('backup_unsaved_title'), t('backup_unsaved_msg'));
+    }
+
+    function saveUserName() {
+      const newName = document.getElementById('user-name-input').value.trim();
+      if (db.userName !== newName) {
+        db.userName = newName;
+        markUnsavedChanges();
+      }
+    }
+
+    function switchTab(tabId, e) {
+      document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+      document.querySelectorAll('.nav-btn').forEach(el => el.classList.remove('active'));
+      const activeEl = document.getElementById(tabId);
+      if (activeEl) activeEl.classList.add('active');
+      if (e && e.currentTarget) e.currentTarget.classList.add('active');
+      if (tabId === 'tab2') renderPlan();
+    }
+
+    function changeTheme(themeName) {
+      db.theme = themeName;
+      saveData();
+      document.documentElement.setAttribute('data-theme', themeName);
+      const themeSelect = document.getElementById('theme-select');
+      if (themeSelect) themeSelect.value = themeName;
+    }
+
+    function changeLanguage(langCode) {
+      db.lang = langCode;
+      saveData();
+      document.documentElement.setAttribute('lang', langCode);
+
+      const langSelect = document.getElementById('lang-select');
+      if (langSelect) langSelect.value = langCode;
+
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const k = el.getAttribute('data-i18n');
+        if (k) el.innerHTML = t(k);
+      });
+
+      document.querySelectorAll('[data-i18n-ph]').forEach(el => {
+        const k = el.getAttribute('data-i18n-ph');
+        if (k) el.placeholder = t(k);
+      });
+
+      const nameInput = document.getElementById('user-name-input');
+      if (nameInput) nameInput.placeholder = t('user_name_placeholder');
+
+      renderAll();
+    }
+
+    function copyFortuneoCode() {
+      const code = "12874482";
+      const btn = document.getElementById('fortuneo-btn');
+      if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(code);
+      if (btn) btn.innerText = db.lang === 'en' ? "✅ Code copied! Opening..." : "✅ Code copié ! Redirection...";
+      window.open("https://www.fortuneo.fr", "_blank");
+      setTimeout(() => { if (btn) btn.innerText = "Fortuneo (Code Parrain : 12874482)"; }, 1800);
+    }
+
+    function allEdges() {
+      return CORE_EDGE.concat(db.customEdges);
+    }
+
+    function catLabel(cat) { return t("cat_" + cat); }
+
+    function setStatus(id, status, e) {
+      if (e) e.stopPropagation();
+      expandedCardIds.add(id);
+
+      if (db.statusMap[id] === status) {
+        delete db.statusMap[id];
+      } else {
+        db.statusMap[id] = status;
+      }
+      markUnsavedChanges();
+      renderAll();
+    }
+
+    // CONFIRMATION AVANT MISE À LA POUBELLE
+    function confirmMoveToTrash(id, e) {
+      if (e) e.stopPropagation();
+      const edge = allEdges().find(item => item.id === id);
+      const title = edge ? edge.title : '';
+      const confirmMsg = t('confirm_trash_msg', { title });
+
+      showCustomDialog(
+        '🗑️',
+        t('confirm_trash_title'),
+        confirmMsg,
+        true,
+        () => {
+          setStatus(id, 'poubelle', e);
+        },
+        t('btn_trash')
+      );
+    }
+
+    // DÉPLIAGE CIBLÉ SUR L'ÉLÉMENT DIRECT (SANS CONFLIT D'ID ENTRE LES COLONNES)
+    function toggleCardExpandDirect(summaryEl, cardId, e) {
+      if (e) e.stopPropagation();
+      const card = summaryEl.closest('.edge-card');
+      if (!card) return;
+
+      const isNowExpanded = card.classList.toggle('expanded');
+      if (isNowExpanded) {
+        expandedCardIds.add(cardId);
+      } else {
+        expandedCardIds.delete(cardId);
+      }
+    }
+
+    function openHelpIconsModal() {
+      document.getElementById('help-icons-modal').classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeHelpIconsModal() {
+      document.getElementById('help-icons-modal').classList.remove('active');
+      document.body.style.overflow = '';
+    }
+
+    /* --- MODALES DU HERO DASHBOARD --- */
+    function openHeroHabitsModal() {
+      const habits = allEdges().filter(e => db.statusMap[e.id] === 'favori');
+      const name = (db.userName || '').trim();
+      const n = habits.length;
+      const s = n > 1 ? 's' : '';
+      const isEn = db.lang === 'en';
+
+      const greeting = name 
+        ? t('m_habits_named', { name, n, s })
+        : t('m_habits_unnamed', { n, s });
+
+      document.getElementById('m-habits-greeting').innerText = greeting;
+
+      const listEl = document.getElementById('m-habits-list');
+      listEl.innerHTML = '';
+      if (habits.length === 0) {
+        listEl.innerHTML = `<div style="text-align:center; opacity:0.6; padding:10px; font-size:0.8rem;">${isEn ? 'No active habits yet.' : 'Aucune habitude active pour l\'instant.'}</div>`;
+      } else {
+        habits.forEach(h => {
+          listEl.innerHTML += `
+            <div style="background:var(--bg-color); border:1px solid var(--border-color); padding:6px 10px; border-radius:6px; font-size:0.8rem; display:flex; justify-content:space-between; align-items:center;">
+              <strong style="color:var(--text-bright);">${h.title}</strong>
+              <span style="color:var(--accent-blue); font-size:0.75rem;">⭐</span>
+            </div>
+          `;
+        });
+      }
+
+      document.getElementById('hero-habits-modal').classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeHeroHabitsModal() {
+      document.getElementById('hero-habits-modal').classList.remove('active');
+      document.body.style.overflow = '';
+    }
+
+    function openHeroDoneModal() {
+      const doneItems = allEdges().filter(e => db.statusMap[e.id] === 'realise');
+      const name = (db.userName || '').trim();
+      const n = doneItems.length;
+      const s = n > 1 ? 's' : '';
+      const isEn = db.lang === 'en';
+
+      const greeting = name 
+        ? t('m_done_named', { name, n, s })
+        : t('m_done_unnamed', { n, s });
+
+      document.getElementById('m-done-greeting').innerText = greeting;
+
+      const listEl = document.getElementById('m-done-list');
+      listEl.innerHTML = '';
+      if (doneItems.length === 0) {
+        listEl.innerHTML = `<div style="text-align:center; opacity:0.6; padding:10px; font-size:0.8rem;">${isEn ? 'No validated actions yet.' : 'Aucune action validée pour l\'instant.'}</div>`;
+      } else {
+        doneItems.forEach(d => {
+          listEl.innerHTML += `
+            <div style="background:var(--bg-color); border:1px solid var(--border-color); padding:6px 10px; border-radius:6px; font-size:0.8rem; display:flex; justify-content:space-between; align-items:center;">
+              <strong style="color:var(--text-bright);">${d.title}</strong>
+              <span style="color:var(--accent-green-bright); font-size:0.75rem;">✅</span>
+            </div>
+          `;
+        });
+      }
+
+      document.getElementById('hero-done-modal').classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeHeroDoneModal() {
+      document.getElementById('hero-done-modal').classList.remove('active');
+      document.body.style.overflow = '';
+    }
+
+    /* --- RENDU DE LA CARTE --- */
+    function edgeCardHTML(edge) {
+      const st = db.statusMap[edge.id] || null;
+      const isCustom = edge.id.startsWith("custom-");
+      const isExpanded = expandedCardIds.has(edge.id);
+
+      let tiersHTML = "";
+      if (edge.tiers && edge.tiers.length) {
+        tiersHTML = '<div class="price-tiers">' + edge.tiers.map(val => `<span class="price-pill">≈ ${val} €</span>`).join("") + '</div>';
+      }
+
+      const statusClass = st ? ("st-" + st) : "";
+      const delBtn = isCustom ? `<button class="btn-danger" onclick="deleteCustom('${edge.id}', event)" title="Supprimer">${t("btn_delete")}</button>` : "";
+
+      return `
+        <div class="edge-card ${statusClass} ${isExpanded ? 'expanded' : ''}">
+          <!-- Ligne visible au repos (très fine, sans boutons d'action) -->
+          <div class="edge-summary-row" onclick="toggleCardExpandDirect(this, '${edge.id}', event)">
+            <div style="display:flex; align-items:center; gap:6px; flex:1; min-width:0;">
+              <span class="edge-title-text" style="overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">${edge.title}</span>
+              ${isCustom ? `<span class="custom-tag">${t("custom_tag")}</span>` : ''}
+            </div>
+            <div style="display:flex; align-items:center; gap:6px; flex-shrink:0;">
+              <span class="edge-cat-badge">${catLabel(edge.cat)}</span>
+              <span class="edge-chevron-btn">▾</span>
+            </div>
+          </div>
+
+          <!-- Corps déplié complet -->
+          <div class="edge-body-expanded">
+            <div class="edge-desc">${edge.desc}</div>
+            ${tiersHTML}
+            <div class="edge-action-row">
+              <div>${delBtn}</div>
+              <div class="edge-icons-group">
+                <button type="button" class="icon-action-btn ${st === 'favori' ? 'on-favori' : ''}" onclick="setStatus('${edge.id}', 'favori', event)" title="⭐ Habitude active">⭐</button>
+                <button type="button" class="icon-action-btn ${st === 'realise' ? 'on-realise' : ''}" onclick="setStatus('${edge.id}', 'realise', event)" title="✅ Action One-Shot validée">✅</button>
+                <button type="button" class="icon-action-btn ${st === 'non_realise' ? 'on-non_realise' : ''}" onclick="setStatus('${edge.id}', 'non_realise', event)" title="🕓 À faire plus tard">🕓</button>
+                <button type="button" class="icon-action-btn ${st === 'poubelle' ? 'on-poubelle' : ''}" onclick="confirmMoveToTrash('${edge.id}', event)" title="🗑️ Mettre à la poubelle">🗑️</button>
+                <button type="button" class="tooltip-btn" onclick="event.stopPropagation(); openHelpIconsModal()" title="Explication des classements">?</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    function renderLibrary() {
+      const q = document.getElementById("search").value.toLowerCase();
+      const cat = document.getElementById("filter-cat").value;
+      const src = document.getElementById("filter-source").value;
+
+      let list = allEdges();
+      if (cat !== "all") list = list.filter(e => e.cat === cat);
+      if (src === "core") list = list.filter(e => !e.id.startsWith("custom-"));
+      if (src === "custom") list = list.filter(e => e.id.startsWith("custom-"));
+      if (q) list = list.filter(e => (e.title + " " + e.desc).toLowerCase().includes(q));
+
+      if (src === "poubelle") {
+        list = list.filter(e => db.statusMap[e.id] === "poubelle");
+      } else {
+        list = list.filter(e => db.statusMap[e.id] !== "poubelle");
+      }
+
+      const container = document.getElementById("library-list");
+      if (list.length === 0) {
+        container.innerHTML = `<div class="card" style="text-align:center; padding:16px; opacity:0.6;">${t("empty_search")}</div>`;
+        return;
+      }
+
+      const shouldGroup = (cat === "all") && list.length > 5;
+      if (!shouldGroup) {
+        container.innerHTML = list.map(e => edgeCardHTML(e)).join("");
+        return;
+      }
+
+      const order = ["logement", "vehicule", "nourriture", "achat"];
+      const html = order.map(c => {
+        const items = list.filter(e => e.cat === c);
+        if (items.length === 0) return "";
+        return `
+          <details class="cat-group" open>
+            <summary>${catLabel(c)} <span class="count">${items.length}</span></summary>
+            <div class="cat-body">${items.map(e => edgeCardHTML(e)).join("")}</div>
+          </details>
+        `;
+      }).join("");
+
+      container.innerHTML = html;
+    }
+
+    function renderPlan() {
+      const groups = { favori: [], realise: [], non_realise: [] };
+      allEdges().forEach(e => {
+        const st = db.statusMap[e.id];
+        if (st && groups[st]) groups[st].push(e);
+      });
+
+      ["favori", "realise", "non_realise"].forEach(key => {
+        const el = document.getElementById("plan-" + key);
+        el.innerHTML = groups[key].length
+          ? groups[key].map(e => edgeCardHTML(e)).join("")
+          : `<div style="text-align:center; padding:12px; opacity:0.6; font-size:0.85rem;">${t("empty_plan")}</div>`;
+      });
+
+      document.getElementById("hero-fav").textContent = groups.favori.length;
+      document.getElementById("hero-done").textContent = groups.realise.length;
+    }
+
+    function renderAll() {
+      renderLibrary();
+      renderPlan();
+    }
+
+    function addCustomEdge() {
+      const title = document.getElementById("in-title").value.trim();
+      const cat = document.getElementById("in-cat").value;
+      const desc = document.getElementById("in-desc").value.trim();
+
+      if (!title) {
+        showCustomDialog('⚠️', 'Attention', t("alert_need_title"));
+        return;
+      }
+
+      const id = "custom-" + Date.now();
+      db.customEdges.push({ id, title, cat, desc, tiers: [] });
+      expandedCardIds.add(id);
+      markUnsavedChanges();
+
+      document.getElementById("in-title").value = "";
+      document.getElementById("in-desc").value = "";
+      renderAll();
+    }
+
+    function deleteCustom(id, e) {
+      if (e) e.stopPropagation();
+      showCustomDialog('🗑️', t('confirm_delete_title'), t('confirm_delete_msg'), true, () => {
+        db.customEdges = db.customEdges.filter(e => e.id !== id);
+        delete db.statusMap[id];
+        expandedCardIds.delete(id);
+        markUnsavedChanges();
+        renderAll();
+      });
+    }
+
+    /* --- DIALOGUES ET MODALES --- */
+    function showCustomDialog(icon, title, message, isConfirm = false, onConfirm = null, confirmBtnLabel = null) {
+      document.getElementById('dialog-icon').innerText = icon || 'ℹ️';
+      document.getElementById('dialog-title').innerText = title || 'Notification';
+      document.getElementById('dialog-message').innerHTML = message || '';
+
+      const btnBox = document.getElementById('dialog-buttons');
+      dialogConfirmCallback = onConfirm;
+
+      if (isConfirm) {
+        const label = confirmBtnLabel || t('btn_delete');
+        btnBox.innerHTML = `
+          <button class="btn-reset" onclick="executeDialogConfirm()" style="flex: 1; padding: 8px;">${label}</button>
+          <button class="btn-secondary" onclick="closeCustomDialog()" style="flex: 1; padding: 8px;">${db.lang === 'en' ? 'Cancel' : 'Annuler'}</button>
+        `;
+      } else {
+        btnBox.innerHTML = `
+          <button class="btn-primary" onclick="closeCustomDialog()" style="width: 100%; padding: 8px;">OK</button>
+        `;
+      }
+      document.getElementById('custom-dialog-modal').classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeCustomDialog() {
+      document.getElementById('custom-dialog-modal').classList.remove('active');
+      document.body.style.overflow = '';
+      dialogConfirmCallback = null;
+    }
+
+    function executeDialogConfirm() {
+      const cb = dialogConfirmCallback;
+      closeCustomDialog();
+      if (typeof cb === 'function') cb();
+    }
+
+    /* --- EXPORTATION ET IMPORTATION INTÉGRALE --- */
+    function exportJSON() {
+      try {
+        const jsonContent = JSON.stringify(db, null, 2);
+        const today = new Date().toISOString().slice(0, 10);
+        const fileName = `KLON_EDGE_backup_${today}.json`;
+        const blob = new Blob([jsonContent], { type: "application/json" });
+
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = fileName;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        setTimeout(() => URL.revokeObjectURL(url), 1000);
+
+        db.hasUnsavedChanges = false;
+        saveData();
+        updateBackupWarningUI();
+
+        showCustomDialog('💾', db.lang === 'en' ? 'Export Successful' : 'Exportation Réussie', db.lang === 'en' ? 'Your KLON Edge backup file has been successfully downloaded!' : 'Votre fichier de sauvegarde KLON Edge a été téléchargé avec succès !');
+      } catch (e) {
+        showCustomDialog('⚠️', 'Erreur', 'Impossible d\'exporter les données.');
+      }
+    }
+
+    function importJSON(evt) {
+      const file = evt.target.files[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        try {
+          const imported = JSON.parse(e.target.result);
+          if (imported && (Array.isArray(imported.customEdges) || Array.isArray(imported))) {
+            if (Array.isArray(imported)) {
+              imported.forEach(item => {
+                if (item && item.title) {
+                  item.id = "custom-" + Date.now() + "-" + Math.floor(Math.random() * 1000);
+                  db.customEdges.push(item);
+                }
+              });
+            } else {
+              db = imported;
+            }
+
+            db.hasUnsavedChanges = false;
+            saveData();
+            document.getElementById('user-name-input').value = db.userName || '';
+            document.getElementById('lang-select').value = db.lang || 'fr';
+            document.getElementById('theme-select').value = db.theme || 'dark';
+            document.documentElement.setAttribute('data-theme', db.theme || 'dark');
+            updateBackupWarningUI();
+            changeLanguage(db.lang || 'fr');
+            showCustomDialog('✅', db.lang === 'en' ? 'Import Successful' : 'Importation Réussie', db.lang === 'en' ? 'KLON Edge database restored successfully!' : 'Vos données KLON Edge ont été restaurées avec succès !');
+          } else {
+            showCustomDialog('⚠️', 'Fichier Invalide', t("alert_import_error"));
+          }
+        } catch (err) {
+          showCustomDialog('⚠️', 'Erreur', t("alert_import_error"));
+        }
+      };
+      reader.readAsText(file);
+      evt.target.value = '';
+    }
+
+    function confirmResetDialog() {
+      showCustomDialog('🗑️', t('btn_reset'), db.lang === 'en' ? 'Are you sure you want to reset all your custom tips and plan?' : 'Es-tu sûr de vouloir réinitialiser toutes tes astuces personnelles et ton plan ?', true, () => {
+        db.customEdges = [];
+        db.statusMap = {};
+        db.userName = '';
+        db.hasUnsavedChanges = false;
+        expandedCardIds.clear();
+        saveData();
+        updateBackupWarningUI();
+        document.getElementById('user-name-input').value = '';
+        renderAll();
+      });
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      document.getElementById('user-name-input').value = db.userName || '';
+      document.getElementById('lang-select').value = db.lang || 'fr';
+      document.getElementById('theme-select').value = db.theme || 'dark';
+      document.documentElement.setAttribute('data-theme', db.theme || 'dark');
+
+      const nameInput = document.getElementById('user-name-input');
+      if (nameInput) nameInput.placeholder = t('user_name_placeholder');
+
+      updateBackupWarningUI();
+      changeLanguage(db.lang || 'fr');
+    });
+  </script>
 </body>
 </html>
