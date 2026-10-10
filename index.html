@@ -24,44 +24,74 @@
 
     :root[data-theme="dark"] {
       color-scheme: dark;
-      --bg-color: #0b0e14;
-      --card-bg: #131722;
-      --card-inner: #1a1f2c;
-      --border-color: #262c3d;
-      --text-main: #c0c7d6;
-      --text-bright: #f0f4fc;
+      --bg-color: #0d1117;
+      --card-bg: #161b22;
+      --card-inner: #1c2128;
+      --border-color: #30363d;
+      --text-main: #c9d1d9;
+      --text-bright: #f0f6fc;
+      --accent-green: #238636;
+      --accent-green-bright: #34d399;
       --brand: #10b981;
       --brand-bright: #34d399;
-      --accent-blue: #38bdf8;
-      --accent-purple: #a855f7;
-      --accent-pink: #ec4899;
-      --accent-red: #ef4444;
-      --nav-active-bg: #1e2433;
-      --nav-active-text: #38bdf8;
-      --btn-paypal-bg: #16a34a;
+      --accent-blue: #58a6ff;
+      --accent-orange: #f0883e;
+      --accent-red: #da3633;
+      --accent-purple: #a371f7;
+      --accent-yellow: #f59e0b;
+      --nav-active-bg: #21262d;
+      --nav-active-text: #34d399;
+      --btn-paypal-bg: #238636;
       --btn-paypal-text: #ffffff;
-      --badge-bg: rgba(56, 189, 248, 0.12);
+      --badge-bg: rgba(52, 211, 153, 0.12);
     }
 
     :root[data-theme="light"] {
       color-scheme: light;
-      --bg-color: #f1f5f9;
+      --bg-color: #f0f2f5;
       --card-bg: #ffffff;
       --card-inner: #f8fafc;
-      --border-color: #cbd5e1;
-      --text-main: #334155;
-      --text-bright: #0f172a;
+      --border-color: #d0d7de;
+      --text-main: #24292f;
+      --text-bright: #1f2328;
+      --accent-green: #1f883d;
+      --accent-green-bright: #059669;
       --brand: #059669;
       --brand-bright: #047857;
-      --accent-blue: #0284c7;
-      --accent-purple: #7c3aed;
-      --accent-pink: #db2777;
-      --accent-red: #dc2626;
-      --nav-active-bg: #e2e8f0;
-      --nav-active-text: #0284c7;
-      --btn-paypal-bg: #16a34a;
+      --accent-blue: #0969da;
+      --accent-orange: #bc4c00;
+      --accent-red: #cf222e;
+      --accent-purple: #8250df;
+      --accent-yellow: #d97706;
+      --nav-active-bg: #e1e4e8;
+      --nav-active-text: #059669;
+      --btn-paypal-bg: #1f883d;
       --btn-paypal-text: #ffffff;
-      --badge-bg: rgba(2, 132, 199, 0.12);
+      --badge-bg: rgba(5, 150, 105, 0.12);
+    }
+
+    :root[data-theme="colorblind"] {
+      color-scheme: dark;
+      --bg-color: #000000;
+      --card-bg: #121212;
+      --card-inner: #1c1c1c;
+      --border-color: #ffffff;
+      --text-main: #ffffff;
+      --text-bright: #ffff00;
+      --accent-green: #0d6efd;
+      --accent-green-bright: #00ffcc;
+      --brand: #00ffcc;
+      --brand-bright: #00ffff;
+      --accent-blue: #00ffff;
+      --accent-orange: #ff8000;
+      --accent-red: #ff3333;
+      --accent-purple: #ffff00;
+      --accent-yellow: #ffcc00;
+      --nav-active-bg: #2a2a2a;
+      --nav-active-text: #00ffcc;
+      --btn-paypal-bg: #0d6efd;
+      --btn-paypal-text: #ffffff;
+      --badge-bg: rgba(0, 255, 204, 0.15);
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -77,14 +107,19 @@
       padding-bottom: env(safe-area-inset-bottom);
     }
 
+    /* NEUTRALISATION ABSOLUE DES SPINNERS */
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+    input[type=number] { -moz-appearance: textfield; }
+
     ::-webkit-scrollbar { width: 6px; height: 6px; }
     ::-webkit-scrollbar-track { background: var(--bg-color); }
     ::-webkit-scrollbar-thumb { background: var(--border-color); border-radius: 4px; }
-    ::-webkit-scrollbar-thumb:hover { background: var(--accent-blue); }
+    ::-webkit-scrollbar-thumb:hover { background: var(--brand); }
 
     .app-container {
       width: 100%;
-      max-width: 620px;
+      max-width: 600px;
       padding: 16px;
       display: flex;
       flex-direction: column;
@@ -95,11 +130,11 @@
     .app-header h1 { font-size: 1.6rem; color: var(--text-bright); font-weight: 800; letter-spacing: -0.5px; }
     .app-header h1 a { transition: opacity 0.2s, transform 0.2s; display: inline-block; text-decoration: none; color: inherit; }
     .app-header h1 a:hover { opacity: 0.85; transform: scale(1.02); }
-    .app-header h1 a span { color: var(--accent-purple); }
-    .app-header .subtitle { font-size: 0.95rem; color: var(--accent-blue); font-weight: 600; margin-top: 2px; }
+    .app-header h1 a span { color: var(--brand); }
+    .app-header .subtitle { font-size: 0.95rem; color: var(--brand); font-weight: 600; margin-top: 2px; }
     .app-header .description { font-size: 0.82rem; color: var(--text-main); opacity: 0.8; margin-top: 6px; line-height: 1.35; }
 
-    nav { display: flex; background-color: var(--card-bg); border: 1px solid var(--border-color); border-radius: 10px; overflow: hidden; }
+    nav { display: flex; background-color: var(--card-bg); border: 1px solid var(--border-color); border-radius: 8px; overflow: hidden; }
     .nav-btn {
       flex: 1; padding: 12px 6px; background: none; border: none; color: var(--text-main);
       font-weight: bold; cursor: pointer; font-size: 0.85rem; transition: background-color 0.2s, color 0.2s;
@@ -112,119 +147,185 @@
       .nav-btn .nav-icon { font-size: 1.25rem; }
     }
 
-    .tab-content { display: none; flex-direction: column; gap: 14px; }
+    .tab-content { display: none; flex-direction: column; gap: 16px; }
     .tab-content.active { display: flex; }
 
     .card {
       background-color: var(--card-bg); border: 1px solid var(--border-color);
-      border-radius: 10px; padding: 14px 16px; display: flex; flex-direction: column; gap: 10px; position: relative;
+      border-radius: 8px; padding: 16px; display: flex; flex-direction: column; gap: 10px; position: relative;
     }
     .card-title { font-size: 1.05rem; color: var(--text-bright); font-weight: 600; display: flex; align-items: center; justify-content: space-between; }
 
     .inline-firstname-input {
       background-color: var(--bg-color); border: 1px solid var(--border-color); color: var(--text-bright);
-      padding: 10px 12px; border-radius: 6px; font-size: 0.95rem; font-weight: 700; width: 100%;
+      padding: 8px 12px; border-radius: 6px; font-size: 0.95rem; font-weight: 700; width: 100%;
     }
 
-    /* PANNEAU HERO STYLE COLORÉ ET DYNAMIQUE */
-    .klon-hero-panel {
-      background: linear-gradient(135deg, rgba(168, 85, 247, 0.08) 0%, rgba(56, 189, 248, 0.08) 100%);
-      border: 1px solid var(--accent-purple); border-radius: 10px; padding: 16px;
-      display: flex; flex-direction: column; gap: 14px; position: relative; overflow: hidden;
+    /* HERO CARD SYNTHÈSE */
+    .edge-hero-card {
+      background: linear-gradient(135deg, var(--card-bg) 0%, rgba(16, 185, 129, 0.08) 100%);
+      border: 1px solid var(--brand); border-radius: 10px; padding: 16px;
+      display: flex; flex-direction: column; gap: 12px;
+    }
+    .edge-hero-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; text-align: center; }
+    .hero-box { display: flex; flex-direction: column; gap: 4px; justify-content: center; }
+    .hero-box .label { font-size: 0.75rem; font-weight: 800; color: var(--brand-bright); letter-spacing: 0.5px; }
+    .hero-box .val { font-size: 1.75rem; font-weight: 900; color: var(--text-bright); line-height: 1.1; }
+    .hero-box .sub { font-size: 0.75rem; opacity: 0.85; }
+    .hero-box-right { border-left: 1px solid var(--border-color); padding-left: 10px; }
+    @media (max-width: 500px) {
+      .edge-hero-grid { grid-template-columns: 1fr; }
+      .hero-box-right { border-left: none; border-top: 1px solid var(--border-color); padding-left: 0; padding-top: 10px; }
     }
 
-    .klon-hero-header {
-      display: flex; justify-content: space-between; align-items: flex-start; gap: 12px;
+    @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+    .spinning { animation: spin 0.8s linear infinite !important; pointer-events: none; opacity: 0.6; }
+
+    /* 4 MINI-GAUGES */
+    .four-gauges-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    @media (max-width: 500px) { .four-gauges-grid { grid-template-columns: 1fr; } }
+    .gauge-card-mini {
+      background: var(--bg-color); border: 1px solid var(--border-color); border-radius: 8px;
+      padding: 9px 12px; display: flex; flex-direction: column; gap: 5px; cursor: pointer;
+      transition: border-color 0.15s ease, transform 0.15s ease; user-select: none;
     }
-    .klon-val-large {
-      font-size: 2.1rem; font-weight: 900; color: var(--brand-bright); line-height: 1; letter-spacing: -0.5px;
+    .gauge-card-mini:hover { border-color: var(--brand); transform: translateY(-1px); }
+    .gauge-mini-title { font-size: 0.72rem; font-weight: 700; display: flex; justify-content: space-between; align-items: center; }
+
+    .progress-bar-bg {
+      width: 100%; height: 8px; background-color: var(--card-bg);
+      border: 1px solid var(--border-color); border-radius: 4px; overflow: hidden; position: relative;
     }
-    .klon-sub-val {
-      font-size: 0.88rem; font-weight: 700; color: var(--accent-blue); margin-top: 4px;
+    .progress-bar-fill { height: 100%; transition: width 0.35s ease; width: 0%; }
+    #gauge-bar-shield { background-color: var(--accent-orange) !important; }
+    #gauge-bar-annuity { background-color: var(--brand-bright) !important; }
+    #gauge-bar-cap { background-color: var(--accent-blue) !important; }
+    #gauge-bar-annual { background-color: var(--accent-purple) !important; }
+
+    /* BADGES DE RÉCOMPENSES */
+    .hero-rewards-toggle-row { display: none; justify-content: center; padding-top: 6px; border-top: 1px solid rgba(16, 185, 129, 0.2); }
+    .hero-rewards-toggle-row.has-rewards { display: flex; }
+    .rewards-toggle-btn {
+      background: var(--bg-color); border: 1px solid var(--border-color); color: var(--text-bright);
+      padding: 5px 14px; border-radius: 14px; font-size: 0.75rem; font-weight: 600; cursor: pointer;
+      display: inline-flex; align-items: center; gap: 6px; transition: 0.2s; user-select: none;
+    }
+    .rewards-toggle-btn:hover { border-color: var(--brand); color: var(--brand); }
+    .hero-rewards-wrapper { display: flex; flex-direction: column; gap: 6px; padding-top: 4px; }
+    .corp-rewards-grid { display: flex; flex-wrap: wrap; gap: 8px 10px; justify-content: flex-start; padding: 4px 2px; }
+    .corp-reward-pill {
+      display: inline-flex; align-items: center; gap: 6px; padding: 5px 11px; border-radius: 20px;
+      font-size: 0.72rem; font-weight: 500; background: var(--bg-color); border: 1px solid var(--brand);
+      color: var(--text-bright); box-shadow: 0 0 6px rgba(16, 185, 129, 0.2); cursor: pointer; user-select: none;
+    }
+    .corp-reward-pill:hover { transform: translateY(-2px); box-shadow: 0 0 10px rgba(16, 185, 129, 0.4); }
+
+    /* INVENTAIRE SCROLLABLE (ONGLET 1) */
+    .inventory-scroll-box {
+      max-height: 460px; overflow-y: auto; display: flex; flex-direction: column; gap: 6px; padding-right: 2px;
     }
 
-    .action-btn-pill {
-      background: var(--card-inner); border: 1px solid var(--border-color); color: var(--text-bright);
-      padding: 6px 12px; border-radius: 20px; font-size: 0.78rem; font-weight: 700; cursor: pointer;
-      display: inline-flex; align-items: center; gap: 6px; transition: all 0.15s ease;
-    }
-    .action-btn-pill:hover { border-color: var(--accent-purple); color: var(--accent-purple); }
-
-    /* BARRE MULTI-SEGMENTS DES CATÉGORIES */
-    .multi-progress-track {
-      width: 100%; height: 12px; background: var(--bg-color); border-radius: 6px;
-      overflow: hidden; border: 1px solid var(--border-color); display: flex;
-    }
-    .multi-segment { height: 100%; transition: width 0.3s ease; }
-
-    .gain-input-row { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
-
-    .scrollable-cards-box {
-      max-height: 520px; overflow-y: auto; display: flex; flex-direction: column; gap: 8px; padding-right: 2px;
-    }
-
-    input[type="text"], input[type="number"], select, textarea {
-      background-color: var(--bg-color); border: 1px solid var(--border-color); color: var(--text-bright);
-      padding: 9px 11px; border-radius: 6px; font-size: 0.88rem; font-family: inherit; width: 100%;
-    }
-    select { cursor: pointer; font-weight: bold; color: var(--accent-blue) !important; }
-
-    .gain-badge {
-      font-size: 0.78rem; font-weight: 800; padding: 3px 10px; border-radius: 12px;
-      background: rgba(255, 255, 255, 0.05); display: inline-block; width: fit-content;
-    }
-
-    /* CARTES DÉPLIABLES AVEC BORDURE DYNAMIQUE HÉRITÉE */
+    /* CARTES D'INVENTAIRE ÉPURÉES SUR UNE LIGNE (ONGLET 1) */
     .edge-card {
-      background: var(--card-bg); border: 1px solid var(--border-color);
-      border-radius: 8px; padding: 0; display: flex; flex-direction: column; transition: border-color 0.2s;
-      overflow: hidden; flex-shrink: 0;
+      background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 8px;
+      display: flex; flex-direction: column; transition: border-color 0.15s; overflow: hidden; flex-shrink: 0;
     }
-
     .edge-summary-row {
       padding: 10px 12px; display: flex; justify-content: space-between; align-items: center;
       gap: 8px; cursor: pointer; user-select: none;
     }
     .edge-summary-row:hover { background: rgba(255, 255, 255, 0.02); }
-    .edge-title-text { font-weight: 700; color: var(--text-bright); font-size: 0.92rem; line-height: 1.35; }
-    
-    .edge-cat-badge {
-      font-size: 0.68rem; padding: 2px 8px; border-radius: 10px; white-space: nowrap; font-weight: 800;
-    }
-    
-    .edge-chevron-btn {
-      font-size: 0.85rem; color: var(--text-main); opacity: 0.6; transition: transform 0.2s ease;
-      display: inline-flex; align-items: center; justify-content: center; width: 18px; height: 18px;
-    }
+    .edge-title-text { font-weight: 700; color: var(--text-bright); font-size: 0.88rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .edge-cat-badge { font-size: 0.65rem; padding: 1px 6px; border-radius: 6px; font-weight: 800; white-space: nowrap; }
+
+    .edge-chevron-btn { font-size: 0.8rem; opacity: 0.5; transition: transform 0.2s ease; display: inline-flex; }
     .edge-card.expanded .edge-chevron-btn { transform: rotate(180deg); opacity: 1; }
 
     .edge-body-expanded {
-      display: none; padding: 0 12px 12px 12px; flex-direction: column; gap: 8px;
-      border-top: 1px dashed rgba(48, 54, 61, 0.6); margin-top: 2px; padding-top: 8px;
+      display: none; padding: 8px 12px 10px 12px; flex-direction: column; gap: 6px;
+      border-top: 1px dashed var(--border-color); font-size: 0.8rem; background: var(--bg-color);
     }
     .edge-card.expanded .edge-body-expanded { display: flex; }
-    .edge-desc { font-size: 0.84rem; line-height: 1.5; color: var(--text-main); opacity: 0.9; }
 
-    .edge-expanded-row { display: flex; justify-content: space-between; align-items: center; gap: 8px; width: 100%; }
-    .edge-actions-right { display: flex; gap: 6px; flex-shrink: 0; margin-left: auto; }
+    /* CARTES ANALYTIQUES DU PLAN (ONGLET 2) */
+    .stake-edge-card {
+      background-color: var(--card-bg); border: 1px solid var(--border-color); border-radius: 8px;
+      padding: 12px 14px; position: relative; display: flex; flex-direction: column; gap: 8px;
+      border-left: 4px solid var(--brand-bright); transition: border-color 0.2s, opacity 0.15s, transform 0.15s;
+      cursor: grab; user-select: none; touch-action: manipulation;
+    }
+    .stake-edge-card:active { cursor: grabbing; }
+    .stake-edge-card.dragging { opacity: 0.4; border: 2px dashed var(--brand) !important; transform: scale(0.98); }
+    .stake-edge-card.long-pressing { transform: scale(0.98); opacity: 0.7; border-color: var(--brand) !important; }
+    .stake-edge-header { display: flex; align-items: center; gap: 10px; }
+
+    .stake-squircle-avatar {
+      width: 44px; height: 44px; border-radius: 8px; background-color: var(--bg-color);
+      border: 1px solid var(--border-color); display: flex; align-items: center; justify-content: center;
+      font-size: 1.45rem; flex-shrink: 0; line-height: 1; overflow: hidden; background-size: cover;
+      background-position: center; cursor: pointer; transition: transform 0.2s;
+    }
+    .stake-squircle-avatar:hover { transform: scale(1.06); border-color: var(--brand); }
+
+    .inventory-avatar-mini {
+      width: 28px; height: 28px; border-radius: 6px; background-color: var(--bg-color);
+      border: 1px solid var(--border-color); display: flex; align-items: center; justify-content: center;
+      font-size: 1rem; flex-shrink: 0; background-size: cover; background-position: center;
+    }
+
+    .stacked-progress-track {
+      width: 100%; height: 8px; background: var(--card-inner); border-radius: 4px;
+      overflow: hidden; border: 1px solid var(--border-color); display: flex;
+    }
+    .stacked-segment-base { height: 100%; background: var(--brand-bright); transition: width 0.3s ease; }
+    .stacked-segment-inflation { height: 100%; background: var(--accent-orange); transition: width 0.3s ease; }
+
+    .auto-expanding-desc {
+      background-color: var(--bg-color); border: 1px solid var(--border-color); color: var(--text-bright);
+      padding: 9px 11px; border-radius: 6px; font-size: 0.88rem; font-family: inherit; width: 100%;
+      min-height: 40px; max-height: 160px; resize: none; overflow-y: auto; line-height: 1.4;
+    }
+
+    input[type="text"], input[type="number"], select {
+      background-color: var(--bg-color); border: 1px solid var(--border-color); color: var(--text-bright);
+      padding: 8px 10px; border-radius: 6px; font-size: 0.88rem; font-family: inherit; width: 100%;
+    }
+    select { cursor: pointer; font-weight: bold; color: var(--text-bright); }
+    #region-select, #theme-select { color: var(--brand) !important; }
 
     button.btn-primary {
-      background-color: var(--accent-purple); color: #ffffff !important; border: none; padding: 10px 16px;
-      border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 0.95rem;
+      background-color: var(--accent-green); color: #fff; border: none; padding: 10px 14px;
+      border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 0.9rem;
     }
     button.btn-secondary, label.btn-secondary {
-      background-color: var(--bg-color); color: var(--accent-blue); border: 1px solid var(--border-color);
+      background-color: var(--bg-color); color: var(--brand); border: 1px solid var(--border-color);
       padding: 8px 12px; border-radius: 6px; cursor: pointer; font-size: 0.8rem; font-weight: bold;
-      display: inline-flex; align-items: center; justify-content: center; gap: 4px; box-sizing: border-box; text-align: center;
+      display: inline-flex; align-items: center; justify-content: center; gap: 4px;
     }
-    button.btn-secondary:hover, label.btn-secondary:hover { border-color: var(--accent-blue); color: var(--text-bright); }
-    button.btn-danger { background-color: transparent; color: var(--accent-red); border: 1px solid var(--border-color); padding: 6px 10px; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 0.85rem; }
-    button.btn-danger:hover { background-color: rgba(239, 68, 68, 0.15); border-color: var(--accent-red); }
+    button.btn-danger { background: transparent; color: var(--accent-red); border: 1px solid var(--border-color); padding: 4px 8px; border-radius: 4px; cursor: pointer; font-weight: bold; }
     button.btn-reset {
       background-color: transparent; color: var(--accent-red); border: 1px solid var(--accent-red);
-      padding: 8px 12px; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 0.8rem;
+      padding: 8px 12px; border-radius: 6px; cursor: pointer; font-size: 0.8rem; font-weight: bold;
     }
-    button.btn-reset:hover { background-color: var(--accent-red); color: white; }
+    button.btn-reset:hover { background-color: var(--accent-red); color: #fff; }
+
+    .tooltip-btn {
+      background: var(--bg-color); border: 1px solid var(--border-color); color: var(--brand);
+      border-radius: 50%; width: 22px; height: 22px; font-size: 0.75rem; font-weight: bold; cursor: pointer;
+      display: inline-flex; align-items: center; justify-content: center;
+    }
+
+    .multi-progress-track {
+      width: 100%; height: 10px; background: var(--bg-color); border-radius: 6px;
+      overflow: hidden; border: 1px solid var(--border-color); display: flex;
+    }
+    .multi-segment { height: 100%; transition: width 0.3s ease; }
+
+    .backup-warning-badge {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 18px; height: 18px; background-color: var(--accent-orange); color: #ffffff;
+      border-radius: 50%; font-size: 0.75rem; font-weight: bold; cursor: pointer; margin-left: 6px;
+    }
 
     .modal-overlay {
       display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0;
@@ -233,32 +334,33 @@
     .modal-overlay.active { display: flex; }
     .modal-card {
       background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 12px;
-      width: 100%; max-width: 440px; padding: 18px; display: flex; flex-direction: column; gap: 12px; position: relative;
+      width: 100%; max-width: 440px; padding: 16px; display: flex; flex-direction: column; gap: 10px; position: relative;
     }
 
     .link-btn {
-      display: flex; align-items: center; justify-content: center; width: 100%; padding: 12px;
-      background-color: var(--bg-color); color: var(--accent-blue); text-align: center; text-decoration: none;
-      border-radius: 6px; font-size: 0.95rem; font-weight: bold; border: 1px solid var(--border-color); cursor: pointer;
+      display: flex; align-items: center; justify-content: center; width: 100%; padding: 10px;
+      background-color: var(--bg-color); color: var(--brand); text-align: center; text-decoration: none;
+      border-radius: 6px; font-size: 0.9rem; font-weight: bold; border: 1px solid var(--border-color);
     }
-    .link-btn:hover { border-color: var(--accent-blue); color: var(--text-bright); }
-
-    .backup-warning-badge {
-      display: inline-flex; align-items: center; justify-content: center;
-      width: 18px; height: 18px; background-color: #f97316; color: #ffffff;
-      border-radius: 50%; font-size: 0.75rem; font-weight: bold; cursor: pointer; margin-left: 6px;
-    }
+    .link-btn:hover { border-color: var(--brand); color: var(--text-bright); }
+    .link-btn-blue { color: var(--accent-blue) !important; }
+    .link-btn-blue:hover { border-color: var(--accent-blue) !important; color: var(--text-bright) !important; }
+    .link-btn-purple { color: var(--accent-purple) !important; }
+    .link-btn-purple:hover { border-color: var(--accent-purple) !important; color: var(--text-bright) !important; }
+    .link-btn-orange { color: var(--accent-orange) !important; }
+    .link-btn-orange:hover { border-color: var(--accent-orange) !important; color: var(--text-bright) !important; }
+    .link-btn-yellow { color: var(--accent-yellow) !important; }
+    .link-btn-yellow:hover { border-color: var(--accent-yellow) !important; color: var(--text-bright) !important; }
 
     .site-footer { margin-top: 24px; padding-top: 16px; border-top: 1px solid var(--border-color); text-align: center; font-size: 0.75rem; color: var(--text-main); opacity: 0.75; display: flex; flex-direction: column; gap: 8px; line-height: 1.4; }
 
-    .top-lever-item {
-      display: flex; justify-content: space-between; align-items: center;
-      background: var(--card-inner); border: 1px solid var(--border-color);
-      padding: 8px 12px; border-radius: 6px; font-size: 0.85rem;
-    }
+    #confetti-canvas { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: 9999; }
   </style>
 </head>
 <body>
+
+  <canvas id="confetti-canvas"></canvas>
+  <input type="file" id="image-upload-input" accept="image/*" style="display: none;" onchange="handleImageSelected(event)">
 
   <div class="app-container">
 
@@ -270,29 +372,29 @@
       </h1>
       <div class="subtitle" data-i18n="subtitle">L'avantage asymétrique du quotidien</div>
       <p class="description" data-i18n="desc">
-        Réduis ton OPEX sans sacrifier ton confort ni ton temps, et réinjecte le FCF libéré dans ton capital.
+        Réduis ton OPEX sans sacrifier ton confort, protège ton pouvoir d'achat contre l'inflation et réinjecte le FCF libéré dans ton capital.
       </p>
     </header>
 
     <nav>
       <button class="nav-btn active" id="nav-tab1" onclick="switchTab('tab1', event)">
-        <span class="nav-icon">📚</span>
-        <span data-i18n="nav_library">Bibliothèque</span>
+        <span class="nav-icon">📋</span>
+        <span data-i18n="tab_input">Saisie & Leviers</span>
       </button>
       <button class="nav-btn" id="nav-tab2" onclick="switchTab('tab2', event)">
-        <span class="nav-icon">📊</span>
-        <span data-i18n="nav_plan">Plan & Analyses</span>
+        <span class="nav-icon">🧭</span>
+        <span data-i18n="tab_plan">Plan KLON</span>
       </button>
       <button class="nav-btn" id="nav-tab3" onclick="switchTab('tab3', event)">
         <span class="nav-icon">🌐</span>
-        <span data-i18n="nav_eco">Écosystème</span>
+        <span data-i18n="tab_eco">Écosystème</span>
       </button>
     </nav>
 
-    <!-- ONGLET 1 : BIBLIOTHÈQUE -->
+    <!-- ONGLET 1 : SAISIE & LEVIERS -->
     <div id="tab1" class="tab-content active">
 
-      <!-- BANDEAU TITULAIRE & THÈMES -->
+      <!-- BANDEAU COMPACT : PAYS SANS DRAPEAUX GÊNANTS SUR PC -->
       <div class="card" style="padding: 10px 14px;">
         <div style="display: flex; justify-content: space-between; align-items: center; gap: 8px;">
           <div style="flex: 1;">
@@ -300,73 +402,91 @@
           </div>
 
           <div style="display: flex; align-items: center; gap: 6px; flex-shrink: 0;">
-            <select id="lang-select" onchange="changeLanguage(this.value)" style="width: auto; padding: 6px 8px; font-size: 0.85rem;">
-              <option value="fr">FR</option>
-              <option value="en">EN</option>
+            <select id="region-select" onchange="changeRegion(this.value)" style="width: auto; padding: 6px 8px; font-size: 0.85rem;" title="Pays & Modèle d'Inflation">
+              <option value="FR">France (EUR €)</option>
+              <option value="BE">Belgique (EUR €)</option>
+              <option value="CH">Suisse (CHF)</option>
+              <option value="CA">Canada (CAD $)</option>
+              <option value="US">États-Unis (USD $)</option>
+              <option value="UK">Royaume-Uni (GBP £)</option>
             </select>
 
             <select id="theme-select" onchange="changeTheme(this.value)" style="width: auto; padding: 6px 8px; font-size: 0.85rem;">
               <option value="dark" data-i18n="theme_dark">🌙 Sombre</option>
               <option value="light" data-i18n="theme_light">☀️ Clair</option>
+              <option value="colorblind" data-i18n="theme_cb">👁️ Daltonien</option>
             </select>
           </div>
         </div>
       </div>
 
-      <!-- AJOUTER / MODIFIER UNE ASTUCE -->
+      <!-- FORMULAIRE COMPACT -->
       <div class="card" id="form-card">
         <div class="card-title">
-          <span id="form-title" data-i18n="add_title">🛠️ Ajoute ton astuce et son gain</span>
+          <div style="display:flex; align-items:center; gap:6px;">
+            <span id="form-title" data-i18n="form_new_title">🛠️ Nouveau Levier Récurrent</span>
+            <button class="tooltip-btn" onclick="openRecurringHelpModal()" title="Pourquoi uniquement des gains récurrents ?">?</button>
+          </div>
         </div>
-        <input type="text" id="in-title" data-i18n-ph="in_title_ph" placeholder="Titre de l'astuce">
+
+        <input type="text" id="in-title" data-i18n-ph="ph_title" placeholder="Intitulé de l'optimisation">
+        
         <select id="in-cat">
-          <option value="logement" data-i18n="cat_logement">🏠 Logement</option>
-          <option value="energie" data-i18n="cat_energie">⚡ Énergie & Fluides</option>
-          <option value="abonnements" data-i18n="cat_abonnements">📱 Abonnements & Services</option>
-          <option value="transports" data-i18n="cat_transports">🚗 Transports & Véhicules</option>
-          <option value="nourriture" data-i18n="cat_nourriture">🛒 Nourriture & Quotidien</option>
-          <option value="finance" data-i18n="cat_finance">🏦 Banque & Finance</option>
-          <option value="achats" data-i18n="cat_achats">🛍️ Achats & Équipements</option>
-          <option value="bricolage" data-i18n="cat_bricolage">🧰 Bricolage & Travaux</option>
-          <option value="divers" data-i18n="cat_divers">🌀 Divers</option>
+          <option value="energie" data-i18n="cat_energie">⚡ Énergie & Eau</option>
+          <option value="nourriture" data-i18n="cat_nourriture">🛒 Alimentation & Quotidien</option>
+          <option value="logement" data-i18n="cat_logement">🏠 Logement & Assurances</option>
+          <option value="transports" data-i18n="cat_transports">🚗 Carburant & Mobilité</option>
+          <option value="abonnements" data-i18n="cat_abonnements">📱 Télécoms & Numérique</option>
+          <option value="divers" data-i18n="cat_divers">🛍️ Biens & Services Divers</option>
         </select>
-        <div class="gain-input-row">
-          <input type="number" id="in-gain" min="0" step="1" data-i18n-ph="in_gain_ph" placeholder="Gain estimé (€)">
-          <select id="in-freq">
-            <option value="once" data-i18n="freq_once">Ponctuel (une fois)</option>
-            <option value="monthly" data-i18n="freq_monthly">Mensuel (récurrent)</option>
-            <option value="yearly" data-i18n="freq_yearly">Annuel (récurrent)</option>
-          </select>
+
+        <div style="display: grid; grid-template-columns: 1.2fr 0.9fr 0.9fr; gap: 6px; align-items: center;">
+          <div>
+            <label style="font-size: 0.7rem; font-weight: bold; display: block; margin-bottom: 2px;" data-i18n="lbl_gain">Gain départ (<span class="curr-sym">€</span>/m)</label>
+            <input type="number" id="in-gain" min="0" step="any" placeholder="35">
+          </div>
+          <div>
+            <label style="font-size: 0.7rem; font-weight: bold; display: block; margin-bottom: 2px;" data-i18n="lbl_month">Mois</label>
+            <select id="in-start-month">
+              <option value="01">Jan</option><option value="02">Fév</option><option value="03">Mar</option>
+              <option value="04">Avr</option><option value="05">Mai</option><option value="06">Juin</option>
+              <option value="07">Juil</option><option value="08">Août</option><option value="09">Sep</option>
+              <option value="10">Oct</option><option value="11">Nov</option><option value="12">Déc</option>
+            </select>
+          </div>
+          <div>
+            <label style="font-size: 0.7rem; font-weight: bold; display: block; margin-bottom: 2px;" data-i18n="lbl_year">Année</label>
+            <select id="in-start-year"></select>
+          </div>
         </div>
-        <textarea id="in-desc" rows="2" data-i18n-ph="in_desc_ph" placeholder="Détail (optionnel)..." style="resize: vertical;"></textarea>
-        <div style="display: flex; gap: 8px;">
-          <button class="btn-primary" id="btn-submit-edge" onclick="submitEdgeForm()" style="flex: 1;" data-i18n="btn_add">Ajouter à ma bibliothèque</button>
+
+        <textarea id="in-desc" class="auto-expanding-desc" rows="1" data-i18n-ph="ph_desc" placeholder="Note ou méthode appliquée (optionnel)..." oninput="autoGrowTextarea(this)"></textarea>
+
+        <div style="display: flex; gap: 8px; margin-top: 2px;">
+          <button class="btn-primary" id="btn-submit-edge" onclick="submitEdgeForm()" style="flex: 1;" data-i18n="btn_submit">Valider le levier</button>
           <button class="btn-secondary" id="btn-cancel-edge" onclick="cancelEditEdge()" style="display: none;" data-i18n="btn_cancel">Annuler</button>
         </div>
       </div>
 
-      <!-- FILTRE PAR CATEGORIE -->
-      <div class="card" style="padding: 10px 12px;">
-        <select id="filter-cat" onchange="renderLibrary()">
-          <option value="all" data-i18n="filter_cat_all">Catégorie : Toutes</option>
-          <option value="logement" data-i18n="cat_logement">🏠 Logement</option>
-          <option value="energie" data-i18n="cat_energie">⚡ Énergie & Fluides</option>
-          <option value="abonnements" data-i18n="cat_abonnements">📱 Abonnements & Services</option>
-          <option value="transports" data-i18n="cat_transports">🚗 Transports & Véhicules</option>
-          <option value="nourriture" data-i18n="cat_nourriture">🛒 Nourriture & Quotidien</option>
-          <option value="finance" data-i18n="cat_finance">🏦 Banque & Finance</option>
-          <option value="achats" data-i18n="cat_achats">🛍️ Achats & Équipements</option>
-          <option value="bricolage" data-i18n="cat_bricolage">🧰 Bricolage & Travaux</option>
-          <option value="divers" data-i18n="cat_divers">🌀 Divers</option>
-        </select>
-      </div>
-
-      <!-- LISTE DES ASTUCES -->
+      <!-- INVENTAIRE FIXE ET SCROLLABLE DES ASTUCES -->
       <div class="card">
         <div class="card-title">
-          <span data-i18n="list_title">📚 Mes astuces</span>
+          <div style="display:flex; align-items:center; gap:8px;">
+            <span id="lbl-inventory-title">📦 Inventaire des Leviers</span>
+            <span id="items-count-badge" style="font-size: 0.72rem; opacity: 0.7;">0 levier</span>
+          </div>
+          <select id="filter-cat" onchange="renderLibrary()" style="width: auto; padding: 2px 6px; font-size: 0.78rem;">
+            <option value="all" data-i18n="filter_all">Tous les secteurs</option>
+            <option value="energie" data-i18n="cat_energie">⚡ Énergie & Eau</option>
+            <option value="nourriture" data-i18n="cat_nourriture">🛒 Alimentation</option>
+            <option value="logement" data-i18n="cat_logement">🏠 Logement</option>
+            <option value="transports" data-i18n="cat_transports">🚗 Carburant</option>
+            <option value="abonnements" data-i18n="cat_abonnements">📱 Télécoms</option>
+            <option value="divers" data-i18n="cat_divers">🛍️ Divers</option>
+          </select>
         </div>
-        <div id="library-list" class="scrollable-cards-box"></div>
+
+        <div id="library-list" class="inventory-scroll-box"></div>
       </div>
 
       <!-- GESTION DES DONNÉES -->
@@ -388,66 +508,111 @@
       </div>
     </div>
 
-    <!-- ONGLET 2 : ANALYSES & DASHBOARD (STYLE COLORÉ ET HARMONISÉ) -->
+    <!-- ONGLET 2 : PLAN KLON (DRAG & DROP SANS TRI POLLUANT) -->
     <div id="tab2" class="tab-content">
 
-      <!-- BLOC HERO SYNTHÈSE COLORÉ -->
-      <div class="klon-hero-panel">
-        <div class="klon-hero-header">
-          <div>
-            <div style="font-size: 0.72rem; font-weight: 800; color: var(--accent-purple); letter-spacing: 0.5px;">FCF DISPONIBLE LIBÉRÉ</div>
-            <div class="klon-val-large" id="dash-monthly">+0 € / m</div>
-            <div class="klon-sub-val" id="dash-yearly">soit +0 € / an à vie</div>
+      <!-- HERO SYNTHÈSE À DEUX BLOCS PERSONNALISÉ -->
+      <div class="edge-hero-card">
+        <div class="edge-hero-grid">
+          <div class="hero-box">
+            <div style="display: flex; align-items: center; justify-content: space-between; padding: 0 4px;">
+              <button class="tooltip-btn" onclick="openPieModal()" title="Répartition du FCF par Secteur" style="padding:0;">
+                <svg width="15" height="15" viewBox="0 0 24 24" style="display: block;">
+                  <path d="M12 12 L12 2 A10 10 0 0 1 20.66 17 Z" fill="#34d399" stroke="var(--card-bg)" stroke-width="1.2"/>
+                  <path d="M12 12 L20.66 17 A10 10 0 0 1 3.34 17 Z" fill="#58a6ff" stroke="var(--card-bg)" stroke-width="1.2"/>
+                  <path d="M12 12 L3.34 17 A10 10 0 0 1 12 2 Z" fill="#f0883e" stroke="var(--card-bg)" stroke-width="1.2"/>
+                </svg>
+              </button>
+              <span class="label" id="lbl-hero-fcf">FCF RÉCURRENT INDEXÉ</span>
+              <button class="tooltip-btn" id="btn-refresh-inflation" onclick="refreshInflationFromCloudflare()" title="Actualiser les données d'inflation officielles">🔄</button>
+            </div>
+            <div class="val" id="dash-monthly" style="color: var(--brand-bright);">+0 € / m</div>
+            <div class="sub" id="dash-nominal-sub">Gain de départ : +0 € / m</div>
           </div>
-          <div style="display: flex; flex-direction: column; gap: 6px; align-items: flex-end;">
-            <button class="action-btn-pill" onclick="openTimelineModal()">🧭 Trajectoire</button>
-            <button class="action-btn-pill" onclick="openPieModal()" style="border-color: var(--accent-blue);">🍕 Répartition</button>
+          <div class="hero-box hero-box-right">
+            <div style="display: flex; align-items: center; justify-content: center; gap: 6px;">
+              <span class="label" style="color: var(--accent-blue);" id="lbl-hero-cumul">TRÉSORERIE CUMULÉE</span>
+              <button class="tooltip-btn" onclick="openTimelineModal()" title="Courbe d'accumulation">📈</button>
+            </div>
+            <div class="val" id="stat-total-cumul" style="color: var(--accent-blue);">0 €</div>
+            <div class="sub" id="stat-cumul-sub" data-i18n="stat_cumul_sub">Économies réelles à ce jour</div>
           </div>
+        </div>
+
+        <div class="hero-rewards-toggle-row" id="hero-rewards-toggle-row">
+          <button id="btn-toggle-rewards" class="rewards-toggle-btn" onclick="toggleRewardsVisibility()" data-i18n="btn_rewards">
+            🏆 Voir les Récompenses ▾
+          </button>
+        </div>
+        <div class="hero-rewards-wrapper" id="hero-rewards-wrapper" style="display: none;">
+          <div class="corp-rewards-grid" id="rewards-box"></div>
         </div>
       </div>
 
-      <!-- RÉPARTITION DU FCF PAR CATÉGORIE -->
+      <!-- 4 MINI-GAUGES INTERACTIVES CLIQUABLES -->
+      <div class="four-gauges-grid">
+        <div class="gauge-card-mini" onclick="openGaugeModal('shield')" title="Cliquer pour comprendre le Bouclier Inflation">
+          <div class="gauge-mini-title">
+            <span data-i18n="g_shield">🛡️ Bouclier Inflation</span>
+            <strong id="gauge-val-shield" style="color: var(--accent-orange);">+0 € / m</strong>
+          </div>
+          <div class="progress-bar-bg"><div id="gauge-bar-shield" class="progress-bar-fill"></div></div>
+        </div>
+
+        <div class="gauge-card-mini" onclick="openGaugeModal('annuity')" title="Cliquer pour comprendre la Rente Passive">
+          <div class="gauge-mini-title">
+            <span data-i18n="g_annuity">⛽ Rente Passive (4%)</span>
+            <strong id="gauge-val-annuity" style="color: var(--brand-bright);">+0 € / m</strong>
+          </div>
+          <div class="progress-bar-bg"><div id="gauge-bar-annuity" class="progress-bar-fill"></div></div>
+        </div>
+
+        <div class="gauge-card-mini" onclick="openGaugeModal('capital')" title="Cliquer pour comprendre le Capital Équivalent">
+          <div class="gauge-mini-title">
+            <span data-i18n="g_capital">🏛️ Capital Équivalent</span>
+            <strong id="gauge-val-cap" style="color: var(--accent-blue);">0 €</strong>
+          </div>
+          <div class="progress-bar-bg"><div id="gauge-bar-cap" class="progress-bar-fill"></div></div>
+        </div>
+
+        <div class="gauge-card-mini" onclick="openGaugeModal('annual')" title="Cliquer pour comprendre le Gain Annuel">
+          <div class="gauge-mini-title">
+            <span data-i18n="g_annual">⚡ Gain Annuel Libéré</span>
+            <strong id="gauge-val-annual" style="color: var(--accent-purple);">+0 € / an</strong>
+          </div>
+          <div class="progress-bar-bg"><div id="gauge-bar-annual" class="progress-bar-fill"></div></div>
+        </div>
+      </div>
+
+      <!-- CASCADE DE RÉPARTITION HORIZONTALE -->
       <div class="card">
-        <div class="card-title" style="font-size: 0.88rem; color: var(--accent-blue);">💧 Répartition du FCF par Catégorie</div>
+        <div class="card-title" style="font-size: 0.88rem; color: var(--brand-bright);" data-i18n="sector_breakdown">💧 Répartition du FCF par Secteur</div>
         <div class="multi-progress-track" id="multi-cat-bar"></div>
         <div id="multi-bar-legend" style="display: flex; flex-wrap: wrap; gap: 6px 12px; font-size: 0.72rem; margin-top: 2px;"></div>
       </div>
 
-      <!-- TOP 3 DES PLUS GROS LEVIERS RÉCURRENTS -->
+      <!-- TOUTES LES CARTES DU PLAN (SANS SÉLECTEUR DE TRI INUTILE) -->
       <div class="card">
-        <div class="card-title">🚀 Top 3 de tes leviers récurrents</div>
-        <div id="top-levers-list" style="display: flex; flex-direction: column; gap: 6px;"></div>
-      </div>
-
-      <!-- GAIN PONCTUEL CUMULÉ -->
-      <div class="card" style="border-left: 4px solid var(--accent-pink);">
-        <div style="display: flex; justify-content: space-between; align-items: center;">
-          <div>
-            <div style="font-size: 0.75rem; font-weight: 800; color: var(--accent-pink);">💰 GAINS PONCTUELS CUMULÉS</div>
-            <div style="font-size: 0.82rem; opacity: 0.8; margin-top: 2px;">Économies acquises une fois pour toutes</div>
-          </div>
-          <div style="font-size: 1.3rem; font-weight: 900; color: var(--accent-pink);" id="dash-once">0 €</div>
+        <div class="card-title">
+          <span id="lbl-plan-title">🚀 Leviers sous Gestion</span>
+          <span style="font-size: 0.7rem; opacity: 0.65;">(glisser pour réordonner)</span>
         </div>
-      </div>
 
-      <!-- RECAPITULATIF STATISTIQUE -->
-      <div class="card">
-        <div class="card-title">📊 Synthèse du Portefeuille</div>
-        <div id="plan-summary-stats" style="display: flex; flex-direction: column; gap: 8px; font-size: 0.88rem;"></div>
+        <div id="plan-cards-container" style="display: flex; flex-direction: column; gap: 8px;"></div>
       </div>
     </div>
 
-    <!-- ONGLET 3 : ÉCOSYSTÈME COMPLET -->
+    <!-- ONGLET 3 : ÉCOSYSTÈME COMPLET ALPHA PICKER -->
     <div id="tab3" class="tab-content">
-      <div class="card" style="border-left: 4px solid var(--accent-blue);">
+      <div class="card" style="border-left: 4px solid var(--brand);">
         <div style="font-size: 0.85rem; line-height: 1.5; color: var(--text-main);" data-i18n="eco_disclaimer">
-          <strong>🤝 Transparence & Parrainage :</strong> Les liens ci-dessous sont des liens d'affiliation et de parrainage. En ouvrant un compte via ces accès, vous pouvez bénéficier des bonus de bienvenue proposés par les plateformes tout en soutenant le développement gratuit de la suite KLON.
+          <strong>🤝 Transparence & Parrainage :</strong> Les liens ci-dessous sont des liens d'affiliation et de parrainage. En ouvrant un compte via ces accès, vous pouvez bénéficier des bonus de bienvenue proposés par les plateformes tout en soutenant le développement gratuit de l'application.
         </div>
       </div>
 
       <div class="card">
         <div class="card-title" data-i18n="eco_brokers">📈 Banques & Courtiers</div>
-        <div style="display: flex; flex-direction: column; gap: 10px;">
+        <div style="display: flex; flex-direction: column; gap: 8px;">
           <a href="https://dub.sh/klon-traderepublic" target="_blank" rel="noopener noreferrer" class="link-btn">Trade Republic</a>
           <a href="https://dub.sh/klon-ibkr" target="_blank" rel="noopener noreferrer" class="link-btn">Interactive Brokers (IBKR)</a>
           <a href="https://dub.sh/klon-boursobank" target="_blank" rel="noopener noreferrer" class="link-btn">BoursoBank</a>
@@ -457,7 +622,7 @@
 
       <div class="card">
         <div class="card-title" data-i18n="eco_crypto">🪙 Crypto & Rendement Alternatif</div>
-        <div style="display: flex; flex-direction: column; gap: 10px;">
+        <div style="display: flex; flex-direction: column; gap: 8px;">
           <a href="https://dub.sh/klon-coinbase" target="_blank" rel="noopener noreferrer" class="link-btn">Coinbase</a>
           <a href="https://crypto.com/app/wu2sfywjnt" target="_blank" rel="noopener noreferrer" class="link-btn">Crypto.com</a>
           <a href="https://dub.sh/klon-mintos" target="_blank" rel="noopener noreferrer" class="link-btn">Mintos</a>
@@ -476,18 +641,18 @@
 
       <div class="card">
         <div class="card-title" data-i18n="eco_suite">🧰 La Suite KLON</div>
-        <div style="display: flex; flex-direction: column; gap: 10px;">
-          <a href="https://alphapicker.github.io/klon/" target="_blank" rel="noopener noreferrer" class="link-btn" style="color: var(--brand-bright);">KLON — Simulateur de liberté financière</a>
-          <a href="https://alphapicker.github.io/klon-corp/" target="_blank" rel="noopener noreferrer" class="link-btn" style="color: var(--accent-purple);">KLON Corp — Simulateur de capacité financière</a>
-          <a href="https://alphapicker.github.io/klon-stake/" target="_blank" rel="noopener noreferrer" class="link-btn" style="color: #f97316;">KLON Stake — Simulateur de propriété réelle</a>
-          <a href="https://alphapicker.github.io/klon-pulse/" target="_blank" rel="noopener noreferrer" class="link-btn" style="color: #f5a60b;">KLON Pulse — Simulateur de transmission vivante</a>
+        <div style="display: flex; flex-direction: column; gap: 8px;">
+          <a href="https://alphapicker.github.io/klon/" target="_blank" rel="noopener noreferrer" class="link-btn link-btn-blue">KLON — Simulateur de liberté financière</a>
+          <a href="https://alphapicker.github.io/klon-corp/" target="_blank" rel="noopener noreferrer" class="link-btn link-btn-purple">KLON Corp — Simulateur de capacité financière</a>
+          <a href="https://alphapicker.github.io/klon-stake/" target="_blank" rel="noopener noreferrer" class="link-btn link-btn-orange">KLON Stake — Simulateur de propriété réelle</a>
+          <a href="https://alphapicker.github.io/klon-pulse/" target="_blank" rel="noopener noreferrer" class="link-btn link-btn-yellow">KLON Pulse — Simulateur de transmission vivante</a>
         </div>
       </div>
 
       <div class="card">
         <div class="card-title" data-i18n="eco_support">☕ Soutenir le Projet</div>
         <p style="font-size: 0.9rem; line-height: 1.4;" data-i18n="eco_support_desc">
-          Si cet outil vous aide dans votre parcours d'optimisation financière et de liberté, vous pouvez soutenir le projet via les liens ci-dessus ou par un don.
+          Si cet outil vous aide dans votre parcours d'autonomie financière et d'optimisation de vos flux, vous pouvez soutenir le projet via les liens ci-dessus ou par un don.
         </p>
         <a href="https://www.paypal.me/AlphaPicker" target="_blank" rel="noopener noreferrer" class="link-btn" style="background: var(--btn-paypal-bg); color: white;" data-i18n="eco_paypal">Faire un don via PayPal</a>
       </div>
@@ -501,84 +666,308 @@
     </footer>
   </div>
 
-  <!-- MODALE CAMEMBERT -->
-  <div id="pie-modal" class="modal-overlay" onclick="if(event.target === this) closePieModal();">
-    <div class="modal-card">
-      <div class="card-title" style="justify-content: center; font-size: 1.15rem; color: var(--accent-blue);">🍕 Répartition par Catégorie</div>
-      <div id="pie-chart-body" style="display: flex; flex-direction: column; align-items: center; gap: 12px;"></div>
-      <button class="btn-primary" onclick="closePieModal()" style="margin-top: 6px; width: 100%;">Fermer</button>
+  <!-- MODALE EXPLICATION DU POURQUOI RÉCURRENT -->
+  <div id="recurring-help-modal" class="modal-overlay" onclick="if(event.target === this) closeRecurringHelpModal();">
+    <div class="modal-card" style="max-width: 420px; text-align: left;">
+      <div style="display: flex; align-items: center; gap: 8px;">
+        <div style="font-size: 1.8rem;">💡</div>
+        <div class="card-title" style="margin: 0;" data-i18n="m_rec_title">Pourquoi uniquement du récurrent ?</div>
+      </div>
+      <div style="font-size: 0.84rem; line-height: 1.5; color: var(--text-main); margin-top: 6px;" data-i18n="m_rec_desc">
+        <strong>L'avantage asymétrique du Free Cash-Flow :</strong><br><br>
+        Une économie ponctuelle (ex: revendre un objet) n'enrichit ton capital qu'une seule fois.<br><br>
+        En revanche, **éradiquer ou réduire une dépense récurrente** (ex: forfait, électricité, courses) libère un flux perpétuel. Ce flux grandit chaque année avec l'inflation évitée et équivaut mathématiquement à détenir un actif financier qui te verse un dividende mensuel à vie.
+      </div>
+      <button class="btn-primary" onclick="closeRecurringHelpModal()" style="margin-top: 8px; width: 100%;" data-i18n="btn_understood">Compris</button>
     </div>
   </div>
 
-  <!-- MODALE TRAJECTOIRE -->
+  <!-- MODALE DONUT SVG OFFICIEL -->
+  <div id="pie-modal" class="modal-overlay" onclick="if(event.target === this) closePieModal();">
+    <div class="modal-card" style="max-width: 440px; text-align: left;">
+      <div style="display: flex; align-items: center; gap: 8px;">
+        <svg width="22" height="22" viewBox="0 0 24 24" style="display: block; flex-shrink: 0;">
+          <path d="M12 12 L12 2 A10 10 0 0 1 20.66 17 Z" fill="#34d399" stroke="var(--card-bg)" stroke-width="1.5"/>
+          <path d="M12 12 L20.66 17 A10 10 0 0 1 3.34 17 Z" fill="#58a6ff" stroke="var(--card-bg)" stroke-width="1.5"/>
+          <path d="M12 12 L3.34 17 A10 10 0 0 1 12 2 Z" fill="#f0883e" stroke="var(--card-bg)" stroke-width="1.5"/>
+        </svg>
+        <div class="card-title" style="margin: 0; font-size: 1.05rem;" data-i18n="m_pie_title">Répartition du FCF par Secteur</div>
+      </div>
+
+      <div id="donut-chart-box" style="display: flex; flex-direction: column; align-items: center; margin-top: 4px;"></div>
+      <button class="btn-secondary" onclick="closePieModal()" style="margin-top: 4px; width: 100%;" data-i18n="btn_close">Fermer</button>
+    </div>
+  </div>
+
+  <!-- MODALE DÉTAIL D'UN LEVIER (CORRIGÉE DU SYMBOLE € EN DUR) -->
+  <div id="lever-detail-modal" class="modal-overlay" onclick="if(event.target === this) closeLeverDetailModal();">
+    <div class="modal-card" style="max-width: 420px; text-align: left;">
+      <div style="display: flex; justify-content: space-between; align-items: center;">
+        <div class="card-title" style="margin: 0;" id="m-lever-title">Nom du levier</div>
+        <span id="m-lever-badge" class="edge-cat-badge">Catégorie</span>
+      </div>
+
+      <div style="display: flex; flex-direction: column; gap: 8px; font-size: 0.82rem; margin-top: 4px;">
+        <div style="background: var(--bg-color); border: 1px solid var(--border-color); border-radius: 8px; padding: 10px;">
+          <div style="color: var(--brand-bright); font-weight: bold; font-size: 0.72rem;" data-i18n="m_lever_cur_title">FCF MENSUEL RÉEL ACTUEL</div>
+          <div id="m-lever-real-val" style="font-size: 1.4rem; font-weight: 900; color: var(--text-bright); margin-top: 2px;">+0 / m</div>
+          <div id="m-lever-gain-breakdown" style="font-size: 0.75rem; opacity: 0.8; margin-top: 2px;">Détail...</div>
+        </div>
+
+        <div style="background: var(--bg-color); border: 1px solid var(--border-color); border-radius: 8px; padding: 10px; display: flex; flex-direction: column; gap: 6px;">
+          <div style="display: flex; justify-content: space-between;">
+            <span data-i18n="m_lever_cumul_lbl">Trésorerie historique cumulée :</span> <strong id="m-lever-cumul-val" style="color: var(--accent-blue);">0</strong>
+          </div>
+          <div style="display: flex; justify-content: space-between;">
+            <span data-i18n="m_lever_cap_lbl">Capital équivalent à 4% :</span> <strong id="m-lever-capital-val" style="color: var(--text-bright);">0</strong>
+          </div>
+          <div style="display: flex; justify-content: space-between;">
+            <span data-i18n="m_lever_age_lbl">Ancienneté du levier :</span> <strong id="m-lever-age" style="color: var(--brand-bright);">0 mois</strong>
+          </div>
+        </div>
+
+        <div id="m-lever-desc-box" style="background: var(--bg-color); border: 1px solid var(--border-color); border-radius: 8px; padding: 10px; font-size: 0.78rem; line-height: 1.45; opacity: 0.9;">
+          Note...
+        </div>
+      </div>
+
+      <button class="btn-primary" onclick="closeLeverDetailModal()" style="margin-top: 4px; width: 100%;" data-i18n="btn_close">Fermer</button>
+    </div>
+  </div>
+
+  <!-- MODALE EXPLICATIVE DES MINI-GAUGES -->
+  <div id="gauge-modal" class="modal-overlay" onclick="if(event.target === this) closeGaugeModal();">
+    <div class="modal-card" style="max-width: 400px; text-align: left;">
+      <div style="display: flex; align-items: center; gap: 8px;">
+        <div style="font-size: 1.8rem;" id="g-modal-icon">🛡️</div>
+        <div class="card-title" style="margin: 0;" id="g-modal-title">Indicateur</div>
+      </div>
+      <div style="font-size: 0.84rem; line-height: 1.5; color: var(--text-main); margin-top: 6px;" id="g-modal-desc">
+        Explication...
+      </div>
+      <button class="btn-primary" onclick="closeGaugeModal()" style="margin-top: 8px; width: 100%;" data-i18n="btn_understood">Compris</button>
+    </div>
+  </div>
+
+  <!-- MODALE TRAJECTOIRE CUMULÉE -->
   <div id="timeline-modal" class="modal-overlay" onclick="if(event.target === this) closeTimelineModal();">
-    <div class="modal-card">
-      <div class="card-title" style="justify-content: center; font-size: 1.15rem; color: var(--accent-purple);">📈 Courbe d'évolution cumulative</div>
-      <div id="timeline-chart-body"></div>
-      <button class="btn-primary" onclick="closeTimelineModal()" style="margin-top: 6px; width: 100%;">Fermer</button>
+    <div class="modal-card" style="max-width: 460px; max-height: 92vh; overflow-y: auto;">
+      <div style="display: flex; justify-content: space-between; align-items: center;">
+        <div class="card-title" style="margin: 0; font-size: 1.1rem; color: var(--brand-bright);" data-i18n="m_traj_header">📈 Trajectoire d'Accumulation</div>
+        <span id="timeline-hover-badge" style="font-size: 0.72rem; font-weight: 800; color: var(--brand-bright); background: var(--card-inner); padding: 2px 8px; border-radius: 6px; border: 1px solid var(--border-color);" data-i18n="m_hover_tip">Survolez les points</span>
+      </div>
+
+      <div style="background: var(--bg-color); border: 1px solid var(--border-color); border-radius: 8px; padding: 10px; display: flex; flex-direction: column; gap: 4px; margin-top: 4px;">
+        <div style="height: 140px; width: 100%;">
+          <svg id="timeline-chart-svg" width="100%" height="100%" viewBox="0 0 500 140" style="overflow: visible;"></svg>
+        </div>
+
+        <div style="display: flex; justify-content: space-between; align-items: center; font-size: 0.72rem; border-top: 1px dashed var(--border-color); padding-top: 6px; margin-top: 4px;">
+          <span style="display: flex; align-items: center; gap: 4px;">
+            <span style="display: inline-block; width: 10px; height: 2px; background: var(--border-color); border-top: 1px dashed var(--text-main);"></span>
+            <span data-i18n="m_nominal_legend">Base nominale</span>
+          </span>
+          <span style="display: flex; align-items: center; gap: 4px;">
+            <span style="display: inline-block; width: 10px; height: 3px; background: var(--brand-bright); border-radius: 2px;"></span>
+            <strong style="color: var(--brand-bright);" data-i18n="m_real_legend">Réel indexé (Inflation absorbée)</strong>
+          </span>
+        </div>
+      </div>
+
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 4px;">
+        <div style="background: var(--bg-color); border: 1px solid var(--border-color); border-radius: 8px; padding: 8px 10px;">
+          <div style="font-size: 0.68rem; opacity: 0.75; font-weight: 700;" data-i18n="m_total_saved_lbl">TRÉSORERIE SAUVÉE TOTALE</div>
+          <div id="m-traj-total-saved" style="font-size: 1.15rem; font-weight: 900; color: var(--accent-blue); margin-top: 2px;">0</div>
+          <div style="font-size: 0.68rem; opacity: 0.7;" data-i18n="m_since_first">depuis le premier levier</div>
+        </div>
+
+        <div style="background: var(--bg-color); border: 1px solid var(--border-color); border-radius: 8px; padding: 8px 10px;">
+          <div style="font-size: 0.68rem; opacity: 0.75; font-weight: 700; color: var(--accent-orange);" data-i18n="m_shield_total_lbl">BOUCLIER INFLATION TOTAL</div>
+          <div id="m-traj-inflation-shield" style="font-size: 1.15rem; font-weight: 900; color: var(--accent-orange); margin-top: 2px;">+0</div>
+          <div style="font-size: 0.68rem; opacity: 0.7;" data-i18n="m_shield_sub">hausse des prix neutralisée</div>
+        </div>
+      </div>
+
+      <div style="background: var(--bg-color); border: 1px solid var(--border-color); border-radius: 8px; padding: 10px; font-size: 0.76rem; line-height: 1.45;">
+        <div style="display: flex; justify-content: space-between; margin-bottom: 4px;">
+          <span data-i18n="m_compound_5y">Projection à 5 ans réinvestie à 7% :</span>
+          <strong id="m-traj-compound-5y" style="color: var(--brand-bright);">0</strong>
+        </div>
+        <div style="display: flex; justify-content: space-between;">
+          <span data-i18n="m_passive_annuity_lbl">Rente passive perpétuelle générée :</span>
+          <strong id="m-traj-passive-yield" style="color: var(--accent-purple);">+0 / mois à vie</strong>
+        </div>
+      </div>
+
+      <button class="btn-primary" onclick="closeTimelineModal()" style="margin-top: 4px; width: 100%;" data-i18n="btn_close">Fermer</button>
+    </div>
+  </div>
+
+  <!-- MODALE BADGE DÉBLOQUÉ -->
+  <div id="reward-modal" class="modal-overlay">
+    <div class="modal-card" style="text-align: center; max-width: 340px;">
+      <div id="reward-detail-icon" style="font-size: 2.8rem; line-height: 1; margin-top: 4px;">🏆</div>
+      <div id="reward-detail-title" class="card-title" style="justify-content: center; font-size: 1.1rem; margin: 4px 0;">Récompense</div>
+      <p id="reward-detail-desc" style="font-size: 0.82rem; line-height: 1.45; color: var(--text-main); opacity: 0.9;">Description...</p>
+      <button class="btn-primary" onclick="closeRewardModal()" style="margin-top: 8px; padding: 8px 16px;" data-i18n="btn_awesome">Génial !</button>
     </div>
   </div>
 
   <!-- MODALE DIALOGUE UNIFIÉE -->
   <div id="custom-dialog-modal" class="modal-overlay" onclick="if(event.target === this) closeCustomDialog();">
-    <div class="modal-card" style="text-align: center;">
-      <div style="font-size: 2.6rem; line-height: 1;" id="dialog-icon">ℹ️</div>
-      <div class="card-title" style="justify-content: center; font-size: 1.15rem; margin: 4px 0;" id="dialog-title">Notification</div>
-      <div style="font-size: 0.85rem; line-height: 1.5; color: var(--text-main); margin-bottom: 6px;" id="dialog-message">Message</div>
+    <div class="modal-card" style="text-align: center; max-width: 360px;">
+      <div style="font-size: 2.4rem; line-height: 1;" id="dialog-icon">ℹ️</div>
+      <div class="card-title" style="justify-content: center; font-size: 1.1rem; margin: 4px 0;" id="dialog-title">Notification</div>
+      <div style="font-size: 0.82rem; line-height: 1.45; color: var(--text-main); margin-bottom: 6px;" id="dialog-message">Message</div>
       <div style="display: flex; gap: 8px; justify-content: center; margin-top: 6px;" id="dialog-buttons">
-        <button class="btn-primary" onclick="closeCustomDialog()" style="width: 100%; padding: 10px;">OK</button>
+        <button class="btn-primary" onclick="closeCustomDialog()" style="width: 100%;">OK</button>
       </div>
     </div>
   </div>
 
   <script>
+    /* ==========================================================================
+       ENDPOINT DU WORKER CLOUDFLARE POUR L'INFLATION EN DIRECT
+       ========================================================================== */
+    const WORKER_INFLATION_URL = 'https://mon-worker.ton-pseudo.workers.dev/inflation';
+
+    const REGION_CONFIG = {
+      FR: { lang: 'fr', curr: 'EUR', sym: '€', name: 'France' },
+      BE: { lang: 'fr', curr: 'EUR', sym: '€', name: 'Belgique' },
+      CH: { lang: 'fr', curr: 'CHF', sym: 'CHF', name: 'Suisse' },
+      CA: { lang: 'en', curr: 'CAD', sym: '$', name: 'Canada' },
+      US: { lang: 'en', curr: 'USD', sym: '$', name: 'États-Unis' },
+      UK: { lang: 'en', curr: 'GBP', sym: '£', name: 'Royaume-Uni' }
+    };
+
+    let INFLATION_SECTOR_RATES = {
+      FR: {
+        energie: [{ y:2020, r:0.015 }, { y:2021, r:0.105 }, { y:2022, r:0.231 }, { y:2023, r:0.158 }, { y:2024, r:0.052 }, { y:2025, r:0.030 }],
+        nourriture: [{ y:2020, r:0.019 }, { y:2021, r:0.006 }, { y:2022, r:0.068 }, { y:2023, r:0.118 }, { y:2024, r:0.016 }, { y:2025, r:0.020 }],
+        logement: [{ y:2020, r:0.010 }, { y:2021, r:0.014 }, { y:2022, r:0.035 }, { y:2023, r:0.035 }, { y:2024, r:0.032 }, { y:2025, r:0.022 }],
+        transports: [{ y:2020, r:-0.005 }, { y:2021, r:0.075 }, { y:2022, r:0.142 }, { y:2023, r:0.062 }, { y:2024, r:0.025 }, { y:2025, r:0.020 }],
+        abonnements: [{ y:2020, r:0.005 }, { y:2021, r:0.008 }, { y:2022, r:0.018 }, { y:2023, r:0.032 }, { y:2024, r:0.021 }, { y:2025, r:0.018 }],
+        divers: [{ y:2020, r:0.011 }, { y:2021, r:0.016 }, { y:2022, r:0.052 }, { y:2023, r:0.049 }, { y:2024, r:0.021 }, { y:2025, r:0.020 }]
+      },
+      BE: {
+        energie: [{ y:2020, r:0.010 }, { y:2021, r:0.180 }, { y:2022, r:0.380 }, { y:2023, r:-0.100 }, { y:2024, r:0.045 }, { y:2025, r:0.025 }],
+        nourriture: [{ y:2020, r:0.020 }, { y:2021, r:0.012 }, { y:2022, r:0.085 }, { y:2023, r:0.125 }, { y:2024, r:0.022 }, { y:2025, r:0.020 }],
+        logement: [{ y:2020, r:0.015 }, { y:2021, r:0.020 }, { y:2022, r:0.060 }, { y:2023, r:0.050 }, { y:2024, r:0.035 }, { y:2025, r:0.025 }],
+        transports: [{ y:2020, r:0.000 }, { y:2021, r:0.070 }, { y:2022, r:0.120 }, { y:2023, r:0.050 }, { y:2024, r:0.025 }, { y:2025, r:0.020 }],
+        abonnements: [{ y:2020, r:0.010 }, { y:2021, r:0.015 }, { y:2022, r:0.040 }, { y:2023, r:0.040 }, { y:2024, r:0.025 }, { y:2025, r:0.020 }],
+        divers: [{ y:2020, r:0.012 }, { y:2021, r:0.025 }, { y:2022, r:0.070 }, { y:2023, r:0.045 }, { y:2024, r:0.028 }, { y:2025, r:0.022 }]
+      },
+      CH: {
+        energie: [{ y:2020, r:-0.010 }, { y:2021, r:0.080 }, { y:2022, r:0.160 }, { y:2023, r:0.080 }, { y:2024, r:0.020 }, { y:2025, r:0.015 }],
+        nourriture: [{ y:2020, r:0.005 }, { y:2021, r:0.000 }, { y:2022, r:0.025 }, { y:2023, r:0.035 }, { y:2024, r:0.010 }, { y:2025, r:0.010 }],
+        logement: [{ y:2020, r:0.010 }, { y:2021, r:0.012 }, { y:2022, r:0.020 }, { y:2023, r:0.030 }, { y:2024, r:0.025 }, { y:2025, r:0.018 }],
+        transports: [{ y:2020, r:-0.020 }, { y:2021, r:0.050 }, { y:2022, r:0.080 }, { y:2023, r:0.025 }, { y:2024, r:0.010 }, { y:2025, r:0.010 }],
+        abonnements: [{ y:2020, r:0.000 }, { y:2021, r:0.005 }, { y:2022, r:0.010 }, { y:2023, r:0.015 }, { y:2024, r:0.010 }, { y:2025, r:0.008 }],
+        divers: [{ y:2020, r:-0.005 }, { y:2021, r:0.006 }, { y:2022, r:0.028 }, { y:2023, r:0.021 }, { y:2024, r:0.012 }, { y:2025, r:0.011 }]
+      },
+      US: {
+        energie: [{ y:2020, r:0.020 }, { y:2021, r:0.210 }, { y:2022, r:0.250 }, { y:2023, r:-0.050 }, { y:2024, r:0.035 }, { y:2025, r:0.025 }],
+        nourriture: [{ y:2020, r:0.035 }, { y:2021, r:0.040 }, { y:2022, r:0.099 }, { y:2023, r:0.058 }, { y:2024, r:0.022 }, { y:2025, r:0.024 }],
+        logement: [{ y:2020, r:0.025 }, { y:2021, r:0.035 }, { y:2022, r:0.065 }, { y:2023, r:0.065 }, { y:2024, r:0.048 }, { y:2025, r:0.032 }],
+        transports: [{ y:2020, r:0.010 }, { y:2021, r:0.150 }, { y:2022, r:0.180 }, { y:2023, r:0.020 }, { y:2024, r:0.030 }, { y:2025, r:0.025 }],
+        abonnements: [{ y:2020, r:0.010 }, { y:2021, r:0.015 }, { y:2022, r:0.025 }, { y:2023, r:0.040 }, { y:2024, r:0.030 }, { y:2025, r:0.020 }],
+        divers: [{ y:2020, r:0.014 }, { y:2021, r:0.047 }, { y:2022, r:0.080 }, { y:2023, r:0.041 }, { y:2024, r:0.029 }, { y:2025, r:0.024 }]
+      },
+      CA: {
+        energie: [{ y:2020, r:0.015 }, { y:2021, r:0.140 }, { y:2022, r:0.220 }, { y:2023, r:-0.020 }, { y:2024, r:0.030 }, { y:2025, r:0.022 }],
+        nourriture: [{ y:2020, r:0.025 }, { y:2021, r:0.030 }, { y:2022, r:0.089 }, { y:2023, r:0.075 }, { y:2024, r:0.025 }, { y:2025, r:0.022 }],
+        logement: [{ y:2020, r:0.020 }, { y:2021, r:0.040 }, { y:2022, r:0.067 }, { y:2023, r:0.062 }, { y:2024, r:0.055 }, { y:2025, r:0.035 }],
+        transports: [{ y:2020, r:0.005 }, { y:2021, r:0.110 }, { y:2022, r:0.145 }, { y:2023, r:0.015 }, { y:2024, r:0.028 }, { y:2025, r:0.022 }],
+        abonnements: [{ y:2020, r:0.005 }, { y:2021, r:0.010 }, { y:2022, r:0.020 }, { y:2023, r:0.025 }, { y:2024, r:0.018 }, { y:2025, r:0.015 }],
+        divers: [{ y:2020, r:0.012 }, { y:2021, r:0.038 }, { y:2022, r:0.068 }, { y:2023, r:0.039 }, { y:2024, r:0.025 }, { y:2025, r:0.022 }]
+      },
+      UK: {
+        energie: [{ y:2020, r:0.010 }, { y:2021, r:0.240 }, { y:2022, r:0.420 }, { y:2023, r:0.120 }, { y:2024, r:-0.050 }, { y:2025, r:0.028 }],
+        nourriture: [{ y:2020, r:0.015 }, { y:2021, r:0.018 }, { y:2022, r:0.125 }, { y:2023, r:0.145 }, { y:2024, r:0.030 }, { y:2025, r:0.025 }],
+        logement: [{ y:2020, r:0.015 }, { y:2021, r:0.025 }, { y:2022, r:0.075 }, { y:2023, r:0.070 }, { y:2024, r:0.045 }, { y:2025, r:0.030 }],
+        transports: [{ y:2020, r:-0.010 }, { y:2021, r:0.120 }, { y:2022, r:0.160 }, { y:2023, r:0.035 }, { y:2024, r:0.025 }, { y:2025, r:0.020 }],
+        abonnements: [{ y:2020, r:0.015 }, { y:2021, r:0.020 }, { y:2022, r:0.045 }, { y:2023, r:0.065 }, { y:2024, r:0.040 }, { y:2025, r:0.025 }],
+        divers: [{ y:2020, r:0.012 }, { y:2021, r:0.045 }, { y:2022, r:0.091 }, { y:2023, r:0.062 }, { y:2024, r:0.032 }, { y:2025, r:0.024 }]
+      }
+    };
+
+    const CAT_ICONS = {
+      energie: '⚡', nourriture: '🛒', logement: '🏠',
+      transports: '🚗', abonnements: '📱', divers: '🛍️'
+    };
+
+    /* COULEURS HARMONISÉES : DIVERS = VIOLET AMÉTHYSTE VIBRANT (#A855F7) */
+    const CAT_COLORS = {
+      energie: '#f97316',      /* Orange Ambré */
+      nourriture: '#10b981',   /* Vert Émeraude */
+      logement: '#38bdf8',     /* Bleu Ciel */
+      transports: '#34d399',   /* Vert Menthe */
+      abonnements: '#ec4899',  /* Rose Fuchsia */
+      divers: '#a855f7'        /* Violet Améthyste */
+    };
+    const CAT_ORDER = ["energie", "nourriture", "logement", "transports", "abonnements", "divers"];
+
     const I18N = {
       fr: {
         subtitle: "L'avantage asymétrique du quotidien",
-        desc: "Réduis ton OPEX sans sacrifier ton confort ni ton temps, et réinjecte le FCF libéré dans ton capital.",
-        nav_library: "Bibliothèque",
-        nav_plan: "Plan & Analyses",
-        nav_eco: "Écosystème",
+        desc: "Réduis ton OPEX sans sacrifier ton confort, protège ton pouvoir d'achat contre l'inflation et réinjecte le FCF libéré dans ton capital.",
+        tab_input: "Saisie & Leviers",
+        tab_plan: "Plan KLON",
+        tab_eco: "Écosystème",
         theme_dark: "🌙 Sombre",
         theme_light: "☀️ Clair",
-        user_name_placeholder: "Alpha Picker",
-        filter_cat_all: "Catégorie : Toutes",
-        cat_logement: "🏠 Logement",
-        cat_energie: "⚡ Énergie & Fluides",
-        cat_abonnements: "📱 Abonnements & Services",
-        cat_transports: "🚗 Transports & Véhicules",
-        cat_nourriture: "🛒 Nourriture & Quotidien",
-        cat_finance: "🏦 Banque & Finance",
-        cat_achats: "🛍️ Achats & Équipements",
-        cat_bricolage: "🧰 Bricolage & Travaux",
-        cat_divers: "🌀 Divers",
-        add_title: "🛠️ Ajoute ton astuce et son gain",
-        edit_title: "✏️ Modifier mon astuce",
-        list_title: "📚 Mes astuces",
-        in_title_ph: "Titre de l'astuce",
-        in_gain_ph: "Gain estimé (€)",
-        in_desc_ph: "Détail (optionnel)...",
-        freq_once: "Ponctuel (une fois)",
-        freq_monthly: "Mensuel (récurrent)",
-        freq_yearly: "Annuel (récurrent)",
-        gain_suffix_once: "(ponctuel)",
-        gain_suffix_monthly: "/ mois",
-        gain_suffix_yearly: "/ an",
-        btn_add: "Ajouter à ma bibliothèque",
-        btn_update: "Enregistrer les modifications",
+        theme_cb: "👁️ Daltonien",
+        form_new_title: "🛠️ Nouveau Levier Récurrent",
+        ph_title: "Intitulé de l'optimisation",
+        cat_energie: "⚡ Énergie & Eau",
+        cat_nourriture: "🛒 Alimentation & Quotidien",
+        cat_logement: "🏠 Logement & Assurances",
+        cat_transports: "🚗 Carburant & Mobilité",
+        cat_abonnements: "📱 Télécoms & Numérique",
+        cat_divers: "🛍️ Biens & Services Divers",
+        lbl_gain: "Gain départ",
+        lbl_month: "Mois",
+        lbl_year: "Année",
+        ph_desc: "Note ou méthode appliquée (optionnel)...",
+        btn_submit: "Valider le levier",
+        btn_update: "Mettre à jour le levier",
         btn_cancel: "Annuler",
+        filter_all: "Tous les secteurs",
         data_mgmt_title: "💾 Gestion des Données",
         btn_export: "💾 Exporter",
         btn_import: "📂 Importer",
         btn_reset: "Réinitialiser",
-        empty_search: "Aucune astuce trouvée.",
-        alert_need_title: "Veuillez donner un titre à votre astuce.",
-        alert_import_error: "Le fichier importé n'est pas un JSON valide de fiches KLON Edge.",
-        confirm_delete_title: "Supprimer l'astuce",
-        confirm_delete_msg: "Es-tu sûr de vouloir supprimer définitivement cette astuce ?",
-        backup_unsaved_title: "Sauvegarde Recommandée",
-        backup_unsaved_msg: "De nouvelles modifications ont été enregistrées localement dans ton navigateur, mais n'ont pas encore été exportées.",
-        eco_disclaimer: "<strong>🤝 Transparence & Parrainage :</strong> Les liens ci-dessous sont des liens d'affiliation...",
+        hero_fcf: "FCF RÉCURRENT INDEXÉ",
+        hero_cumul: "TRÉSORERIE CUMULÉE",
+        stat_cumul_sub: "Économies réelles à ce jour",
+        btn_rewards: "🏆 Voir les Récompenses ▾",
+        btn_rewards_hide: "🏆 Masquer les Récompenses ▴",
+        g_shield: "🛡️ Bouclier Inflation",
+        g_annuity: "⛽ Rente Passive (4%)",
+        g_capital: "🏛️ Capital Équivalent",
+        g_annual: "⚡ Gain Annuel Libéré",
+        sector_breakdown: "💧 Répartition du FCF par Secteur",
+        m_rec_title: "Pourquoi uniquement du récurrent ?",
+        m_rec_desc: "<strong>L'avantage asymétrique du Free Cash-Flow :</strong><br><br>Une économie ponctuelle (ex: revendre un objet) n'enrichit ton capital qu'une seule fois.<br><br>En revanche, **éradiquer ou réduire une dépense récurrente** (ex: forfait, électricité, courses) libère un flux perpétuel. Ce flux grandit chaque année avec l'inflation évitée et équivaut mathématiquement à détenir un actif financier qui te verse un dividende mensuel à vie.",
+        btn_understood: "Compris",
+        btn_close: "Fermer",
+        btn_awesome: "Génial !",
+        m_pie_title: "Répartition du FCF par Secteur",
+        m_lever_cur_title: "FCF MENSUEL RÉEL ACTUEL",
+        m_lever_cumul_lbl: "Trésorerie historique cumulée :",
+        m_lever_cap_lbl: "Capital équivalent à 4% :",
+        m_lever_age_lbl: "Ancienneté du levier :",
+        m_traj_header: "📈 Trajectoire d'Accumulation",
+        m_hover_tip: "Survolez les points",
+        m_nominal_legend: "Base nominale",
+        m_real_legend: "Réel indexé (Inflation absorbée)",
+        m_total_saved_lbl: "TRÉSORERIE SAUVÉE TOTALE",
+        m_since_first: "depuis le premier levier",
+        m_shield_total_lbl: "BOUCLIER INFLATION TOTAL",
+        m_shield_sub: "hausse des prix neutralisée",
+        m_compound_5y: "Projection à 5 ans réinvestie à 7% :",
+        m_passive_annuity_lbl: "Rente passive perpétuelle générée :",
+        eco_disclaimer: "<strong>🤝 Transparence & Parrainage :</strong> Les liens ci-dessous sont des liens d'affiliation et de parrainage. En ouvrant un compte via ces accès, vous pouvez bénéficier des bonus de bienvenue proposés par les plateformes tout en soutenant le développement gratuit de l'application.",
         eco_brokers: "📈 Banques & Courtiers",
         eco_crypto: "🪙 Crypto & Rendement Alternatif",
         eco_portfolio: "🎯 Portefeuille & Performances",
@@ -587,123 +976,217 @@
         eco_substack: "Suivre le Substack Alpha Picker",
         eco_suite: "🧰 La Suite KLON",
         eco_support: "☕ Soutenir le Projet",
-        eco_support_desc: "Si cet outil vous aide dans votre parcours...",
+        eco_support_desc: "Si cet outil vous aide dans votre parcours d'autonomie financière et d'optimisation de vos flux, vous pouvez soutenir le projet via les liens ci-dessus ou par un don.",
         eco_paypal: "Faire un don via PayPal",
-        footer_dev: "<strong>KLON Edge</strong> — Application gratuite & Open Source développée par <strong>Alpha Picker</strong>.",
-        footer_privacy: "🛡️ <strong>Confidentialité :</strong> Aucun cookie de suivi...",
-        footer_disclaimer: "⚠️ <strong>Avertissement :</strong> Cet outil sert de simulation personnelle..."
+        footer_dev: "<strong>KLON Edge</strong> — Application gratuite & Open Source développée par <strong>Alpha Picker</strong> et hébergée sur GitHub Pages.",
+        footer_privacy: "🛡️ <strong>Confidentialité :</strong> Aucun cookie de suivi, aucune collecte de données. Toutes vos saisies restent exclusivement stockées dans votre navigateur.",
+        footer_disclaimer: "⚠️ <strong>Avertissement :</strong> Cet outil me sert de simulation personnelle et éducative. Il ne constitue en aucun cas un conseil en investissement ou une incitation financière."
       },
       en: {
         subtitle: "Your asymmetric daily edge",
-        desc: "Cut your OPEX without sacrificing comfort or time...",
-        nav_library: "Library",
-        nav_plan: "Plan & Analytics",
-        nav_eco: "Ecosystem",
+        desc: "Cut your OPEX without sacrificing comfort, protect your purchasing power from inflation, and reinvest freed cash into your capital.",
+        tab_input: "Data & Levers",
+        tab_plan: "KLON Plan",
+        tab_eco: "Ecosystem",
         theme_dark: "🌙 Dark",
         theme_light: "☀️ Light",
-        user_name_placeholder: "Alpha Picker",
-        filter_cat_all: "Category: All",
-        cat_logement: "🏠 Housing",
+        theme_cb: "👁️ Colorblind",
+        form_new_title: "🛠️ New Recurring Lever",
+        ph_title: "Optimization name",
         cat_energie: "⚡ Energy & Utilities",
-        cat_abonnements: "📱 Subscriptions & Services",
-        cat_transports: "🚗 Transport & Vehicles",
-        cat_nourriture: "🛒 Food & Daily",
-        cat_finance: "🏦 Banking & Finance",
-        cat_achats: "🛍️ Purchases & Equipment",
-        cat_bricolage: "🧰 DIY & Works",
-        cat_divers: "🌀 Miscellaneous",
-        add_title: "🛠️ Add your tip and gain",
-        edit_title: "✏️ Edit my tip",
-        list_title: "📚 My tips",
-        in_title_ph: "Tip title",
-        in_gain_ph: "Estimated gain (€)",
-        in_desc_ph: "Details (optional)...",
-        freq_once: "One-off (once)",
-        freq_monthly: "Monthly (recurring)",
-        freq_yearly: "Yearly (recurring)",
-        gain_suffix_once: "(one-off)",
-        gain_suffix_monthly: "/ month",
-        gain_suffix_yearly: "/ year",
-        btn_add: "Add to my library",
-        btn_update: "Save changes",
+        cat_nourriture: "🛒 Food & Daily Expenses",
+        cat_logement: "🏠 Housing & Insurance",
+        cat_transports: "🚗 Fuel & Transport",
+        cat_abonnements: "📱 Subscriptions & Telecom",
+        cat_divers: "🛍️ Gear & Miscellaneous",
+        lbl_gain: "Starting gain",
+        lbl_month: "Month",
+        lbl_year: "Year",
+        ph_desc: "Method or note (optional)...",
+        btn_submit: "Save lever",
+        btn_update: "Update lever",
         btn_cancel: "Cancel",
+        filter_all: "All sectors",
         data_mgmt_title: "💾 Data Management",
         btn_export: "💾 Export",
         btn_import: "📂 Import",
         btn_reset: "Reset",
-        empty_search: "No tips found.",
-        alert_need_title: "Please give your tip a title.",
-        alert_import_error: "Invalid KLON Edge JSON backup file.",
-        confirm_delete_title: "Delete Tip",
-        confirm_delete_msg: "Are you sure you want to permanently delete this tip?",
-        backup_unsaved_title: "Unsaved Changes",
-        backup_unsaved_msg: "New updates are saved locally but not exported yet.",
-        eco_disclaimer: "<strong>🤝 Transparency & Referrals:</strong> Referral links...",
+        hero_fcf: "REAL INDEXED FCF",
+        hero_cumul: "CUMULATIVE TREASURY",
+        stat_cumul_sub: "Real savings to date",
+        btn_rewards: "🏆 View Rewards ▾",
+        btn_rewards_hide: "🏆 Hide Rewards ▴",
+        g_shield: "🛡️ Inflation Shield",
+        g_annuity: "⛽ Passive Yield (4%)",
+        g_capital: "🏛️ Equivalent Capital",
+        g_annual: "⚡ Annual Unlocked Gain",
+        sector_breakdown: "💧 FCF Breakdown by Sector",
+        m_rec_title: "Why only recurring expenses?",
+        m_rec_desc: "<strong>The asymmetric edge of Free Cash-Flow:</strong><br><br>A one-off saving (like selling an item) only boosts your net worth once.<br><br>In contrast, **eradicating or cutting a recurring expense** (phone plan, energy, groceries) frees a permanent cash flow. That cash flow grows every year with beaten inflation and mathematically equals owning a financial asset that pays you a dividend every month for life.",
+        btn_understood: "Understood",
+        btn_close: "Close",
+        btn_awesome: "Awesome!",
+        m_pie_title: "FCF Breakdown by Sector",
+        m_lever_cur_title: "CURRENT REAL MONTHLY FCF",
+        m_lever_cumul_lbl: "Historical cumulative cash:",
+        m_lever_cap_lbl: "Equivalent capital at 4%:",
+        m_lever_age_lbl: "Lever age:",
+        m_traj_header: "📈 Wealth Accumulation Curve",
+        m_hover_tip: "Hover over points",
+        m_nominal_legend: "Nominal basis",
+        m_real_legend: "Real indexed (Inflation beaten)",
+        m_total_saved_lbl: "TOTAL TREASURY SAVED",
+        m_since_first: "since first lever",
+        m_shield_total_lbl: "TOTAL INFLATION SHIELD",
+        m_shield_sub: "price increases neutralized",
+        m_compound_5y: "5-year projection reinvested at 7%:",
+        m_passive_annuity_lbl: "Perpetual passive yield created:",
+        eco_disclaimer: "<strong>🤝 Transparency & Referrals:</strong> Referral links below provide welcome bonuses while supporting free development.",
         eco_brokers: "📈 Banks & Brokers",
         eco_crypto: "🪙 Crypto & Yield",
-        eco_portfolio: "🎯 Portfolio",
-        eco_wikifolio: "Follow Wikifolio",
-        eco_theses: "🔬 Analysis",
-        eco_substack: "Follow Substack",
+        eco_portfolio: "🎯 Portfolio & Track Record",
+        eco_wikifolio: "Follow Alpha Picker Wikifolio",
+        eco_theses: "🔬 Theses & Analysis",
+        eco_substack: "Follow Alpha Picker Substack",
         eco_suite: "🧰 The KLON Suite",
-        eco_support: "☕ Support Project",
-        eco_support_desc: "If this tool helps you on your path to financial freedom...",
+        eco_support: "☕ Support the Project",
+        eco_support_desc: "If this tool helps you on your path to financial freedom and runway optimization, you can support development with a donation.",
         eco_paypal: "Donate via PayPal",
-        footer_dev: "<strong>KLON Edge</strong> — Free & Open Source app.",
-        footer_privacy: "🛡️ <strong>Privacy:</strong> No tracking cookies...",
-        footer_disclaimer: "⚠️ <strong>Disclaimer:</strong> Educational simulation only..."
+        footer_dev: "<strong>KLON Edge</strong> — Free & Open Source app developed by <strong>Alpha Picker</strong>.",
+        footer_privacy: "🛡️ <strong>Privacy:</strong> No tracking cookies, no data collection. All inputs remain exclusively stored in your browser.",
+        footer_disclaimer: "⚠️ <strong>Disclaimer:</strong> Educational and personal simulation only. Not financial advice."
       }
     };
 
-    function t(key, params = {}) {
+    function t(key) {
       const lang = db.lang || 'fr';
-      let text = I18N[lang]?.[key] || I18N.fr?.[key] || key;
-      Object.keys(params).forEach(p => { text = text.replace(new RegExp(`\\{${p}\\}`, 'g'), params[p]); });
-      return text;
+      return I18N[lang]?.[key] || I18N.fr?.[key] || key;
     }
 
-    function formatEUR(n) { return Math.round(n || 0).toLocaleString('fr-FR'); }
+    function applyLanguageUI() {
+      const curLang = db.lang || 'fr';
+      document.documentElement.setAttribute('lang', curLang);
 
-    /* PALETTE HARMONISÉE STRICTEMENT UNIFORME SUR TOUTE L'APPLICATION */
-    const CAT_COLORS = {
-      logement: '#38bdf8',     /* Bleu Ciel (Logement) */
-      energie: '#f97316',      /* Orange Ambré */
-      abonnements: '#ec4899',  /* Rose / Fuchsia */
-      transports: '#34d399',   /* Vert Émeraude */
-      nourriture: '#10b981',   /* Vert Vert */
-      finance: '#a855f7',      /* Violet (Banque & Finance - Nette distinction) */
-      achats: '#eab308',       /* Jaune Or */
-      bricolage: '#ef4444',     /* Rouge Rouge */
-      divers: '#64748b'        /* Gris Ardoise */
-    };
-    const CAT_ORDER = ["logement", "energie", "abonnements", "transports", "nourriture", "finance", "achats", "bricolage", "divers"];
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const k = el.getAttribute('data-i18n');
+        if (k) el.innerHTML = t(k);
+      });
+      document.querySelectorAll('[data-i18n-ph]').forEach(el => {
+        const k = el.getAttribute('data-i18n-ph');
+        if (k) el.placeholder = t(k);
+      });
 
-    let dialogConfirmCallback = null;
-    let expandedCardIds = new Set();
-    let editingId = null;
+      renderLibrary();
+      updateUserLabels();
+      if (document.getElementById('tab2').classList.contains('active')) {
+        renderPlan();
+      }
+    }
 
     let localData = JSON.parse(localStorage.getItem('klon_edge_db'));
     if (!localData || typeof localData !== 'object') {
-      localData = { theme: 'dark', lang: 'fr', userName: '', hasUnsavedChanges: false, customEdges: [] };
+      localData = {
+        theme: 'dark',
+        region: 'FR',
+        lang: 'fr',
+        userName: '',
+        hasUnsavedChanges: false,
+        cardsOrder: [],
+        everUnlockedRewards: [],
+        customEdges: [],
+        cachedInflation: null
+      };
       localStorage.setItem('klon_edge_db', JSON.stringify(localData));
     }
     let db = localData;
     if (!db.theme) db.theme = 'dark';
-    if (!db.lang) db.lang = 'fr';
+    if (!db.region) db.region = 'FR';
+    if (!db.lang) db.lang = (REGION_CONFIG[db.region]?.lang) || 'fr';
+    if (!Array.isArray(db.cardsOrder)) db.cardsOrder = [];
+    if (!Array.isArray(db.everUnlockedRewards)) db.everUnlockedRewards = [];
     if (!Array.isArray(db.customEdges)) db.customEdges = [];
 
+    if (db.cachedInflation && db.cachedInflation[db.region]) {
+      INFLATION_SECTOR_RATES[db.region] = db.cachedInflation[db.region];
+    }
+
+    let expandedCardIds = new Set();
+    let editingId = null;
+    let isRewardsVisible = false;
+    let currentImageTargetId = null;
+    let dialogConfirmCallback = null;
+
     function saveData() { localStorage.setItem('klon_edge_db', JSON.stringify(db)); }
+    function markUnsavedChanges() { db.hasUnsavedChanges = true; saveData(); updateBackupWarningUI(); }
 
     function updateBackupWarningUI() {
       const badge = document.getElementById('backup-warning');
       if (badge) badge.style.display = db.hasUnsavedChanges ? 'inline-flex' : 'none';
     }
 
-    function markUnsavedChanges() { db.hasUnsavedChanges = true; saveData(); updateBackupWarningUI(); }
+    function showBackupWarningInfo() {
+      showCustomDialog('💾', t('data_mgmt_title'), db.lang === 'en' ? 'New updates are stored locally but not exported yet.' : 'De nouvelles modifications ont été enregistrées localement, mais n\'ont pas encore été exportées.');
+    }
 
     function saveUserName() {
       const newName = document.getElementById('user-name-input').value.trim();
-      if (db.userName !== newName) { db.userName = newName; markUnsavedChanges(); }
+      if (db.userName !== newName) {
+        db.userName = newName;
+        markUnsavedChanges();
+        updateUserLabels();
+      }
+    }
+
+    function updateUserLabels() {
+      const uName = db.userName.trim();
+      const heroFcfLabel = document.getElementById('lbl-hero-fcf');
+      const heroCumulLabel = document.getElementById('lbl-hero-cumul');
+      const invTitle = document.getElementById('lbl-inventory-title');
+      const planTitle = document.getElementById('lbl-plan-title');
+
+      if (uName) {
+        if (heroFcfLabel) heroFcfLabel.innerText = db.lang === 'en' ? `${uName.toUpperCase()}'S REAL FCF` : `FCF RÉCURRENT DE ${uName.toUpperCase()}`;
+        if (heroCumulLabel) heroCumulLabel.innerText = db.lang === 'en' ? `${uName.toUpperCase()} HAS SAVED` : `${uName.toUpperCase()} A SAUVÉ`;
+        if (invTitle) invTitle.innerText = db.lang === 'en' ? `📦 ${uName}'s Levers` : `📦 Leviers de ${uName}`;
+        if (planTitle) planTitle.innerText = db.lang === 'en' ? `🚀 ${uName}'s Levers` : `🚀 Leviers de ${uName}`;
+      } else {
+        if (heroFcfLabel) heroFcfLabel.innerText = t('hero_fcf');
+        if (heroCumulLabel) heroCumulLabel.innerText = t('hero_cumul');
+        if (invTitle) invTitle.innerText = db.lang === 'en' ? `📦 Levers Inventory` : `📦 Inventaire des Leviers`;
+        if (planTitle) planTitle.innerText = db.lang === 'en' ? `🚀 Levers under Management` : `🚀 Leviers sous Gestion`;
+      }
+    }
+
+    function getCurrencySymbol() {
+      const conf = REGION_CONFIG[db.region] || REGION_CONFIG.FR;
+      return conf.sym;
+    }
+
+    function fmt(n) {
+      const sym = getCurrencySymbol();
+      const locale = db.lang === 'en' ? 'en-US' : 'fr-FR';
+      return Math.round(n || 0).toLocaleString(locale) + ' ' + sym;
+    }
+
+    function fmtCompact(n) {
+      const sym = getCurrencySymbol();
+      const locale = db.lang === 'en' ? 'en-US' : 'fr-FR';
+      const formatted = new Intl.NumberFormat(locale, { notation: 'compact', maximumFractionDigits: 1 }).format(n || 0);
+      return `${formatted} ${sym}`;
+    }
+
+    function changeRegion(reg) {
+      db.region = reg;
+      db.lang = REGION_CONFIG[reg]?.lang || 'fr';
+      markUnsavedChanges();
+      document.querySelectorAll('.curr-sym').forEach(el => el.innerText = getCurrencySymbol());
+      fetchInflationFromWorker(reg);
+      applyLanguageUI();
+    }
+
+    function changeTheme(themeName) {
+      db.theme = themeName; saveData();
+      document.documentElement.setAttribute('data-theme', themeName);
     }
 
     function switchTab(tabId, e) {
@@ -715,65 +1198,211 @@
       if (tabId === 'tab2') renderPlan();
     }
 
-    function changeTheme(themeName) {
-      db.theme = themeName; saveData();
-      document.documentElement.setAttribute('data-theme', themeName);
-      const sel = document.getElementById('theme-select');
-      if (sel) sel.value = themeName;
+    function catLabel(cat) {
+      return t("cat_" + cat);
     }
 
-    function changeLanguage(langCode) {
-      db.lang = langCode; saveData();
-      document.documentElement.setAttribute('lang', langCode);
-      const sel = document.getElementById('lang-select');
-      if (sel) sel.value = langCode;
+    function openRecurringHelpModal() {
+      document.getElementById('recurring-help-modal').classList.add('active');
+    }
+    function closeRecurringHelpModal() {
+      document.getElementById('recurring-help-modal').classList.remove('active');
+    }
 
-      document.querySelectorAll('[data-i18n]').forEach(el => {
-        const k = el.getAttribute('data-i18n');
-        if (k) el.innerHTML = t(k);
-      });
-      document.querySelectorAll('[data-i18n-ph]').forEach(el => {
-        const k = el.getAttribute('data-i18n-ph');
-        if (k) el.placeholder = t(k);
-      });
+    function autoGrowTextarea(element) {
+      element.style.height = "auto";
+      element.style.height = (element.scrollHeight) + "px";
+    }
+
+    /* ==========================================================================
+       SYNCHRONISATION DE L'INFLATION VIA CLOUDFLARE WORKER
+       ========================================================================== */
+    async function fetchInflationFromWorker(countryCode) {
+      const code = countryCode || db.region || 'FR';
+      try {
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 6000);
+        const res = await fetch(`${WORKER_INFLATION_URL}?country=${code}`, { signal: controller.signal });
+        clearTimeout(timeoutId);
+
+        if (res.ok) {
+          const data = await res.json();
+          if (data && data.rates) {
+            INFLATION_SECTOR_RATES[code] = data.rates;
+            if (!db.cachedInflation) db.cachedInflation = {};
+            db.cachedInflation[code] = data.rates;
+            saveData();
+            return true;
+          }
+        }
+      } catch (e) {
+        console.warn("Worker d'inflation non disponible, bascule sur modèle local :", e.message);
+      }
+      return false;
+    }
+
+    async function refreshInflationFromCloudflare() {
+      const btn = document.getElementById('btn-refresh-inflation');
+      if (btn) btn.classList.add('spinning');
+
+      try {
+        const success = await fetchInflationFromWorker(db.region);
+        renderAll();
+
+        const conf = REGION_CONFIG[db.region] || REGION_CONFIG.FR;
+        const msg = success 
+          ? (db.lang === 'en' ? `Official inflation data for <strong>${conf.name}</strong> synchronized live from Cloudflare!` : `Données d'inflation officielles pour <strong>${conf.name}</strong> synchronisées en direct depuis Cloudflare !`)
+          : (db.lang === 'en' ? `Inflation data up to date (autonomous model active for ${conf.name}).` : `Données d'inflation à jour (modèle autonome actif pour ${conf.name}).`);
+        showCustomDialog('🔄', (db.lang === 'en' ? 'Inflation Synced' : 'Inflation Synchronisée'), msg);
+      } finally {
+        if (btn) btn.classList.remove('spinning');
+      }
+    }
+
+    /* ==========================================================================
+       GESTION DES IMAGES PERSONNALISÉES
+       ========================================================================== */
+    function triggerImageUpload(edgeId) {
+      const edge = db.customEdges.find(e => e.id === edgeId);
+      if (!edge) return;
+      currentImageTargetId = edgeId;
+
+      if (edge.customImage) {
+        showCustomDialog(
+          '🖼️', (db.lang === 'en' ? 'Icon Settings' : 'Gestion de l\'icône'),
+          db.lang === 'en' ? 'Do you want to change the picture or reset to the sector icon?' : 'Souhaites-tu remplacer l\'image ou réinitialiser l\'icône officielle du secteur ?',
+          false, null, 'OK'
+        );
+        const btnBox = document.getElementById('dialog-buttons');
+        btnBox.innerHTML = `
+          <button class="btn-primary" onclick="closeCustomDialog(); document.getElementById('image-upload-input').click();" style="flex:1; padding:8px;">${db.lang === 'en' ? '📷 Change' : '📷 Changer'}</button>
+          <button class="btn-reset" onclick="resetEdgeImage('${edgeId}')" style="flex:1; padding:8px;">${db.lang === 'en' ? '🔄 Reset' : '🔄 Réinitialiser'}</button>
+        `;
+      } else {
+        document.getElementById('image-upload-input').click();
+      }
+    }
+
+    function resetEdgeImage(edgeId) {
+      const edge = db.customEdges.find(e => e.id === edgeId);
+      if (!edge) return;
+      edge.customImage = null;
+      markUnsavedChanges();
+      closeCustomDialog();
       renderAll();
     }
 
-    function copyFortuneoCode() {
-      const code = "12874482";
-      const btn = document.getElementById('fortuneo-btn');
-      if (navigator.clipboard) navigator.clipboard.writeText(code);
-      if (btn) btn.innerText = db.lang === 'en' ? "✅ Code copied!" : "✅ Code copié !";
-      window.open("https://www.fortuneo.fr", "_blank");
-      setTimeout(() => { if (btn) btn.innerText = "Fortuneo (Code Parrain : 12874482)"; }, 1800);
+    function handleImageSelected(event) {
+      const file = event.target.files[0];
+      if (!file || !currentImageTargetId) return;
+
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        const img = new Image();
+        img.onload = () => {
+          const canvas = document.createElement('canvas');
+          canvas.width = 120; canvas.height = 120;
+          const ctx = canvas.getContext('2d');
+          const minDim = Math.min(img.width, img.height);
+          const sx = (img.width - minDim) / 2;
+          const sy = (img.height - minDim) / 2;
+          ctx.drawImage(img, sx, sy, minDim, minDim, 0, 0, 120, 120);
+
+          const dataUrl = canvas.toDataURL('image/webp', 0.82);
+          const target = db.customEdges.find(i => i.id === currentImageTargetId);
+          if (target) {
+            target.customImage = dataUrl;
+            markUnsavedChanges();
+            renderAll();
+          }
+        };
+        img.src = e.target.result;
+      };
+      reader.readAsDataURL(file);
+      event.target.value = '';
     }
 
-    function allEdges() { return db.customEdges; }
-    function catLabel(cat) { return t("cat_" + cat); }
+    /* ==========================================================================
+       CALCUL DE L'INFLATION SECTORIELLE MOIS PAR MOIS
+       ========================================================================== */
+    function getInflationMultiplier(cat, startYear, startMonth) {
+      const now = new Date();
+      const currentYear = now.getFullYear();
+      const currentMonth = now.getMonth() + 1;
 
-    function annualValue(edge) {
-      const gain = edge.gain || 0;
-      if (edge.freq === 'monthly') return gain * 12;
-      return gain;
+      const reg = db.region || 'FR';
+      const ratesMap = INFLATION_SECTOR_RATES[reg] || INFLATION_SECTOR_RATES.FR;
+      const ratesList = ratesMap[cat] || ratesMap.divers;
+
+      let multiplier = 1.0;
+
+      for (let y = startYear; y <= currentYear; y++) {
+        const rateObj = ratesList.find(item => item.y === y);
+        const annualRate = rateObj ? rateObj.r : 0.02;
+        const monthlyRate = annualRate / 12;
+
+        let mStart = (y === startYear) ? startMonth : 1;
+        let mEnd = (y === currentYear) ? currentMonth : 12;
+
+        for (let m = mStart; m <= mEnd; m++) {
+          multiplier *= (1 + monthlyRate);
+        }
+      }
+
+      return Math.max(1.0, multiplier);
     }
 
-    function monthlyValue(edge) {
-      const gain = edge.gain || 0;
-      if (edge.freq === 'monthly') return gain;
-      if (edge.freq === 'yearly') return gain / 12;
-      return 0;
+    function adjustedMonthlyValue(edge) {
+      const baseGain = edge.gain || 0;
+      const sYear = parseInt(edge.startYear || new Date().getFullYear(), 10);
+      const sMonth = parseInt(edge.startMonth || 1, 10);
+      return baseGain * getInflationMultiplier(edge.cat, sYear, sMonth);
     }
 
-    function gainBadge(edge) {
-      const amt = edge.gain || 0;
-      if (!amt) return '';
-      let suffix = t('gain_suffix_once');
-      if (edge.freq === 'monthly') suffix = t('gain_suffix_monthly');
-      if (edge.freq === 'yearly') suffix = t('gain_suffix_yearly');
-      const catColor = CAT_COLORS[edge.cat] || 'var(--brand-bright)';
-      return `<div class="gain-badge" style="color:${catColor}; border:1px solid ${catColor};">+${formatEUR(amt)} € ${suffix}</div>`;
+    function calculateTotalSavedHistorically(edge) {
+      const baseGain = edge.gain || 0;
+      const sYear = parseInt(edge.startYear || new Date().getFullYear(), 10);
+      const sMonth = parseInt(edge.startMonth || 1, 10);
+
+      const now = new Date();
+      const currentYear = now.getFullYear();
+      const currentMonth = now.getMonth() + 1;
+
+      const reg = db.region || 'FR';
+      const ratesMap = INFLATION_SECTOR_RATES[reg] || INFLATION_SECTOR_RATES.FR;
+      const ratesList = ratesMap[edge.cat] || ratesMap.divers;
+
+      let totalCumul = 0;
+      let runningVal = baseGain;
+
+      for (let y = sYear; y <= currentYear; y++) {
+        const rateObj = ratesList.find(item => item.y === y);
+        const monthlyRate = (rateObj ? rateObj.r : 0.02) / 12;
+
+        let mStart = (y === sYear) ? sMonth : 1;
+        let mEnd = (y === currentYear) ? currentMonth : 12;
+
+        for (let m = mStart; m <= mEnd; m++) {
+          runningVal *= (1 + monthlyRate);
+          totalCumul += runningVal;
+        }
+      }
+
+      return Math.max(baseGain, totalCumul);
     }
 
+    function getLeverAgeInMonths(edge) {
+      const now = new Date();
+      const curY = now.getFullYear();
+      const curM = now.getMonth() + 1;
+      const sY = parseInt(edge.startYear || curY, 10);
+      const sM = parseInt(edge.startMonth || 1, 10);
+      return Math.max(1, (curY - sY) * 12 + (curM - sM) + 1);
+    }
+
+    /* ==========================================================================
+       CARTES D'INVENTAIRE ÉPURÉES (ONGLET 1)
+       ========================================================================== */
     function toggleCardExpandDirect(summaryEl, cardId, e) {
       if (e) e.stopPropagation();
       const card = summaryEl.closest('.edge-card');
@@ -785,29 +1414,41 @@
 
     function edgeCardHTML(edge) {
       const isExpanded = expandedCardIds.has(edge.id);
-      const catColor = CAT_COLORS[edge.cat] || 'var(--accent-blue)';
+      const catColor = CAT_COLORS[edge.cat] || 'var(--brand)';
+      const adjMonthly = adjustedMonthlyValue(edge);
+      const baseGain = edge.gain || 0;
+      const sYear = edge.startYear || new Date().getFullYear();
+      const sMonth = String(edge.startMonth || 1).padStart(2, '0');
+      const icon = CAT_ICONS[edge.cat] || '💡';
+
+      const avatarContent = edge.customImage 
+        ? `<div class="inventory-avatar-mini" style="background-image:url('${edge.customImage}');" onclick="event.stopPropagation(); triggerImageUpload('${edge.id}')"></div>`
+        : `<div class="inventory-avatar-mini" onclick="event.stopPropagation(); triggerImageUpload('${edge.id}')">${icon}</div>`;
+
       return `
         <div class="edge-card ${isExpanded ? 'expanded' : ''}" style="border-left: 4px solid ${catColor};">
           <div class="edge-summary-row" onclick="toggleCardExpandDirect(this, '${edge.id}', event)">
-            <div style="display:flex; align-items:center; gap:6px; flex:1; min-width:0;">
+            <div style="display:flex; align-items:center; gap:8px; flex:1; min-width:0;">
+              ${avatarContent}
               <span class="edge-title-text">${edge.title}</span>
+              <span class="edge-cat-badge" style="background:${catColor}20; color:${catColor};">${catLabel(edge.cat)}</span>
             </div>
-            <div style="display:flex; align-items:center; gap:6px; flex-shrink:0;">
-              <span class="edge-cat-badge" style="background:${catColor}1f; color:${catColor}; border:1px solid ${catColor};">${catLabel(edge.cat)}</span>
-              <span class="edge-chevron-btn" style="color:${catColor};">▾</span>
+            <div style="display:flex; align-items:center; gap:8px; flex-shrink:0;">
+              <span style="font-size:0.85rem; font-weight:800; color:var(--brand-bright);">+${fmt(adjMonthly)}/m</span>
+              <span style="font-size:0.7rem; opacity:0.6;">(base: ${fmt(baseGain)})</span>
+              <span class="edge-chevron-btn">▾</span>
             </div>
           </div>
+
           <div class="edge-body-expanded">
-            <div class="edge-expanded-row">
-              <div style="display:flex; flex-direction:column; gap:4px; flex:1; min-width:0;">
-                ${gainBadge(edge)}
-                ${edge.desc ? `<div class="edge-desc">${edge.desc}</div>` : ''}
-              </div>
-              <div class="edge-actions-right">
-                <button class="btn-secondary" style="padding:6px 9px;" onclick="startEditEdge('${edge.id}', event)">✏️</button>
-                <button class="btn-danger" onclick="deleteCustom('${edge.id}', event)">🗑️</button>
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+              <span style="opacity:0.8;">${db.lang === 'en' ? 'Active since:' : 'En place depuis :'} <strong>${sMonth}/${sYear}</strong></span>
+              <div style="display:flex; gap:6px;">
+                <button class="btn-secondary" style="padding:4px 8px;" onclick="startEditEdge('${edge.id}', event)">✏️</button>
+                <button class="btn-danger" style="padding:4px 8px;" onclick="deleteCustom('${edge.id}', event)">🗑️</button>
               </div>
             </div>
+            ${edge.desc ? `<div style="font-size:0.75rem; opacity:0.85; border-top:1px dashed var(--border-color); padding-top:4px;">${edge.desc}</div>` : ''}
           </div>
         </div>
       `;
@@ -815,248 +1456,655 @@
 
     function renderLibrary() {
       const cat = document.getElementById("filter-cat").value;
-      let list = allEdges();
+      let list = db.customEdges;
       if (cat !== "all") list = list.filter(e => e.cat === cat);
+
+      const countBadge = document.getElementById('items-count-badge');
+      if (countBadge) countBadge.innerText = `${list.length} ${db.lang === 'en' ? (list.length > 1 ? 'levers' : 'lever') : (list.length > 1 ? 'leviers' : 'levier')}`;
 
       const container = document.getElementById("library-list");
       if (list.length === 0) {
-        container.innerHTML = `<div class="card" style="text-align:center; padding:16px; opacity:0.6;">${t("empty_search")}</div>`;
+        container.innerHTML = `<div style="font-size:0.82rem; opacity:0.6; text-align:center; padding:16px;">${db.lang === 'en' ? 'No levers recorded yet.' : 'Aucun levier enregistré pour le moment.'}</div>`;
         return;
       }
       container.innerHTML = list.map(e => edgeCardHTML(e)).join("");
     }
 
-    /* --- RENDU TABLEAU DE BORD --- */
-    function renderPlan() {
-      const edges = allEdges();
+    /* ==========================================================================
+       CARTES DU PLAN KLON : SANS TRI POLLUANT (ORDRE LIBRE)
+       ========================================================================== */
+    function renderPlanCards() {
+      const container = document.getElementById('plan-cards-container');
+      if (!container) return;
 
-      const monthlyTotal = edges.reduce((s, e) => s + monthlyValue(e), 0);
-      const yearlyTotal = edges.reduce((s, e) => {
-        if (e.freq === 'monthly') return s + ((e.gain || 0) * 12);
-        if (e.freq === 'yearly') return s + (e.gain || 0);
-        return s;
-      }, 0);
+      let edges = [...db.customEdges];
 
-      const onceTotal = edges.filter(e => e.freq === 'once').reduce((s, e) => s + (e.gain || 0), 0);
+      // Application de l'ordre personnalisé glisser-déposer
+      if (db.cardsOrder && db.cardsOrder.length > 0) {
+        edges.sort((a, b) => {
+          let idxA = db.cardsOrder.indexOf(a.id);
+          let idxB = db.cardsOrder.indexOf(b.id);
+          if (idxA === -1) idxA = 999;
+          if (idxB === -1) idxB = 999;
+          return idxA - idxB;
+        });
+      }
 
-      document.getElementById("dash-monthly").textContent = '+' + formatEUR(monthlyTotal) + ' € / m';
-      document.getElementById("dash-yearly").textContent = 'soit +' + formatEUR(yearlyTotal) + ' € / an à vie';
-      document.getElementById("dash-once").textContent = formatEUR(onceTotal) + ' €';
+      if (edges.length === 0) {
+        container.innerHTML = `<div style="font-size:0.85rem; opacity:0.6; text-align:center; padding:20px;">${db.lang === 'en' ? 'Add levers in the Data tab to unlock analysis.' : 'Ajoute des leviers dans l\'onglet Saisie pour débloquer l\'analyse.'}</div>`;
+        return;
+      }
 
-      // Multi-barre par catégorie avec couleurs harmonisées
-      const catTotals = {};
-      CAT_ORDER.forEach(c => catTotals[c] = 0);
-      edges.forEach(e => {
-        if (e.freq !== 'once') catTotals[e.cat] = (catTotals[e.cat] || 0) + annualValue(e);
+      container.innerHTML = edges.map(edge => {
+        const catColor = CAT_COLORS[edge.cat] || 'var(--brand-bright)';
+        const icon = CAT_ICONS[edge.cat] || '💡';
+        const adjVal = adjustedMonthlyValue(edge);
+        const baseVal = edge.gain || 0;
+        const shieldVal = adjVal - baseVal;
+        const shieldPct = baseVal > 0 ? Math.round((shieldVal / baseVal) * 100) : 0;
+        const ageMonths = getLeverAgeInMonths(edge);
+
+        const pctBase = adjVal > 0 ? Math.min(100, Math.round((baseVal / adjVal) * 100)) : 100;
+        const pctInflation = 100 - pctBase;
+
+        const avatarContent = edge.customImage 
+          ? `<div class="stake-squircle-avatar" style="background-image:url('${edge.customImage}');" onclick="event.stopPropagation(); triggerImageUpload('${edge.id}')"></div>`
+          : `<div class="stake-squircle-avatar" onclick="event.stopPropagation(); triggerImageUpload('${edge.id}')">${icon}</div>`;
+
+        return `
+          <div class="stake-edge-card" draggable="true" data-id="${edge.id}" style="border-left-color: ${catColor};" onclick="openLeverDetailModal('${edge.id}')">
+            <div class="stake-edge-header">
+              ${avatarContent}
+              <div style="flex: 1; display: flex; justify-content: space-between; align-items: flex-start; min-width: 0;">
+                <div>
+                  <strong style="font-size: 0.95rem; color: var(--text-bright); display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${edge.title}</strong>
+                  <div style="font-size: 0.72rem; opacity: 0.8; margin-top: 2px;">
+                    Base: ${fmt(baseVal)}/m • <span style="color:var(--brand-bright);">${db.lang === 'en' ? `Active for ${ageMonths} mo` : `Actif depuis ${ageMonths} mois`}</span>
+                  </div>
+                </div>
+                <div style="text-align: right; flex-shrink: 0;">
+                  <div style="font-size: 1.05rem; font-weight: 900; color: var(--brand-bright);">+${fmt(adjVal)} / m</div>
+                  ${shieldVal > 0.5 ? `<div style="font-size: 0.72rem; font-weight: bold; color: var(--accent-orange);">${db.lang === 'en' ? 'Shield' : 'Bouclier'} : +${fmt(shieldVal)}/m (+${shieldPct}%)</div>` : `<div style="font-size: 0.72rem; opacity: 0.6;">${db.lang === 'en' ? 'Recently added' : 'Récemment activé'}</div>`}
+                </div>
+              </div>
+            </div>
+
+            <div class="stacked-progress-track" title="Base : ${pctBase}% • ${db.lang === 'en' ? 'Inflation beaten' : 'Inflation absorbée'} : ${pctInflation}%">
+              <div class="stacked-segment-base" style="width: ${pctBase}%;"></div>
+              <div class="stacked-segment-inflation" style="width: ${pctInflation}%;"></div>
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      initDragAndDrop();
+    }
+
+    /* ==========================================================================
+       DRAG & DROP TACTILE ET SOURIS
+       ========================================================================== */
+    function initDragAndDrop() {
+      const container = document.getElementById('plan-cards-container');
+      if (!container) return;
+      const cards = container.querySelectorAll('.stake-edge-card');
+
+      cards.forEach(card => {
+        card.addEventListener('dragstart', (e) => {
+          card.classList.add('dragging');
+          e.dataTransfer.setData('text/plain', card.dataset.id);
+        });
+
+        card.addEventListener('dragend', () => {
+          card.classList.remove('dragging');
+          saveNewCardsOrder();
+        });
       });
 
-      const totalRec = Object.values(catTotals).reduce((a, b) => a + b, 0);
+      container.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        const draggingCard = container.querySelector('.dragging');
+        if (!draggingCard) return;
+
+        const nextSibling = getDragAfterElement(container, e.clientY);
+        if (nextSibling == null) {
+          container.appendChild(draggingCard);
+        } else {
+          container.insertBefore(draggingCard, nextSibling);
+        }
+      });
+
+      cards.forEach(card => {
+        let touchTimer = null;
+        let startX = 0, startY = 0;
+        let isDragging = false;
+
+        const finishDrag = () => {
+          if (touchTimer) clearTimeout(touchTimer);
+          card.classList.remove('dragging', 'long-pressing');
+          card.style.pointerEvents = '';
+          document.body.style.userSelect = '';
+          document.body.style.overflow = '';
+          if (isDragging) {
+            isDragging = false;
+            saveNewCardsOrder();
+          }
+          document.removeEventListener('touchmove', handleMove);
+          document.removeEventListener('touchend', finishDrag);
+          document.removeEventListener('touchcancel', finishDrag);
+        };
+
+        const handleMove = (e) => {
+          const touch = e.touches[0];
+          if (!isDragging && (Math.abs(touch.clientX - startX) > 8 || Math.abs(touch.clientY - startY) > 8)) {
+            if (touchTimer) clearTimeout(touchTimer);
+            return;
+          }
+
+          if (isDragging) {
+            e.preventDefault();
+            const elUnder = document.elementFromPoint(touch.clientX, touch.clientY);
+            if (!elUnder) return;
+            const target = elUnder.closest('.stake-edge-card');
+            if (target && target !== card && target.parentNode === container) {
+              const rect = target.getBoundingClientRect();
+              if (touch.clientY < rect.top + rect.height / 2) {
+                container.insertBefore(card, target);
+              } else {
+                container.insertBefore(card, target.nextSibling);
+              }
+            }
+          }
+        };
+
+        card.addEventListener('touchstart', (e) => {
+          if (e.target.closest('button, input, select, .stake-squircle-avatar')) return;
+          startX = e.touches[0].clientX;
+          startY = e.touches[0].clientY;
+          isDragging = false;
+
+          document.addEventListener('touchmove', handleMove, { passive: false });
+          document.addEventListener('touchend', finishDrag);
+          document.addEventListener('touchcancel', finishDrag);
+
+          touchTimer = setTimeout(() => {
+            isDragging = true;
+            card.classList.add('dragging', 'long-pressing');
+            card.style.pointerEvents = 'none';
+            document.body.style.userSelect = 'none';
+            document.body.style.overflow = 'hidden';
+            if (navigator.vibrate) navigator.vibrate(35);
+          }, 220);
+        }, { passive: true });
+      });
+    }
+
+    function getDragAfterElement(container, y) {
+      const draggables = [...container.querySelectorAll('.stake-edge-card:not(.dragging)')];
+      return draggables.reduce((closest, child) => {
+        const box = child.getBoundingClientRect();
+        const offset = y - box.top - box.height / 2;
+        if (offset < 0 && offset > closest.offset) {
+          return { offset: offset, element: child };
+        } else {
+          return closest;
+        }
+      }, { offset: Number.NEGATIVE_INFINITY }).element;
+    }
+
+    function saveNewCardsOrder() {
+      const container = document.getElementById('plan-cards-container');
+      if (!container) return;
+      const cardEls = container.querySelectorAll('.stake-edge-card');
+      db.cardsOrder = Array.from(cardEls).map(c => c.dataset.id);
+      markUnsavedChanges();
+    }
+
+    /* ==========================================================================
+       RENDU DU PLAN, DES ANALYSES & STATISTIQUES
+       ========================================================================== */
+    function renderPlan() {
+      const edges = db.customEdges;
+
+      const totalBaseMonthly = edges.reduce((s, e) => s + (e.gain || 0), 0);
+      const totalAdjMonthly = edges.reduce((s, e) => s + adjustedMonthlyValue(e), 0);
+      const inflationDiff = totalAdjMonthly - totalBaseMonthly;
+
+      const totalCumulSaved = edges.reduce((s, e) => s + calculateTotalSavedHistorically(e), 0);
+
+      const annualAdj = totalAdjMonthly * 12;
+      const capitalEquivalent = annualAdj / 0.04;
+      const monthlyAnnuity = Math.round((annualAdj * 0.04) / 12);
+
+      document.getElementById("dash-monthly").textContent = '+' + fmt(totalAdjMonthly) + ' / m';
+      document.getElementById("dash-nominal-sub").textContent = `${db.lang === 'en' ? 'Starting gain' : 'Gain de départ'} : +${fmt(totalBaseMonthly)} / m`;
+      document.getElementById("stat-total-cumul").textContent = fmt(totalCumulSaved);
+
+      // 1. Bouclier Inflation (Orange)
+      const shieldEl = document.getElementById("gauge-bar-shield");
+      document.getElementById("gauge-val-shield").textContent = `+${fmt(inflationDiff)} / m`;
+      const shieldPct = totalBaseMonthly > 0 ? Math.min(100, Math.max(8, (inflationDiff / totalBaseMonthly) * 150)) : (inflationDiff > 0 ? 15 : 0);
+      shieldEl.style.width = `${shieldPct}%`;
+
+      // 2. Rente Passive (Vert Émeraude)
+      const annuityEl = document.getElementById("gauge-bar-annuity");
+      document.getElementById("gauge-val-annuity").textContent = `+${fmt(monthlyAnnuity)} / m`;
+      const annuityPct = totalAdjMonthly > 0 ? Math.min(100, Math.max(12, (totalAdjMonthly / 350) * 100)) : 0;
+      annuityEl.style.width = `${annuityPct}%`;
+
+      // 3. Capital Équivalent (Bleu)
+      const capEl = document.getElementById("gauge-bar-cap");
+      document.getElementById("gauge-val-cap").textContent = fmt(capitalEquivalent);
+      const capPct = capitalEquivalent > 0 ? Math.min(100, Math.max(10, (capitalEquivalent / 100000) * 100)) : 0;
+      capEl.style.width = `${capPct}%`;
+
+      // 4. Gain Annuel Libéré (Violet)
+      const annualEl = document.getElementById("gauge-bar-annual");
+      document.getElementById("gauge-val-annual").textContent = `+${fmt(annualAdj)} / an`;
+      const annualPct = annualAdj > 0 ? Math.min(100, Math.max(10, (annualAdj / 4000) * 100)) : 0;
+      annualEl.style.width = `${annualPct}%`;
+
+      // Multi-barre
+      const catTotals = {};
+      CAT_ORDER.forEach(c => catTotals[c] = 0);
+      edges.forEach(e => { catTotals[e.cat] = (catTotals[e.cat] || 0) + adjustedMonthlyValue(e); });
+
       const multiBarEl = document.getElementById("multi-cat-bar");
       const multiLegendEl = document.getElementById("multi-bar-legend");
 
-      if (totalRec > 0) {
+      if (totalAdjMonthly > 0) {
         multiBarEl.innerHTML = CAT_ORDER.map(c => {
           const val = catTotals[c];
           if (val <= 0) return '';
-          const pct = ((val / totalRec) * 100).toFixed(1);
+          const pct = ((val / totalAdjMonthly) * 100).toFixed(1);
           return `<div class="multi-segment" style="width:${pct}%; background:${CAT_COLORS[c]};" title="${catLabel(c)}: ${pct}%"></div>`;
         }).join('');
 
         multiLegendEl.innerHTML = CAT_ORDER.map(c => {
           if (catTotals[c] <= 0) return '';
-          const pct = Math.round((catTotals[c] / totalRec) * 100);
+          const pct = Math.round((catTotals[c] / totalAdjMonthly) * 100);
           return `
             <div style="display:flex; align-items:center; gap:4px;">
-              <div style="width:8px; height:8px; border-radius:50%; background:${CAT_COLORS[c]};"></div>
+              <div style="width:7px; height:7px; border-radius:50%; background:${CAT_COLORS[c]};"></div>
               <span>${catLabel(c)} <strong>(${pct}%)</strong></span>
             </div>
           `;
         }).join('');
       } else {
         multiBarEl.innerHTML = `<div style="width:100%; height:100%; background:var(--border-color); opacity:0.3;"></div>`;
-        multiLegendEl.innerHTML = `<span style="opacity:0.6;">Aucune donnée récurrente</span>`;
+        multiLegendEl.innerHTML = `<span style="opacity:0.6;">${db.lang === 'en' ? 'No recorded data' : 'Aucune donnée enregistrée'}</span>`;
       }
 
-      // Top 3 exclusif des leviers récurrents
-      const recurringEdges = edges.filter(e => e.freq !== 'once');
-      const sortedEdges = [...recurringEdges].sort((a, b) => annualValue(b) - annualValue(a));
-      const top3 = sortedEdges.slice(0, 3);
-      const topListEl = document.getElementById("top-levers-list");
-
-      if (topListEl) {
-        if (top3.length === 0) {
-          topListEl.innerHTML = `<div style="text-align:center; opacity:0.6; padding:8px; font-size:0.8rem;">Ajoute des astuces récurrentes pour voir tes tops leviers.</div>`;
-        } else {
-          topListEl.innerHTML = top3.map((e, idx) => `
-            <div class="top-lever-item">
-              <div style="display:flex; align-items:center; gap:6px;">
-                <strong style="color:var(--accent-purple);">#${idx + 1}</strong>
-                <span>${e.title}</span>
-              </div>
-              <span style="color:${CAT_COLORS[e.cat] || 'var(--brand-bright)'}; font-weight:800;">+${formatEUR(annualValue(e))} €/an</span>
-            </div>
-          `).join('');
-        }
-      }
-
-      const statsEl = document.getElementById('plan-summary-stats');
-      if (statsEl) {
-        statsEl.innerHTML = `
-          <div style="display:flex; justify-content:space-between; padding:4px 0; border-bottom:1px solid var(--border-color);">
-            <span>Nombre total d'astuces :</span>
-            <strong>${edges.length}</strong>
-          </div>
-          <div style="display:flex; justify-content:space-between; padding:4px 0; border-bottom:1px solid var(--border-color);">
-            <span>Gains récurrents :</span>
-            <strong style="color:var(--brand-bright);">${edges.filter(e => e.freq !== 'once').length}</strong>
-          </div>
-          <div style="display:flex; justify-content:space-between; padding:4px 0;">
-            <span>Gains ponctuels :</span>
-            <strong style="color:var(--accent-pink);">${edges.filter(e => e.freq === 'once').length}</strong>
-          </div>
-        `;
-      }
+      renderPlanCards();
+      checkRewards(totalAdjMonthly, totalCumulSaved, edges.length);
     }
 
-    /* --- MODALE CAMEMBERT (SVG) --- */
-    function openPieModal() {
-      const totals = {};
-      CAT_ORDER.forEach(c => totals[c] = 0);
-      allEdges().forEach(e => { totals[e.cat] = (totals[e.cat] || 0) + annualValue(e); });
+    /* ==========================================================================
+       MODALE DÉTAIL D'UN LEVIER (CORRIGÉE DU SYMBOLE € EN DUR)
+       ========================================================================== */
+    function openLeverDetailModal(leverId) {
+      const edge = db.customEdges.find(e => e.id === leverId);
+      if (!edge) return;
 
-      const grandTotal = Object.values(totals).reduce((a, b) => a + b, 0);
-      const container = document.getElementById('pie-chart-body');
+      const adjVal = adjustedMonthlyValue(edge);
+      const baseVal = edge.gain || 0;
+      const shieldVal = adjVal - baseVal;
+      const cumulVal = calculateTotalSavedHistorically(edge);
+      const capVal = (adjVal * 12) / 0.04;
+      const ageMonths = getLeverAgeInMonths(edge);
+      const catColor = CAT_COLORS[edge.cat] || 'var(--brand)';
 
-      if (grandTotal <= 0) {
-        container.innerHTML = `<div style="text-align:center; padding:20px; opacity:0.6;">Renseigne des gains récurrents pour afficher le camembert.</div>`;
+      document.getElementById('m-lever-title').innerText = edge.title;
+      const badgeEl = document.getElementById('m-lever-badge');
+      badgeEl.innerText = catLabel(edge.cat);
+      badgeEl.style.background = `${catColor}20`;
+      badgeEl.style.color = catColor;
+      badgeEl.style.border = `1px solid ${catColor}`;
+
+      document.getElementById('m-lever-real-val').innerText = `+${fmt(adjVal)} / mois`;
+      document.getElementById('m-lever-gain-breakdown').innerHTML = db.lang === 'en'
+        ? `Including <strong>${fmt(baseVal)}</strong> initial and <strong>+${fmt(shieldVal)}</strong> saved via beaten inflation.`
+        : `Dont <strong>${fmt(baseVal)}</strong> au départ et <strong>+${fmt(shieldVal)}</strong> sauvés grâce à l'inflation évitée.`;
+
+      document.getElementById('m-lever-cumul-val').innerText = fmt(cumulVal);
+      document.getElementById('m-lever-capital-val').innerText = fmt(capVal);
+      document.getElementById('m-lever-age').innerText = db.lang === 'en' ? `${ageMonths} consecutive months` : `${ageMonths} mois consécutifs`;
+
+      const descBox = document.getElementById('m-lever-desc-box');
+      if (edge.desc) {
+        descBox.style.display = 'block';
+        descBox.innerHTML = `<strong>${db.lang === 'en' ? 'Method & Note:' : 'Note & Méthode :'}</strong><br>${edge.desc}`;
       } else {
-        let cumulativeAngle = 0;
-        const slices = [];
-        const legendItems = [];
-
-        CAT_ORDER.forEach(c => {
-          const val = totals[c];
-          if (val > 0) {
-            const pct = (val / grandTotal);
-            const angle = pct * 360;
-            const startAngle = cumulativeAngle;
-            const endAngle = cumulativeAngle + angle;
-            cumulativeAngle = endAngle;
-
-            const x1 = 50 + 40 * Math.cos(Math.PI * startAngle / 180);
-            const y1 = 50 + 40 * Math.sin(Math.PI * startAngle / 180);
-            const x2 = 50 + 40 * Math.cos(Math.PI * endAngle / 180);
-            const y2 = 50 + 40 * Math.sin(Math.PI * endAngle / 180);
-            const largeArcFlag = angle > 180 ? 1 : 0;
-
-            const pathData = `M 50 50 L ${x1.toFixed(2)} ${y1.toFixed(2)} A 40 40 0 ${largeArcFlag} 1 ${x2.toFixed(2)} ${y2.toFixed(2)} Z`;
-
-            slices.push(`<path d="${pathData}" fill="${CAT_COLORS[c]}" />`);
-            legendItems.push(`
-              <div style="display:flex; align-items:center; gap:6px; font-size:0.78rem;">
-                <div style="width:10px; height:10px; border-radius:50%; background:${CAT_COLORS[c]};"></div>
-                <span>${catLabel(c)}: <strong>${formatEUR(val)} €/an</strong> (${Math.round(pct * 100)}%)</span>
-              </div>
-            `);
-          }
-        });
-
-        container.innerHTML = `
-          <svg viewBox="0 0 100 100" style="width:180px; height:180px; transform: rotate(-90deg); border-radius:50%;">
-            ${slices.join('')}
-          </svg>
-          <div style="display:flex; flex-wrap:wrap; gap:8px 12px; justify-content:center; margin-top:8px;">${legendItems.join('')}</div>
-        `;
+        descBox.style.display = 'none';
       }
 
+      document.getElementById('lever-detail-modal').classList.add('active');
+    }
+
+    function closeLeverDetailModal() {
+      document.getElementById('lever-detail-modal').classList.remove('active');
+    }
+
+    /* ==========================================================================
+       MODALES EXPLICATIVES DES MINI-GAUGES
+       ========================================================================== */
+    const GAUGE_INFOS = {
+      shield: {
+        icon: "🛡️",
+        title_fr: "Bouclier Anti-Inflation",
+        title_en: "Inflation Shield",
+        desc_fr: "Mesure le gain mensuel additionnel issu de la <strong>hausse des prix sectorielle évitée</strong>.<br><br>Si tu n'avais pas supprimé ou renégocié cette dépense, son coût réel aurait gonflé au fil des mois avec l'inflation. Cette somme représente exactement les euros supplémentaires sauvés chaque mois par rapport à ton estimation initiale !",
+        desc_en: "Measures additional monthly savings generated by <strong>neutralizing price increases</strong>.<br><br>Had you kept paying this expense, inflation would have amplified its cost over the months. This amount represents the extra cash protected compared to your starting baseline."
+      },
+      annuity: {
+        icon: "⛽",
+        title_fr: "Rente Passive Perpétuelle (4%)",
+        title_en: "Perpetual Passive Yield (4%)",
+        desc_fr: "Correspond au <strong>revenu net mensuel perpétuel</strong> que ce cash libéré peut créer.<br><br>Selon la règle financière des 4 % (Trinity Study), couper une dépense récurrente équivaut mathématiquement à posséder un actif productif qui te verse ce cash-flow tous les mois sans jamais entamer ton capital.",
+        desc_en: "Represents the <strong>net perpetual monthly cash flow</strong> created by this freed cash.<br><br>According to the 4% rule (Trinity Study), cutting a recurring expense is mathematically identical to owning an income-producing asset that deposits this cash every month without touching principal."
+      },
+      capital: {
+        icon: "🏛️",
+        title_fr: "Capital Équivalent Investi",
+        title_en: "Equivalent Invested Capital",
+        desc_fr: "Calcule la fortune exacte qu'il te faudrait détenir en portefeuille pour générer la même somme sans travailler (avec un rendement de 4 % net d'inflation) :<br><br><code style='background:rgba(52,211,153,0.15); padding:2px 6px; border-radius:4px; color:var(--brand-bright); font-weight:bold;'>Gain Annuel ÷ 4 %</code><br><br>Exemple : Réduire tes charges de 100 €/m équivaut à posséder <strong>30 000 € investis</strong> sur les marchés financiers !",
+        desc_en: "Calculates the portfolio size required to generate this exact cash flow without working (at a 4% net real yield):<br><br><code style='background:rgba(52,211,153,0.15); padding:2px 6px; border-radius:4px; color:var(--brand-bright); font-weight:bold;'>Annual Gain ÷ 4%</code><br><br>Example: Cutting 100/mo in expenses equals holding <strong>30,000 invested</strong> in financial markets!"
+      },
+      annual: {
+        icon: "⚡",
+        title_fr: "Gain Annuel Libéré (Annualisé)",
+        title_en: "Annual Unlocked Gain",
+        desc_fr: "Total du Free Cash-Flow disponible généré sur 12 mois complets grâce à tes astuces récurrentes indexées.<br><br>C'est le carburant direct prêt à être réinvesti dans ton capital sur KLON ou réinjecté dans tes actifs sur KLON Stake.",
+        desc_en: "Total Free Cash-Flow generated over a full 12-month period through your indexed recurring levers.<br><br>This is pure investment fuel ready to compound in KLON or fund assets in KLON Stake."
+      }
+    };
+
+    function openGaugeModal(type) {
+      const info = GAUGE_INFOS[type];
+      if (!info) return;
+      const isEn = db.lang === 'en';
+      document.getElementById('g-modal-icon').innerText = info.icon;
+      document.getElementById('g-modal-title').innerText = isEn ? info.title_en : info.title_fr;
+      document.getElementById('g-modal-desc').innerHTML = isEn ? info.desc_en : info.desc_fr;
+      document.getElementById('gauge-modal').classList.add('active');
+    }
+
+    function closeGaugeModal() {
+      document.getElementById('gauge-modal').classList.remove('active');
+    }
+
+    /* ==========================================================================
+       MODALE DONUT SVG OFFICIEL
+       ========================================================================== */
+    function openPieModal() {
+      const box = document.getElementById('donut-chart-box');
+      if (!box) return;
+
+      const edges = db.customEdges;
+      const totalBase = edges.reduce((s, e) => s + (e.gain || 0), 0);
+      const totalAdj = edges.reduce((s, e) => s + adjustedMonthlyValue(e), 0);
+      const inflationGain = totalAdj - totalBase;
+
+      if (totalAdj <= 0) {
+        box.innerHTML = `<div style="font-size:0.85rem; opacity:0.6; padding: 20px 0; text-align: center;">${db.lang === 'en' ? 'No recurring levers recorded yet.' : 'Aucun levier récurrent enregistré pour le moment.'}</div>`;
+        document.getElementById('pie-modal').classList.add('active');
+        return;
+      }
+
+      const catTotals = {};
+      CAT_ORDER.forEach(c => catTotals[c] = 0);
+      edges.forEach(e => { catTotals[e.cat] = (catTotals[e.cat] || 0) + adjustedMonthlyValue(e); });
+
+      const C = 213.628;
+      let offsetAccumulator = 0;
+      let circleSegments = '';
+      let legendRows = '';
+
+      CAT_ORDER.forEach(c => {
+        const val = catTotals[c];
+        if (val > 0) {
+          const pct = (val / totalAdj) * 100;
+          const strokeLen = (pct / 100) * C;
+          const catColor = CAT_COLORS[c];
+
+          circleSegments += `
+            <circle cx="50" cy="50" r="34" fill="transparent" stroke="${catColor}" stroke-width="12"
+                    stroke-dasharray="${strokeLen} ${C - strokeLen}"
+                    stroke-dashoffset="${-offsetAccumulator}" transform="rotate(-90 50 50)"></circle>
+          `;
+          offsetAccumulator += strokeLen;
+
+          legendRows += `
+            <div style="display:flex; justify-content:space-between; align-items:center; padding:3px 0; font-size:0.78rem;">
+              <span style="display:flex; align-items:center; gap:6px;">
+                <span style="width:8px; height:8px; border-radius:50%; background:${catColor};"></span>
+                <span>${catLabel(c)}</span>
+              </span>
+              <strong>+${fmt(val)}/m (${Math.round(pct)}%)</strong>
+            </div>
+          `;
+        }
+      });
+
+      box.innerHTML = `
+        <div style="width: 100%; display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 6px; text-align: center; background: var(--bg-color); border: 1px solid var(--border-color); border-radius: 8px; padding: 8px 4px; margin-bottom: 12px; font-size: 0.72rem;">
+          <div>
+            <div style="opacity: 0.75;">${db.lang === 'en' ? 'Base gain' : 'Gain de base'}</div>
+            <strong style="color: var(--text-bright); font-size: 0.85rem;">+${fmt(totalBase)}</strong>
+          </div>
+          <div style="border-left: 1px solid var(--border-color); border-right: 1px solid var(--border-color);">
+            <div style="opacity: 0.75; color: var(--accent-orange);">${db.lang === 'en' ? 'Inflation Shield' : 'Bouclier Inflation'}</div>
+            <strong style="color: var(--accent-orange); font-size: 0.85rem;">+${fmt(inflationGain)}</strong>
+          </div>
+          <div>
+            <div style="opacity: 0.75; color: var(--brand-bright);">${db.lang === 'en' ? 'Real Indexed' : 'Réel Indexé'}</div>
+            <strong style="color: var(--brand-bright); font-size: 0.85rem;">+${fmt(totalAdj)}/m</strong>
+          </div>
+        </div>
+
+        <div style="position: relative; width: 120px; height: 120px; display: flex; align-items: center; justify-content: center; margin-bottom: 12px;">
+          <svg width="120" height="120" viewBox="0 0 100 100">
+            <circle cx="50" cy="50" r="34" fill="transparent" stroke="var(--bg-color)" stroke-width="12"></circle>
+            ${circleSegments}
+          </svg>
+          <div style="position: absolute; text-align: center; pointer-events: none;">
+            <div style="font-size: 0.85rem; font-weight: 900; color: var(--brand-bright);">+${fmt(totalAdj)}</div>
+            <div style="font-size: 0.65rem; opacity: 0.7;">${db.lang === 'en' ? 'per month' : 'par mois'}</div>
+          </div>
+        </div>
+
+        <div style="display: flex; flex-direction: column; width: 100%; border-top: 1px solid var(--border-color); padding-top: 8px;">
+          ${legendRows}
+        </div>
+      `;
+
       document.getElementById('pie-modal').classList.add('active');
-      document.body.style.overflow = 'hidden';
     }
 
     function closePieModal() {
       document.getElementById('pie-modal').classList.remove('active');
-      document.body.style.overflow = '';
     }
 
-    /* --- MODALE TRAJECTOIRE (SVG) --- */
+    /* ==========================================================================
+       MODALE TRAJECTOIRE CUMULÉE
+       ========================================================================== */
     function openTimelineModal() {
-      const container = document.getElementById('timeline-chart-body');
-      const edges = allEdges();
+      const edges = db.customEdges;
+      const svg = document.getElementById('timeline-chart-svg');
+      const hoverBadge = document.getElementById('timeline-hover-badge');
+      if (hoverBadge) hoverBadge.innerText = t('m_hover_tip');
 
       if (edges.length === 0) {
-        container.innerHTML = `<div style="text-align:center; padding:20px; opacity:0.6;">Ajoute des astuces pour générer la trajectoire de Free Cash-Flow.</div>`;
-      } else {
-        const events = [];
-        edges.forEach(e => { if (e.createdAt) events.push({ date: e.createdAt, amount: annualValue(e) }); });
-        events.sort((a, b) => new Date(a.date) - new Date(b.date));
-
-        let cum = 0;
-        const points = events.map(ev => { cum += ev.amount; return cum; });
-
-        const w = 300, h = 120, pad = 12;
-        const maxCum = Math.max(...points, 1);
-        const n = points.length;
-
-        const coords = points.map((v, i) => {
-          const x = n === 1 ? w / 2 : pad + (i / (n - 1)) * (w - 2 * pad);
-          const y = h - pad - (v / maxCum) * (h - 2 * pad);
-          return [x, y];
-        });
-
-        const linePath = coords.map((p, i) => (i === 0 ? 'M' : 'L') + p[0].toFixed(1) + ',' + p[1].toFixed(1)).join(' ');
-        const lastX = coords[coords.length - 1][0].toFixed(1);
-        const firstX = coords[0][0].toFixed(1);
-        const areaPath = linePath + ' L' + lastX + ',' + (h - pad) + ' L' + firstX + ',' + (h - pad) + ' Z';
-
-        container.innerHTML = `
-          <svg viewBox="0 0 ${w} ${h}" style="width:100%; height:130px; display:block;">
-            <path d="${areaPath}" fill="var(--accent-purple)" opacity="0.15"></path>
-            <path d="${linePath}" fill="none" stroke="var(--accent-purple)" stroke-width="2.5" stroke-linejoin="round"></path>
-            ${coords.map(p => `<circle cx="${p[0].toFixed(1)}" cy="${p[1].toFixed(1)}" r="3" fill="var(--accent-purple)"></circle>`).join('')}
-          </svg>
-          <div style="font-size:0.85rem; text-align:center; font-weight:700; color:var(--brand-bright); margin-top:8px;">
-            Trésorerie théorique cumulée : ${formatEUR(cum)} € / an
-          </div>
-        `;
+        svg.innerHTML = `<text x="250" y="70" fill="var(--text-main)" font-size="12" text-anchor="middle" opacity="0.6">${db.lang === 'en' ? 'Add levers to plot your trajectory.' : 'Ajoute des leviers pour tracer la trajectoire.'}</text>`;
+        document.getElementById('m-traj-total-saved').innerText = '0 ' + getCurrencySymbol();
+        document.getElementById('m-traj-inflation-shield').innerText = '+0 ' + getCurrencySymbol();
+        document.getElementById('m-traj-compound-5y').innerText = '0 ' + getCurrencySymbol();
+        document.getElementById('m-traj-passive-yield').innerText = '+0 ' + getCurrencySymbol() + ' / mo';
+        document.getElementById('timeline-modal').classList.add('active');
+        return;
       }
 
+      const totalBaseMonthly = edges.reduce((s, e) => s + (e.gain || 0), 0);
+      const totalAdjMonthly = edges.reduce((s, e) => s + adjustedMonthlyValue(e), 0);
+      const totalCumulSaved = edges.reduce((s, e) => s + calculateTotalSavedHistorically(e), 0);
+      const totalBaseHistSaved = edges.reduce((s, e) => s + ((e.gain || 0) * getLeverAgeInMonths(e)), 0);
+      const totalShieldSaved = Math.max(0, totalCumulSaved - totalBaseHistSaved);
+
+      const r = 0.07;
+      const n = 60;
+      const pmt = totalAdjMonthly;
+      const compound5Y = pmt > 0 ? pmt * ((Math.pow(1 + r/12, n) - 1) / (r/12)) : 0;
+      const passivePerpetual = Math.round((totalAdjMonthly * 12 * 0.04) / 12);
+
+      document.getElementById('m-traj-total-saved').innerText = fmt(totalCumulSaved);
+      document.getElementById('m-traj-inflation-shield').innerText = `+${fmt(totalShieldSaved)}`;
+      document.getElementById('m-traj-compound-5y').innerText = fmt(compound5Y);
+      document.getElementById('m-traj-passive-yield').innerText = `+${fmt(passivePerpetual)} ${db.lang === 'en' ? '/ mo for life' : '/ mois à vie'}`;
+
+      const monthsCount = 24;
+      const now = new Date();
+      const series = [];
+
+      for (let i = monthsCount - 1; i >= 0; i--) {
+        const d = new Date(now.getFullYear(), now.getMonth() - i, 1);
+        const y = d.getFullYear();
+        const m = d.getMonth() + 1;
+        const key = `${String(m).padStart(2,'0')}/${String(y).slice(-2)}`;
+
+        let monthlyNominal = 0;
+        let monthlyReal = 0;
+
+        edges.forEach(e => {
+          const eY = parseInt(e.startYear, 10);
+          const eM = parseInt(e.startMonth, 10);
+          if (y > eY || (y === eY && m >= eM)) {
+            monthlyNominal += (e.gain || 0);
+            monthlyReal += adjustedMonthlyValue(e);
+          }
+        });
+
+        series.push({ key, nominal: monthlyNominal, real: monthlyReal });
+      }
+
+      const padLeft = 45, padRight = 15, padTop = 15, padBottom = 20;
+      const width = 500 - padLeft - padRight;
+      const height = 140 - padTop - padBottom;
+      const maxVal = Math.max(10, ...series.map(s => s.real));
+
+      const getY = (val) => padTop + height - (val / maxVal) * height;
+
+      let gridLines = '';
+      [0, maxVal / 2, maxVal].forEach(v => {
+        const gy = getY(v);
+        gridLines += `
+          <line x1="${padLeft}" y1="${gy}" x2="${500 - padRight}" y2="${gy}" stroke="var(--border-color)" stroke-dasharray="3,3" stroke-width="1" />
+          <text x="${padLeft - 6}" y="${gy + 3}" fill="var(--text-main)" font-size="8" font-weight="700" text-anchor="end" opacity="0.65">${fmtCompact(v)}</text>
+        `;
+      });
+
+      const pointsReal = series.map((s, idx) => ({
+        x: padLeft + (idx / (series.length - 1 || 1)) * width,
+        y: getY(s.real),
+        key: s.key,
+        real: s.real,
+        nominal: s.nominal
+      }));
+
+      const pointsNominal = series.map((s, idx) => ({
+        x: padLeft + (idx / (series.length - 1 || 1)) * width,
+        y: getY(s.nominal)
+      }));
+
+      let pathDReal = `M ${pointsReal[0].x} ${pointsReal[0].y}`;
+      for (let i = 1; i < pointsReal.length; i++) pathDReal += ` L ${pointsReal[i].x} ${pointsReal[i].y}`;
+
+      let pathDNominal = `M ${pointsNominal[0].x} ${pointsNominal[0].y}`;
+      for (let i = 1; i < pointsNominal.length; i++) pathDNominal += ` L ${pointsNominal[i].x} ${pointsNominal[i].y}`;
+
+      const areaDReal = pathDReal + ` L ${pointsReal[pointsReal.length - 1].x} ${padTop + height} L ${pointsReal[0].x} ${padTop + height} Z`;
+
+      svg.innerHTML = `
+        ${gridLines}
+        <path d="${areaDReal}" fill="var(--brand)" opacity="0.12"></path>
+        <path d="${pathDNominal}" fill="none" stroke="var(--border-color)" stroke-width="1.8" stroke-dasharray="3,3"></path>
+        <path d="${pathDReal}" fill="none" stroke="var(--brand-bright)" stroke-width="2.5" stroke-linecap="round"></path>
+      `;
+
+      pointsReal.forEach(p => {
+        const circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+        circle.setAttribute("cx", p.x);
+        circle.setAttribute("cy", p.y);
+        circle.setAttribute("r", "4");
+        circle.setAttribute("fill", "var(--bg-color)");
+        circle.setAttribute("stroke", "var(--brand-bright)");
+        circle.setAttribute("stroke-width", "2");
+        circle.style.cursor = "pointer";
+
+        const updateHover = () => {
+          const badge = document.getElementById('timeline-hover-badge');
+          if (badge) {
+            badge.innerText = `${p.key} : +${fmt(p.real)}/m (base: ${fmt(p.nominal)})`;
+          }
+        };
+
+        circle.addEventListener("mouseenter", updateHover);
+        circle.addEventListener("click", updateHover);
+        svg.appendChild(circle);
+      });
+
       document.getElementById('timeline-modal').classList.add('active');
-      document.body.style.overflow = 'hidden';
     }
 
     function closeTimelineModal() {
       document.getElementById('timeline-modal').classList.remove('active');
-      document.body.style.overflow = '';
     }
 
-    function renderAll() {
-      renderLibrary();
-      renderPlan();
+    /* ==========================================================================
+       GESTION DU FORMULAIRE
+       ========================================================================== */
+    function initYearSelector() {
+      const yearSel = document.getElementById("in-start-year");
+      if (!yearSel) return;
+      const currentYear = new Date().getFullYear();
+      yearSel.innerHTML = '';
+      for (let y = currentYear; y >= currentYear - 8; y--) {
+        yearSel.innerHTML += `<option value="${y}">${y}</option>`;
+      }
     }
 
     function resetEdgeForm() {
       document.getElementById("in-title").value = "";
-      document.getElementById("in-cat").value = "logement";
+      document.getElementById("in-cat").value = "energie";
       document.getElementById("in-gain").value = "";
-      document.getElementById("in-freq").value = "once";
-      document.getElementById("in-desc").value = "";
+      const descEl = document.getElementById("in-desc");
+      descEl.value = "";
+      descEl.style.height = "auto";
+      document.getElementById("in-start-year").value = new Date().getFullYear();
+      document.getElementById("in-start-month").value = String(new Date().getMonth() + 1).padStart(2, '0');
     }
 
     function submitEdgeForm() {
       const title = document.getElementById("in-title").value.trim();
       const cat = document.getElementById("in-cat").value;
       const gain = parseFloat(document.getElementById("in-gain").value) || 0;
-      const freq = document.getElementById("in-freq").value;
+      const startMonth = document.getElementById("in-start-month").value;
+      const startYear = document.getElementById("in-start-year").value;
       const desc = document.getElementById("in-desc").value.trim();
 
-      if (!title) {
-        showCustomDialog('⚠️', 'Attention', t("alert_need_title"));
+      if (!title || gain <= 0) {
+        showCustomDialog('⚠️', (db.lang === 'en' ? 'Warning' : 'Attention'), (db.lang === 'en' ? 'Please enter a title and a gain greater than 0.' : 'Veuillez saisir un intitulé et un gain supérieur à 0.'));
         return;
       }
 
       if (editingId) {
         const edge = db.customEdges.find(e => e.id === editingId);
-        if (edge) { edge.title = title; edge.cat = cat; edge.gain = gain; edge.freq = freq; edge.desc = desc; }
+        if (edge) {
+          edge.title = title;
+          edge.cat = cat;
+          edge.gain = gain;
+          edge.startMonth = startMonth;
+          edge.startYear = startYear;
+          edge.desc = desc;
+        }
         markUnsavedChanges();
         cancelEditEdge();
         renderAll();
@@ -1064,13 +2112,14 @@
       }
 
       const id = "edge-" + Date.now();
-      const createdAt = new Date().toISOString().slice(0, 10);
-      db.customEdges.push({ id, title, cat, desc, gain, freq, createdAt });
+      db.customEdges.push({ id, title, cat, gain, startMonth, startYear, desc, customImage: null });
+      db.cardsOrder.push(id);
       expandedCardIds.add(id);
 
       resetEdgeForm();
       markUnsavedChanges();
       renderAll();
+      triggerCelebration('cash');
     }
 
     function startEditEdge(id, e) {
@@ -1082,33 +2131,47 @@
       document.getElementById("in-title").value = edge.title;
       document.getElementById("in-cat").value = edge.cat;
       document.getElementById("in-gain").value = edge.gain || "";
-      document.getElementById("in-freq").value = edge.freq || "once";
-      document.getElementById("in-desc").value = edge.desc || "";
+      document.getElementById("in-start-month").value = edge.startMonth || "01";
+      document.getElementById("in-start-year").value = edge.startYear || new Date().getFullYear();
+      const descEl = document.getElementById("in-desc");
+      descEl.value = edge.desc || "";
+      autoGrowTextarea(descEl);
 
-      document.getElementById("form-title").textContent = t("edit_title");
+      document.getElementById("form-title").textContent = t("btn_update");
       document.getElementById("btn-submit-edge").textContent = t("btn_update");
       document.getElementById("btn-cancel-edge").style.display = "inline-flex";
 
-      document.getElementById("form-card").scrollIntoView({ behavior: "smooth", block: "start" });
+      document.getElementById("form-card").scrollIntoView({ behavior: "smooth" });
     }
 
     function cancelEditEdge() {
       editingId = null;
       resetEdgeForm();
-      document.getElementById("form-title").textContent = t("add_title");
-      document.getElementById("btn-submit-edge").textContent = t("btn_add");
+      document.getElementById("form-title").textContent = t("form_new_title");
+      document.getElementById("btn-submit-edge").textContent = t("btn_submit");
       document.getElementById("btn-cancel-edge").style.display = "none";
     }
 
     function deleteCustom(id, e) {
       if (e) e.stopPropagation();
-      showCustomDialog('🗑️', t('confirm_delete_title'), t('confirm_delete_msg'), true, () => {
+      const isEn = db.lang === 'en';
+      showCustomDialog('🗑️', (isEn ? 'Confirm Deletion' : 'Suppression'), (isEn ? 'Are you sure you want to delete this lever permanently?' : 'Es-tu sûr de vouloir supprimer définitivement ce levier ?'), true, () => {
         db.customEdges = db.customEdges.filter(e => e.id !== id);
+        db.cardsOrder = db.cardsOrder.filter(cId => cId !== id);
         expandedCardIds.delete(id);
         if (editingId === id) cancelEditEdge();
         markUnsavedChanges();
         renderAll();
       });
+    }
+
+    function copyFortuneoCode() {
+      const code = "12874482";
+      const btn = document.getElementById('fortuneo-btn');
+      if (navigator.clipboard) navigator.clipboard.writeText(code);
+      if (btn) btn.innerText = db.lang === 'en' ? "✅ Code copied!" : "✅ Code copié !";
+      window.open("https://www.fortuneo.fr", "_blank");
+      setTimeout(() => { if (btn) btn.innerText = "Fortuneo (Code Parrain : 12874482)"; }, 1800);
     }
 
     function showCustomDialog(icon, title, message, isConfirm = false, onConfirm = null) {
@@ -1121,19 +2184,17 @@
 
       if (isConfirm) {
         btnBox.innerHTML = `
-          <button class="btn-reset" onclick="executeDialogConfirm()" style="flex:1;">Supprimer</button>
-          <button class="btn-secondary" onclick="closeCustomDialog()" style="flex:1;">Annuler</button>
+          <button class="btn-reset" onclick="executeDialogConfirm()" style="flex:1;">${db.lang === 'en' ? 'Delete' : 'Supprimer'}</button>
+          <button class="btn-secondary" onclick="closeCustomDialog()" style="flex:1;">${t('btn_cancel')}</button>
         `;
       } else {
         btnBox.innerHTML = `<button class="btn-primary" onclick="closeCustomDialog()" style="width:100%;">OK</button>`;
       }
       document.getElementById('custom-dialog-modal').classList.add('active');
-      document.body.style.overflow = 'hidden';
     }
 
     function closeCustomDialog() {
       document.getElementById('custom-dialog-modal').classList.remove('active');
-      document.body.style.overflow = '';
       dialogConfirmCallback = null;
     }
 
@@ -1152,9 +2213,9 @@
         const a = document.createElement("a");
         a.href = url; a.download = fileName; document.body.appendChild(a); a.click(); document.body.removeChild(a);
         db.hasUnsavedChanges = false; saveData(); updateBackupWarningUI();
-        showCustomDialog('💾', 'Export Réussi', 'Votre fichier de sauvegarde a été téléchargé !');
+        showCustomDialog('💾', (db.lang === 'en' ? 'Export Successful' : 'Export Réussi'), (db.lang === 'en' ? 'Backup file downloaded!' : 'Fichier de sauvegarde téléchargé !'));
       } catch (e) {
-        showCustomDialog('⚠️', 'Erreur', 'Impossible d\'exporter les données.');
+        showCustomDialog('⚠️', (db.lang === 'en' ? 'Error' : 'Erreur'), (db.lang === 'en' ? 'Failed to export.' : 'Impossible d\'exporter.'));
       }
     }
 
@@ -1170,34 +2231,178 @@
               imported.forEach(item => {
                 if (item && item.title) {
                   item.id = "edge-" + Date.now() + "-" + Math.floor(Math.random() * 1000);
-                  if (!item.createdAt) item.createdAt = new Date().toISOString().slice(0, 10);
+                  if (!item.startYear) item.startYear = new Date().getFullYear();
+                  if (!item.startMonth) item.startMonth = "01";
                   db.customEdges.push(item);
+                  db.cardsOrder.push(item.id);
                 }
               });
             } else { db = imported; }
-            db.hasUnsavedChanges = false; saveData(); renderAll();
-            showCustomDialog('✅', 'Importation Réussie', 'Vos données KLON Edge ont été restaurées !');
-          } else { showCustomDialog('⚠️', 'Fichier Invalide', t("alert_import_error")); }
-        } catch (err) { showCustomDialog('⚠️', 'Erreur', t("alert_import_error")); }
+            db.hasUnsavedChanges = false; saveData(); applyLanguageUI();
+            showCustomDialog('✅', (db.lang === 'en' ? 'Import Successful' : 'Import Réussi'), (db.lang === 'en' ? 'Data restored successfully!' : 'Données restaurées avec succès !'));
+          } else { showCustomDialog('⚠️', (db.lang === 'en' ? 'Invalid File' : 'Fichier Invalide'), (db.lang === 'en' ? 'Invalid backup file.' : 'Fichier JSON non reconnu.')); }
+        } catch (err) { showCustomDialog('⚠️', (db.lang === 'en' ? 'Error' : 'Erreur'), (db.lang === 'en' ? 'Error reading backup file.' : 'Erreur de lecture du fichier.')); }
       };
       reader.readAsText(file);
       evt.target.value = '';
     }
 
     function confirmResetDialog() {
-      showCustomDialog('🗑️', t('btn_reset'), 'Es-tu sûr de vouloir réinitialiser toutes tes astuces personnelles ?', true, () => {
-        db.customEdges = []; db.userName = ''; db.hasUnsavedChanges = false; expandedCardIds.clear();
-        saveData(); updateBackupWarningUI(); renderAll();
+      const isEn = db.lang === 'en';
+      showCustomDialog('🗑️', t('btn_reset'), (isEn ? 'Are you sure you want to reset all data?' : 'Es-tu sûr de vouloir tout remettre à zéro ?'), true, () => {
+        db.customEdges = []; db.userName = ''; db.hasUnsavedChanges = false; db.cardsOrder = []; db.everUnlockedRewards = []; expandedCardIds.clear();
+        saveData(); updateBackupWarningUI(); applyLanguageUI();
       });
     }
 
+    /* BADGES */
+    const REWARDS_DATA = [
+      { id: "r_first", icon: "🌱", label_fr: "Premier Levier", label_en: "First Lever", desc_fr: "Premier levier d'optimisation récurrent posé.", desc_en: "First recurring optimization lever saved.", anim: "confetti" },
+      { id: "r_50", icon: "⚡", label_fr: "Bouclier 50 €/m", label_en: "50/mo Shield", desc_fr: "50 € par mois d'OPEX libéré à vie !", desc_en: "50/month in OPEX permanently eliminated!", anim: "cash" },
+      { id: "r_100", icon: "🛡️", label_fr: "Bouclier 100 €/m", label_en: "100/mo Shield", desc_fr: "100 € de cash-flow mensuel racheté !", desc_en: "100/month recurring cash flow bought back!", anim: "cash" },
+      { id: "r_250", icon: "💰", label_fr: "Cap 250 €/m", label_en: "250/mo Cap", desc_fr: "250 € par mois d'économies indexées !", desc_en: "250/month in indexed savings reached!", anim: "gold" },
+      { id: "r_500", icon: "🏰", label_fr: "Cap 500 €/m", label_en: "500/mo Cap", desc_fr: "500 € mensuels protégés contre l'inflation !", desc_en: "500/month shielded from inflation for life!", anim: "crowns" },
+      { id: "r_cumul_1k", icon: "🪙", label_fr: "1 000 € Sauvé", label_en: "1,000 Saved", desc_fr: "1 000 € cumulés déjà sauvés dans l'histoire.", desc_en: "1,000 cumulative savings reached.", anim: "cash" },
+      { id: "r_cumul_5k", icon: "💎", label_fr: "5 000 € Sauvé", label_en: "5,000 Saved", desc_fr: "5 000 € d'économies réelles réinjectées.", desc_en: "5,000 real savings reinvested.", anim: "diamonds" }
+    ];
+
+    function toggleRewardsVisibility() {
+      isRewardsVisible = !isRewardsVisible;
+      const wrapper = document.getElementById('hero-rewards-wrapper');
+      const btn = document.getElementById('btn-toggle-rewards');
+      if (isRewardsVisible) {
+        wrapper.style.display = 'flex';
+        btn.innerHTML = t('btn_rewards_hide');
+      } else {
+        wrapper.style.display = 'none';
+        btn.innerHTML = t('btn_rewards');
+      }
+    }
+
+    function checkRewards(monthlyFcf, totalCumul, countEdges) {
+      const box = document.getElementById('rewards-box');
+      const toggleRow = document.getElementById('hero-rewards-toggle-row');
+      const wrapper = document.getElementById('hero-rewards-wrapper');
+      box.innerHTML = '';
+
+      if (countEdges === 0) {
+        toggleRow.classList.remove('has-rewards');
+        wrapper.style.display = 'none';
+        return;
+      }
+
+      let newlyUnlockedId = null;
+
+      REWARDS_DATA.forEach(r => {
+        let isUnlocked = false;
+        if (r.id === "r_first") isUnlocked = countEdges >= 1;
+        if (r.id === "r_50") isUnlocked = monthlyFcf >= 50;
+        if (r.id === "r_100") isUnlocked = monthlyFcf >= 100;
+        if (r.id === "r_250") isUnlocked = monthlyFcf >= 250;
+        if (r.id === "r_500") isUnlocked = monthlyFcf >= 500;
+        if (r.id === "r_cumul_1k") isUnlocked = totalCumul >= 1000;
+        if (r.id === "r_cumul_5k") isUnlocked = totalCumul >= 5000;
+
+        if (isUnlocked) {
+          if (!db.everUnlockedRewards.includes(r.id)) {
+            db.everUnlockedRewards.push(r.id);
+            newlyUnlockedId = r.id;
+            saveData();
+          }
+          const label = db.lang === 'en' ? r.label_en : r.label_fr;
+          box.innerHTML += `
+            <div class="corp-reward-pill" onclick="openRewardModal('${r.id}')">
+              <span>${r.icon}</span>${label}
+            </div>
+          `;
+        }
+      });
+
+      if (box.children.length > 0) {
+        toggleRow.classList.add('has-rewards');
+        wrapper.style.display = isRewardsVisible ? 'flex' : 'none';
+        document.getElementById('btn-toggle-rewards').innerHTML = isRewardsVisible ? t('btn_rewards_hide') : t('btn_rewards');
+      } else {
+        toggleRow.classList.remove('has-rewards');
+        wrapper.style.display = 'none';
+      }
+
+      if (newlyUnlockedId) {
+        const found = REWARDS_DATA.find(item => item.id === newlyUnlockedId);
+        if (found) triggerCelebration(found.anim);
+      }
+    }
+
+    function openRewardModal(rId) {
+      const r = REWARDS_DATA.find(x => x.id === rId);
+      if (!r) return;
+      const isEn = db.lang === 'en';
+      document.getElementById('reward-detail-icon').innerText = r.icon;
+      document.getElementById('reward-detail-title').innerText = isEn ? r.label_en : r.label_fr;
+      document.getElementById('reward-detail-desc').innerText = isEn ? r.desc_en : r.desc_fr;
+      document.getElementById('reward-modal').classList.add('active');
+    }
+    function closeRewardModal() { document.getElementById('reward-modal').classList.remove('active'); }
+
+    function triggerCelebration(type = 'confetti') {
+      const canvas = document.getElementById('confetti-canvas');
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+
+      let particles = [];
+      const icons = type === 'gold' ? ['✨', '🪙', '⭐'] : (type === 'cash' ? ['💵', '💰', '💸'] : (type === 'crowns' ? ['👑', '⚡'] : ['💎', '✨']));
+
+      for (let i = 0; i < 50; i++) {
+        particles.push({
+          x: canvas.width / 2, y: canvas.height / 2,
+          vx: (Math.random() - 0.5) * 14, vy: (Math.random() - 0.7) * 15,
+          size: 20, icon: icons[Math.floor(Math.random() * icons.length)],
+          rotation: 0, vRot: (Math.random() - 0.5) * 8
+        });
+      }
+
+      let frame = 0;
+      function animate() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        particles.forEach((p, idx) => {
+          p.x += p.vx; p.y += p.vy; p.vy += 0.25; p.rotation += p.vRot;
+          ctx.save();
+          ctx.translate(p.x, p.y);
+          ctx.rotate((p.rotation * Math.PI) / 180);
+          ctx.font = `${p.size}px sans-serif`;
+          ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+          ctx.fillText(p.icon, 0, 0);
+          ctx.restore();
+          if (p.y > canvas.height || p.x < 0 || p.x > canvas.width) particles.splice(idx, 1);
+        });
+
+        if (particles.length > 0 && frame < 100) {
+          frame++; requestAnimationFrame(animate);
+        } else {
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+        }
+      }
+      animate();
+    }
+
+    function renderAll() {
+      renderLibrary();
+      renderPlan();
+      updateUserLabels();
+    }
+
     window.addEventListener('DOMContentLoaded', () => {
+      initYearSelector();
       document.getElementById('user-name-input').value = db.userName || '';
-      document.getElementById('lang-select').value = db.lang || 'fr';
+      document.getElementById('region-select').value = db.region || 'FR';
       document.getElementById('theme-select').value = db.theme || 'dark';
       document.documentElement.setAttribute('data-theme', db.theme || 'dark');
+      document.querySelectorAll('.curr-sym').forEach(el => el.innerText = getCurrencySymbol());
       updateBackupWarningUI();
-      changeLanguage(db.lang || 'fr');
+      applyLanguageUI();
+      fetchInflationFromWorker(db.region);
     });
   </script>
 </body>
