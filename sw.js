@@ -1,5 +1,5 @@
 // 1. Définissez la nouvelle version du cache
-const CACHE_NAME = 'klon-edgev3'; // <-- À incrémenter à chaque mise à jour (v2, v3, etc.)
+const CACHE_NAME = 'klon-edgev4'; // <-- À incrémenter à chaque mise à jour (v2, v3, etc.)
 
 const ASSETS = [
   './',
