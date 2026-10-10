@@ -1,0 +1,17 @@
+{
+  "name": "KLON-EDGE",
+  "short_name": "KLON-EDGE",
+  "start_url": "./index.html",
+  "display_override": ["fullscreen", "standalone"],
+  "display": "fullscreen",
+  "background_color": "#0d1117",
+  "theme_color": "#0d1117",
+  "icons": [
+    {
+      "src": "./icon.svg",
+      "sizes": "192x192 512x512",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
