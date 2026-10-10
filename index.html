@@ -10,11 +10,11 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="theme-color" content="#10b981">
- 
+
   <link rel="manifest" href="./manifest.json">
   <link rel="icon" href="./icon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="./icon.svg">
-  
+
   <style>
     html {
       background-color: var(--bg-color);
@@ -24,71 +24,44 @@
 
     :root[data-theme="dark"] {
       color-scheme: dark;
-      --bg-color: #0d1117;
-      --card-bg: #161b22;
-      --border-color: #30363d;
-      --text-main: #c9d1d9;
-      --text-bright: #f0f6fc;
+      --bg-color: #0b0e14;
+      --card-bg: #131722;
+      --card-inner: #1a1f2c;
+      --border-color: #262c3d;
+      --text-main: #c0c7d6;
+      --text-bright: #f0f4fc;
       --brand: #10b981;
       --brand-bright: #34d399;
-      --accent-blue: #58a6ff;
-      --accent-green: #238636;
-      --accent-green-bright: #7ee787;
-      --accent-orange: #f0883e;
-      --accent-red: #da3633;
-      --accent-purple: #a371f7;
-      --nav-active-bg: #21262d;
-      --nav-active-text: #34d399;
-      --btn-paypal-bg: #238636;
+      --accent-blue: #38bdf8;
+      --accent-purple: #a855f7;
+      --accent-pink: #ec4899;
+      --accent-red: #ef4444;
+      --nav-active-bg: #1e2433;
+      --nav-active-text: #38bdf8;
+      --btn-paypal-bg: #16a34a;
       --btn-paypal-text: #ffffff;
-      --badge-bg: rgba(16, 185, 129, 0.14);
-      --gray-card: #6e7681;
+      --badge-bg: rgba(56, 189, 248, 0.12);
     }
 
     :root[data-theme="light"] {
       color-scheme: light;
-      --bg-color: #f0f2f5;
+      --bg-color: #f1f5f9;
       --card-bg: #ffffff;
-      --border-color: #d0d7de;
-      --text-main: #24292f;
-      --text-bright: #1f2328;
+      --card-inner: #f8fafc;
+      --border-color: #cbd5e1;
+      --text-main: #334155;
+      --text-bright: #0f172a;
       --brand: #059669;
       --brand-bright: #047857;
-      --accent-blue: #0969da;
-      --accent-green: #1f883d;
-      --accent-green-bright: #1a7f37;
-      --accent-orange: #bc4c00;
-      --accent-red: #cf222e;
-      --accent-purple: #8250df;
-      --nav-active-bg: #e1e4e8;
-      --nav-active-text: #059669;
-      --btn-paypal-bg: #1f883d;
+      --accent-blue: #0284c7;
+      --accent-purple: #7c3aed;
+      --accent-pink: #db2777;
+      --accent-red: #dc2626;
+      --nav-active-bg: #e2e8f0;
+      --nav-active-text: #0284c7;
+      --btn-paypal-bg: #16a34a;
       --btn-paypal-text: #ffffff;
-      --badge-bg: rgba(5, 150, 105, 0.14);
-      --gray-card: #8c959f;
-    }
-
-    :root[data-theme="colorblind"] {
-      color-scheme: dark;
-      --bg-color: #000000;
-      --card-bg: #121212;
-      --border-color: #ffffff;
-      --text-main: #ffffff;
-      --text-bright: #ffff00;
-      --brand: #00ffff;
-      --brand-bright: #00ffff;
-      --accent-blue: #00ffff;
-      --accent-green: #0d6efd;
-      --accent-green-bright: #ffcc00;
-      --accent-orange: #ff8000;
-      --accent-red: #ffcc00;
-      --accent-purple: #ffff00;
-      --nav-active-bg: #2a2a2a;
-      --nav-active-text: #00ffff;
-      --btn-paypal-bg: #0d6efd;
-      --btn-paypal-text: #ffffff;
-      --badge-bg: rgba(0, 255, 255, 0.2);
-      --gray-card: #a0a0a0;
+      --badge-bg: rgba(2, 132, 199, 0.12);
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -105,14 +78,13 @@
     }
 
     ::-webkit-scrollbar { width: 6px; height: 6px; }
-    ::-webkit-scrollbar-track { background: var(--bg-color); border-radius: 4px; }
+    ::-webkit-scrollbar-track { background: var(--bg-color); }
     ::-webkit-scrollbar-thumb { background: var(--border-color); border-radius: 4px; }
-    ::-webkit-scrollbar-thumb:hover { background: var(--brand); }
-    * { scrollbar-width: thin; scrollbar-color: var(--border-color) var(--bg-color); }
+    ::-webkit-scrollbar-thumb:hover { background: var(--accent-blue); }
 
     .app-container {
       width: 100%;
-      max-width: 600px;
+      max-width: 620px;
       padding: 16px;
       display: flex;
       flex-direction: column;
@@ -123,11 +95,11 @@
     .app-header h1 { font-size: 1.6rem; color: var(--text-bright); font-weight: 800; letter-spacing: -0.5px; }
     .app-header h1 a { transition: opacity 0.2s, transform 0.2s; display: inline-block; text-decoration: none; color: inherit; }
     .app-header h1 a:hover { opacity: 0.85; transform: scale(1.02); }
-    .app-header h1 a span { color: var(--brand-bright); }
-    .app-header .subtitle { font-size: 0.95rem; color: var(--brand-bright); font-weight: 600; margin-top: 2px; }
+    .app-header h1 a span { color: var(--accent-purple); }
+    .app-header .subtitle { font-size: 0.95rem; color: var(--accent-blue); font-weight: 600; margin-top: 2px; }
     .app-header .description { font-size: 0.82rem; color: var(--text-main); opacity: 0.8; margin-top: 6px; line-height: 1.35; }
 
-    nav { display: flex; background-color: var(--card-bg); border: 1px solid var(--border-color); border-radius: 8px; overflow: hidden; }
+    nav { display: flex; background-color: var(--card-bg); border: 1px solid var(--border-color); border-radius: 10px; overflow: hidden; }
     .nav-btn {
       flex: 1; padding: 12px 6px; background: none; border: none; color: var(--text-main);
       font-weight: bold; cursor: pointer; font-size: 0.85rem; transition: background-color 0.2s, color 0.2s;
@@ -145,7 +117,7 @@
 
     .card {
       background-color: var(--card-bg); border: 1px solid var(--border-color);
-      border-radius: 8px; padding: 14px 16px; display: flex; flex-direction: column; gap: 10px; position: relative;
+      border-radius: 10px; padding: 14px 16px; display: flex; flex-direction: column; gap: 10px; position: relative;
     }
     .card-title { font-size: 1.05rem; color: var(--text-bright); font-weight: 600; display: flex; align-items: center; justify-content: space-between; }
 
@@ -154,154 +126,100 @@
       padding: 10px 12px; border-radius: 6px; font-size: 0.95rem; font-weight: 700; width: 100%;
     }
 
-    .edge-hero-card {
-      background: linear-gradient(135deg, var(--card-bg) 0%, rgba(16, 185, 129, 0.08) 100%);
-      border: 1px solid var(--brand); border-radius: 10px; padding: 12px 14px; display: flex; flex-direction: column; gap: 8px;
-    }
-    .edge-hero-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; text-align: center; }
-    .hero-box {
-      display: flex; flex-direction: column; gap: 3px; justify-content: center; padding: 8px;
-      border-radius: 8px; cursor: pointer; transition: background-color 0.15s, transform 0.15s;
-    }
-    .hero-box:hover { background-color: rgba(16, 185, 129, 0.1); transform: translateY(-1px); }
-    .hero-box .label { font-size: 0.72rem; font-weight: 800; color: var(--brand-bright); letter-spacing: 0.5px; }
-    .hero-box .val { font-size: 1.7rem; font-weight: 900; color: var(--text-bright); }
-    .hero-box-right { border-left: 1px solid var(--border-color); padding-left: 10px; }
-    @media (max-width: 500px) {
-      .edge-hero-grid { grid-template-columns: 1fr; }
-      .hero-box-right { border-left: none; border-top: 1px solid var(--border-color); padding-left: 0; padding-top: 8px; }
+    /* PANNEAU HERO STYLE COLORÉ ET DYNAMIQUE */
+    .klon-hero-panel {
+      background: linear-gradient(135deg, rgba(168, 85, 247, 0.08) 0%, rgba(56, 189, 248, 0.08) 100%);
+      border: 1px solid var(--accent-purple); border-radius: 10px; padding: 16px;
+      display: flex; flex-direction: column; gap: 14px; position: relative; overflow: hidden;
     }
 
-    /* FILTRES MINIMALISTES SUR 2 NIVEAUX */
-    .filters-box-slim {
-      background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 8px;
-      padding: 8px 10px; display: flex; flex-direction: column; gap: 6px;
+    .klon-hero-header {
+      display: flex; justify-content: space-between; align-items: flex-start; gap: 12px;
     }
-    .filters-select-row {
-      display: grid; grid-template-columns: 1fr 1fr; gap: 6px;
+    .klon-val-large {
+      font-size: 2.1rem; font-weight: 900; color: var(--brand-bright); line-height: 1; letter-spacing: -0.5px;
+    }
+    .klon-sub-val {
+      font-size: 0.88rem; font-weight: 700; color: var(--accent-blue); margin-top: 4px;
     }
 
-    /* CONTENEUR DE SCROLL DE LA BIBLIOTHÈQUE POUR GARDER LE FORMULAIRE ACCESSIBLE */
+    .action-btn-pill {
+      background: var(--card-inner); border: 1px solid var(--border-color); color: var(--text-bright);
+      padding: 6px 12px; border-radius: 20px; font-size: 0.78rem; font-weight: 700; cursor: pointer;
+      display: inline-flex; align-items: center; gap: 6px; transition: all 0.15s ease;
+    }
+    .action-btn-pill:hover { border-color: var(--accent-purple); color: var(--accent-purple); }
+
+    /* BARRE MULTI-SEGMENTS DES CATÉGORIES */
+    .multi-progress-track {
+      width: 100%; height: 12px; background: var(--bg-color); border-radius: 6px;
+      overflow: hidden; border: 1px solid var(--border-color); display: flex;
+    }
+    .multi-segment { height: 100%; transition: width 0.3s ease; }
+
+    .gain-input-row { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+
     .scrollable-cards-box {
-      max-height: 500px;
-      overflow-y: auto;
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-      padding-right: 2px;
+      max-height: 520px; overflow-y: auto; display: flex; flex-direction: column; gap: 8px; padding-right: 2px;
     }
 
-    .scrollable-plan-box {
-      max-height: 380px;
-      overflow-y: auto;
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-      padding-right: 2px;
-    }
-
-    input[type="text"], select, textarea {
+    input[type="text"], input[type="number"], select, textarea {
       background-color: var(--bg-color); border: 1px solid var(--border-color); color: var(--text-bright);
       padding: 9px 11px; border-radius: 6px; font-size: 0.88rem; font-family: inherit; width: 100%;
     }
-    select { cursor: pointer; font-weight: bold; color: var(--brand-bright) !important; }
+    select { cursor: pointer; font-weight: bold; color: var(--accent-blue) !important; }
 
-    /* CARTES DÉPLIABLES */
+    .gain-badge {
+      font-size: 0.78rem; font-weight: 800; padding: 3px 10px; border-radius: 12px;
+      background: rgba(255, 255, 255, 0.05); display: inline-block; width: fit-content;
+    }
+
+    /* CARTES DÉPLIABLES AVEC BORDURE DYNAMIQUE HÉRITÉE */
     .edge-card {
-      background: var(--card-bg); border: 1px solid var(--border-color); border-left: 4px solid var(--gray-card);
+      background: var(--card-bg); border: 1px solid var(--border-color);
       border-radius: 8px; padding: 0; display: flex; flex-direction: column; transition: border-color 0.2s;
       overflow: hidden; flex-shrink: 0;
     }
-    .edge-card.st-favori { border-left-color: var(--accent-blue) !important; }
-    .edge-card.st-realise { border-left-color: var(--accent-green-bright) !important; }
-    .edge-card.st-non_realise { border-left-color: var(--accent-orange) !important; }
-    .edge-card.st-poubelle { border-left-color: var(--border-color) !important; opacity: 0.55; }
 
     .edge-summary-row {
       padding: 10px 12px; display: flex; justify-content: space-between; align-items: center;
       gap: 8px; cursor: pointer; user-select: none;
     }
     .edge-summary-row:hover { background: rgba(255, 255, 255, 0.02); }
-    .edge-title-text {
-      font-weight: 700; color: var(--text-bright); font-size: 0.92rem; line-height: 1.35;
-    }
+    .edge-title-text { font-weight: 700; color: var(--text-bright); font-size: 0.92rem; line-height: 1.35; }
+    
     .edge-cat-badge {
-      font-size: 0.68rem; padding: 2px 7px; border-radius: 10px; background: var(--badge-bg);
-      color: var(--brand-bright); border: 1px solid var(--brand); white-space: nowrap; font-weight: 700;
+      font-size: 0.68rem; padding: 2px 8px; border-radius: 10px; white-space: nowrap; font-weight: 800;
     }
+    
     .edge-chevron-btn {
       font-size: 0.85rem; color: var(--text-main); opacity: 0.6; transition: transform 0.2s ease;
       display: inline-flex; align-items: center; justify-content: center; width: 18px; height: 18px;
     }
-    .edge-card.expanded .edge-chevron-btn {
-      transform: rotate(180deg); opacity: 1; color: var(--brand-bright);
-    }
+    .edge-card.expanded .edge-chevron-btn { transform: rotate(180deg); opacity: 1; }
 
     .edge-body-expanded {
       display: none; padding: 0 12px 12px 12px; flex-direction: column; gap: 8px;
       border-top: 1px dashed rgba(48, 54, 61, 0.6); margin-top: 2px; padding-top: 8px;
     }
-    .edge-card.expanded .edge-body-expanded {
-      display: flex;
-    }
+    .edge-card.expanded .edge-body-expanded { display: flex; }
     .edge-desc { font-size: 0.84rem; line-height: 1.5; color: var(--text-main); opacity: 0.9; }
 
-    .price-tiers { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 2px; }
-    .price-pill {
-      font-size: 0.72rem; font-weight: 700; padding: 2px 8px; border-radius: 12px;
-      background: var(--bg-color); border: 1px solid var(--border-color); color: var(--text-bright);
-    }
-
-    .edge-action-row {
-      display: flex; justify-content: space-between; align-items: center; margin-top: 4px; gap: 6px;
-    }
-    .edge-icons-group {
-      display: flex; align-items: center; gap: 6px; margin-left: auto;
-    }
-    .icon-action-btn {
-      width: 32px; height: 32px; border-radius: 6px; border: 1px solid var(--border-color);
-      background: var(--bg-color); font-size: 0.95rem; cursor: pointer; display: flex;
-      align-items: center; justify-content: center; transition: all 0.15s ease; user-select: none;
-    }
-    .icon-action-btn:hover { border-color: var(--brand-bright); transform: translateY(-1px); }
-    .icon-action-btn.on-favori { background: var(--accent-blue); border-color: var(--accent-blue); color: #fff; }
-    .icon-action-btn.on-realise { background: var(--accent-green); border-color: var(--accent-green); color: #fff; }
-    .icon-action-btn.on-non_realise { background: var(--accent-orange); border-color: var(--accent-orange); color: #fff; }
-    .icon-action-btn.on-poubelle { background: var(--gray-card); border-color: var(--gray-card); color: #fff; }
-
-    .tooltip-btn {
-      background: var(--bg-color); border: 1px solid var(--border-color); color: var(--brand-bright);
-      border-radius: 50%; width: 22px; height: 22px; font-size: 0.75rem; font-weight: bold; cursor: pointer;
-      display: inline-flex; align-items: center; justify-content: center; line-height: 1; padding: 0; flex-shrink: 0;
-    }
-    .tooltip-btn:hover { border-color: var(--brand-bright); color: var(--text-bright); }
-
-    .cat-group { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 8px; overflow: hidden; flex-shrink: 0; }
-    .cat-group summary {
-      list-style: none; cursor: pointer; padding: 10px 12px; display: flex; justify-content: space-between;
-      align-items: center; font-weight: 700; color: var(--text-bright); font-size: 0.88rem; user-select: none;
-    }
-    .cat-group summary::-webkit-details-marker { display: none; }
-    .cat-group summary .count {
-      font-size: 0.72rem; font-weight: 700; color: var(--brand-bright); background: var(--badge-bg);
-      border: 1px solid var(--brand); border-radius: 10px; padding: 2px 8px;
-    }
-    .cat-group summary::after { content: "▾"; margin-left: 8px; opacity: 0.6; transition: transform 0.15s; }
-    .cat-group[open] summary::after { transform: rotate(180deg); }
-    .cat-group .cat-body { padding: 0 10px 10px; display: flex; flex-direction: column; gap: 8px; }
+    .edge-expanded-row { display: flex; justify-content: space-between; align-items: center; gap: 8px; width: 100%; }
+    .edge-actions-right { display: flex; gap: 6px; flex-shrink: 0; margin-left: auto; }
 
     button.btn-primary {
-      background-color: var(--accent-green); color: #ffffff !important; border: none; padding: 10px 16px;
+      background-color: var(--accent-purple); color: #ffffff !important; border: none; padding: 10px 16px;
       border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 0.95rem;
     }
     button.btn-secondary, label.btn-secondary {
-      background-color: var(--bg-color); color: var(--brand-bright); border: 1px solid var(--border-color);
+      background-color: var(--bg-color); color: var(--accent-blue); border: 1px solid var(--border-color);
       padding: 8px 12px; border-radius: 6px; cursor: pointer; font-size: 0.8rem; font-weight: bold;
       display: inline-flex; align-items: center; justify-content: center; gap: 4px; box-sizing: border-box; text-align: center;
     }
-    button.btn-secondary:hover, label.btn-secondary:hover { border-color: var(--brand-bright); color: var(--text-bright); }
-    button.btn-danger { background-color: transparent; color: var(--accent-red); border: 1px solid var(--border-color); padding: 4px 8px; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 0.75rem; }
-    button.btn-danger:hover { background-color: rgba(218, 54, 51, 0.15); }
+    button.btn-secondary:hover, label.btn-secondary:hover { border-color: var(--accent-blue); color: var(--text-bright); }
+    button.btn-danger { background-color: transparent; color: var(--accent-red); border: 1px solid var(--border-color); padding: 6px 10px; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 0.85rem; }
+    button.btn-danger:hover { background-color: rgba(239, 68, 68, 0.15); border-color: var(--accent-red); }
     button.btn-reset {
       background-color: transparent; color: var(--accent-red); border: 1px solid var(--accent-red);
       padding: 8px 12px; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 0.8rem;
@@ -315,40 +233,35 @@
     .modal-overlay.active { display: flex; }
     .modal-card {
       background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 12px;
-      width: 100%; max-width: 400px; padding: 18px; display: flex; flex-direction: column; gap: 12px; position: relative;
+      width: 100%; max-width: 440px; padding: 18px; display: flex; flex-direction: column; gap: 12px; position: relative;
     }
 
     .link-btn {
       display: flex; align-items: center; justify-content: center; width: 100%; padding: 12px;
-      background-color: var(--bg-color); color: var(--brand-bright); text-align: center; text-decoration: none;
+      background-color: var(--bg-color); color: var(--accent-blue); text-align: center; text-decoration: none;
       border-radius: 6px; font-size: 0.95rem; font-weight: bold; border: 1px solid var(--border-color); cursor: pointer;
     }
-    .link-btn:hover { border-color: var(--brand-bright); color: var(--text-bright); }
-    .link-btn-blue { color: var(--accent-blue) !important; }
-    .link-btn-blue:hover { border-color: var(--accent-blue) !important; color: var(--text-bright) !important; }
-    .link-btn-purple { color: var(--accent-purple) !important; }
-    .link-btn-purple:hover { border-color: var(--accent-purple) !important; color: var(--text-bright) !important; }
-    .link-btn-orange { color: var(--accent-orange) !important; }
-    .link-btn-orange:hover { border-color: var(--accent-orange) !important; color: var(--text-bright) !important; }
-    .link-btn-yellow { color: #f5a60b !important; }
-    .link-btn-yellow:hover { border-color: #f5a60b !important; color: var(--text-bright) !important; }
-    .link-btn-paypal { background-color: var(--btn-paypal-bg) !important; color: var(--btn-paypal-text) !important; }
+    .link-btn:hover { border-color: var(--accent-blue); color: var(--text-bright); }
 
     .backup-warning-badge {
       display: inline-flex; align-items: center; justify-content: center;
-      width: 18px; height: 18px; background-color: var(--accent-orange); color: #ffffff;
-      border-radius: 50%; font-size: 0.75rem; font-weight: bold; cursor: pointer;
-      margin-left: 6px; animation: pulse-warning 2s infinite;
+      width: 18px; height: 18px; background-color: #f97316; color: #ffffff;
+      border-radius: 50%; font-size: 0.75rem; font-weight: bold; cursor: pointer; margin-left: 6px;
     }
-    @keyframes pulse-warning { 0% { transform: scale(1); } 50% { transform: scale(1.18); } 100% { transform: scale(1); } }
 
     .site-footer { margin-top: 24px; padding-top: 16px; border-top: 1px solid var(--border-color); text-align: center; font-size: 0.75rem; color: var(--text-main); opacity: 0.75; display: flex; flex-direction: column; gap: 8px; line-height: 1.4; }
+
+    .top-lever-item {
+      display: flex; justify-content: space-between; align-items: center;
+      background: var(--card-inner); border: 1px solid var(--border-color);
+      padding: 8px 12px; border-radius: 6px; font-size: 0.85rem;
+    }
   </style>
 </head>
 <body>
 
   <div class="app-container">
-    
+
     <header class="app-header">
       <h1>
         <a href="https://alphapicker.github.io/klon/" title="Écosystème KLON">
@@ -363,12 +276,12 @@
 
     <nav>
       <button class="nav-btn active" id="nav-tab1" onclick="switchTab('tab1', event)">
-        <span class="nav-icon">🔍</span>
+        <span class="nav-icon">📚</span>
         <span data-i18n="nav_library">Bibliothèque</span>
       </button>
       <button class="nav-btn" id="nav-tab2" onclick="switchTab('tab2', event)">
-        <span class="nav-icon">📋</span>
-        <span data-i18n="nav_plan">Plan KLON</span>
+        <span class="nav-icon">📊</span>
+        <span data-i18n="nav_plan">Plan & Analyses</span>
       </button>
       <button class="nav-btn" id="nav-tab3" onclick="switchTab('tab3', event)">
         <span class="nav-icon">🌐</span>
@@ -378,14 +291,14 @@
 
     <!-- ONGLET 1 : BIBLIOTHÈQUE -->
     <div id="tab1" class="tab-content active">
-      
-      <!-- BANDEAU TITULAIRE & THÈMES (DANS L'ONGLET 1) -->
+
+      <!-- BANDEAU TITULAIRE & THÈMES -->
       <div class="card" style="padding: 10px 14px;">
         <div style="display: flex; justify-content: space-between; align-items: center; gap: 8px;">
           <div style="flex: 1;">
             <input type="text" id="user-name-input" class="inline-firstname-input" placeholder="Alpha Picker" onblur="saveUserName()" onkeydown="if(event.key==='Enter') this.blur()">
           </div>
-          
+
           <div style="display: flex; align-items: center; gap: 6px; flex-shrink: 0;">
             <select id="lang-select" onchange="changeLanguage(this.value)" style="width: auto; padding: 6px 8px; font-size: 0.85rem;">
               <option value="fr">FR</option>
@@ -395,49 +308,65 @@
             <select id="theme-select" onchange="changeTheme(this.value)" style="width: auto; padding: 6px 8px; font-size: 0.85rem;">
               <option value="dark" data-i18n="theme_dark">🌙 Sombre</option>
               <option value="light" data-i18n="theme_light">☀️ Clair</option>
-              <option value="colorblind" data-i18n="theme_cb">👁️ Daltonien</option>
             </select>
           </div>
         </div>
       </div>
 
-      <!-- FILTRES MINIMALISTES SUR 2 LIGNES -->
-      <div class="filters-box-slim">
-        <input type="text" id="search" data-i18n-ph="search_ph" placeholder="🔍 Rechercher une astuce..." oninput="renderLibrary()">
-        <div class="filters-select-row">
-          <select id="filter-cat" onchange="renderLibrary()">
-            <option value="all" data-i18n="filter_cat_all">Domaine : Tous</option>
-            <option value="logement" data-i18n="cat_logement">🏠 Logement</option>
-            <option value="vehicule" data-i18n="cat_vehicule">🚗 Véhicule</option>
-            <option value="nourriture" data-i18n="cat_nourriture">🛒 Nourriture</option>
-            <option value="achat" data-i18n="cat_achat">🛍️ Achat / Tech</option>
-          </select>
-          <select id="filter-source" onchange="renderLibrary()">
-            <option value="all" data-i18n="filter_source_all">Source : Toutes</option>
-            <option value="core" data-i18n="filter_source_core">Officielle</option>
-            <option value="custom" data-i18n="filter_source_custom">Mes astuces</option>
-            <option value="poubelle" data-i18n="filter_source_poubelle">🗑️ Poubelle</option>
-          </select>
-        </div>
-      </div>
-
-      <!-- LISTE DÉFILANTE PLAFONNÉE DE LA BIBLIOTHÈQUE -->
-      <div id="library-list" class="scrollable-cards-box"></div>
-
-      <!-- AJOUTER UNE ASTUCE PERSO (TOUJOURS RAPIDEMENT ACCESSIBLE) -->
-      <div class="card">
+      <!-- AJOUTER / MODIFIER UNE ASTUCE -->
+      <div class="card" id="form-card">
         <div class="card-title">
-          <span data-i18n="add_title">🛠️ Ajouter ma propre astuce</span>
+          <span id="form-title" data-i18n="add_title">🛠️ Ajoute ton astuce et son gain</span>
         </div>
         <input type="text" id="in-title" data-i18n-ph="in_title_ph" placeholder="Titre de l'astuce">
         <select id="in-cat">
           <option value="logement" data-i18n="cat_logement">🏠 Logement</option>
-          <option value="vehicule" data-i18n="cat_vehicule">🚗 Véhicule</option>
-          <option value="nourriture" data-i18n="cat_nourriture">🛒 Nourriture</option>
-          <option value="achat" data-i18n="cat_achat">🛍️ Achat / Tech</option>
+          <option value="energie" data-i18n="cat_energie">⚡ Énergie & Fluides</option>
+          <option value="abonnements" data-i18n="cat_abonnements">📱 Abonnements & Services</option>
+          <option value="transports" data-i18n="cat_transports">🚗 Transports & Véhicules</option>
+          <option value="nourriture" data-i18n="cat_nourriture">🛒 Nourriture & Quotidien</option>
+          <option value="finance" data-i18n="cat_finance">🏦 Banque & Finance</option>
+          <option value="achats" data-i18n="cat_achats">🛍️ Achats & Équipements</option>
+          <option value="bricolage" data-i18n="cat_bricolage">🧰 Bricolage & Travaux</option>
+          <option value="divers" data-i18n="cat_divers">🌀 Divers</option>
         </select>
-        <textarea id="in-desc" rows="3" data-i18n-ph="in_desc_ph" placeholder="Description, sans corvée inutile..." style="resize: vertical;"></textarea>
-        <button class="btn-primary" onclick="addCustomEdge()" data-i18n="btn_add">Ajouter à ma bibliothèque</button>
+        <div class="gain-input-row">
+          <input type="number" id="in-gain" min="0" step="1" data-i18n-ph="in_gain_ph" placeholder="Gain estimé (€)">
+          <select id="in-freq">
+            <option value="once" data-i18n="freq_once">Ponctuel (une fois)</option>
+            <option value="monthly" data-i18n="freq_monthly">Mensuel (récurrent)</option>
+            <option value="yearly" data-i18n="freq_yearly">Annuel (récurrent)</option>
+          </select>
+        </div>
+        <textarea id="in-desc" rows="2" data-i18n-ph="in_desc_ph" placeholder="Détail (optionnel)..." style="resize: vertical;"></textarea>
+        <div style="display: flex; gap: 8px;">
+          <button class="btn-primary" id="btn-submit-edge" onclick="submitEdgeForm()" style="flex: 1;" data-i18n="btn_add">Ajouter à ma bibliothèque</button>
+          <button class="btn-secondary" id="btn-cancel-edge" onclick="cancelEditEdge()" style="display: none;" data-i18n="btn_cancel">Annuler</button>
+        </div>
+      </div>
+
+      <!-- FILTRE PAR CATEGORIE -->
+      <div class="card" style="padding: 10px 12px;">
+        <select id="filter-cat" onchange="renderLibrary()">
+          <option value="all" data-i18n="filter_cat_all">Catégorie : Toutes</option>
+          <option value="logement" data-i18n="cat_logement">🏠 Logement</option>
+          <option value="energie" data-i18n="cat_energie">⚡ Énergie & Fluides</option>
+          <option value="abonnements" data-i18n="cat_abonnements">📱 Abonnements & Services</option>
+          <option value="transports" data-i18n="cat_transports">🚗 Transports & Véhicules</option>
+          <option value="nourriture" data-i18n="cat_nourriture">🛒 Nourriture & Quotidien</option>
+          <option value="finance" data-i18n="cat_finance">🏦 Banque & Finance</option>
+          <option value="achats" data-i18n="cat_achats">🛍️ Achats & Équipements</option>
+          <option value="bricolage" data-i18n="cat_bricolage">🧰 Bricolage & Travaux</option>
+          <option value="divers" data-i18n="cat_divers">🌀 Divers</option>
+        </select>
+      </div>
+
+      <!-- LISTE DES ASTUCES -->
+      <div class="card">
+        <div class="card-title">
+          <span data-i18n="list_title">📚 Mes astuces</span>
+        </div>
+        <div id="library-list" class="scrollable-cards-box"></div>
       </div>
 
       <!-- GESTION DES DONNÉES -->
@@ -459,48 +388,58 @@
       </div>
     </div>
 
-    <!-- ONGLET 2 : PLAN KLON -->
+    <!-- ONGLET 2 : ANALYSES & DASHBOARD (STYLE COLORÉ ET HARMONISÉ) -->
     <div id="tab2" class="tab-content">
-      
-      <!-- HERO DASHBOARD EXCLUSIF AU PLAN KLON -->
-      <div class="edge-hero-card">
-        <div class="edge-hero-grid">
-          <div class="hero-box" onclick="openHeroHabitsModal()" title="Cliquer pour voir tes habitudes actives">
-            <span class="label" data-i18n="hero_active">⭐ HABITUDES ACTIVES</span>
-            <div class="val" id="hero-fav" style="color: var(--accent-blue);">0</div>
+
+      <!-- BLOC HERO SYNTHÈSE COLORÉ -->
+      <div class="klon-hero-panel">
+        <div class="klon-hero-header">
+          <div>
+            <div style="font-size: 0.72rem; font-weight: 800; color: var(--accent-purple); letter-spacing: 0.5px;">FCF DISPONIBLE LIBÉRÉ</div>
+            <div class="klon-val-large" id="dash-monthly">+0 € / m</div>
+            <div class="klon-sub-val" id="dash-yearly">soit +0 € / an à vie</div>
           </div>
-          <div class="hero-box hero-box-right" onclick="openHeroDoneModal()" title="Cliquer pour voir tes actions One-Shot validées">
-            <span class="label" data-i18n="hero_done">✅ ACTIONS VALIDÉES</span>
-            <div class="val" id="hero-done" style="color: var(--accent-green-bright);">0</div>
+          <div style="display: flex; flex-direction: column; gap: 6px; align-items: flex-end;">
+            <button class="action-btn-pill" onclick="openTimelineModal()">🧭 Trajectoire</button>
+            <button class="action-btn-pill" onclick="openPieModal()" style="border-color: var(--accent-blue);">🍕 Répartition</button>
           </div>
         </div>
       </div>
 
+      <!-- RÉPARTITION DU FCF PAR CATÉGORIE -->
       <div class="card">
-        <div class="card-title">
-          <span style="color: var(--accent-blue);" data-i18n="plan_favori_title">⭐ Habitudes — récurrentes</span>
-        </div>
-        <div id="plan-favori" class="scrollable-plan-box"></div>
+        <div class="card-title" style="font-size: 0.88rem; color: var(--accent-blue);">💧 Répartition du FCF par Catégorie</div>
+        <div class="multi-progress-track" id="multi-cat-bar"></div>
+        <div id="multi-bar-legend" style="display: flex; flex-wrap: wrap; gap: 6px 12px; font-size: 0.72rem; margin-top: 2px;"></div>
       </div>
 
+      <!-- TOP 3 DES PLUS GROS LEVIERS RÉCURRENTS -->
       <div class="card">
-        <div class="card-title">
-          <span style="color: var(--accent-green-bright);" data-i18n="plan_realise_title">✅ Validé — One-Shot réalisé</span>
-        </div>
-        <div id="plan-realise" class="scrollable-plan-box"></div>
+        <div class="card-title">🚀 Top 3 de tes leviers récurrents</div>
+        <div id="top-levers-list" style="display: flex; flex-direction: column; gap: 6px;"></div>
       </div>
 
-      <div class="card">
-        <div class="card-title">
-          <span style="color: var(--accent-orange);" data-i18n="plan_non_realise_title">🕓 À faire — pour plus tard</span>
+      <!-- GAIN PONCTUEL CUMULÉ -->
+      <div class="card" style="border-left: 4px solid var(--accent-pink);">
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+          <div>
+            <div style="font-size: 0.75rem; font-weight: 800; color: var(--accent-pink);">💰 GAINS PONCTUELS CUMULÉS</div>
+            <div style="font-size: 0.82rem; opacity: 0.8; margin-top: 2px;">Économies acquises une fois pour toutes</div>
+          </div>
+          <div style="font-size: 1.3rem; font-weight: 900; color: var(--accent-pink);" id="dash-once">0 €</div>
         </div>
-        <div id="plan-non_realise" class="scrollable-plan-box"></div>
+      </div>
+
+      <!-- RECAPITULATIF STATISTIQUE -->
+      <div class="card">
+        <div class="card-title">📊 Synthèse du Portefeuille</div>
+        <div id="plan-summary-stats" style="display: flex; flex-direction: column; gap: 8px; font-size: 0.88rem;"></div>
       </div>
     </div>
 
     <!-- ONGLET 3 : ÉCOSYSTÈME COMPLET -->
     <div id="tab3" class="tab-content">
-      <div class="card" style="border-left: 4px solid var(--brand);">
+      <div class="card" style="border-left: 4px solid var(--accent-blue);">
         <div style="font-size: 0.85rem; line-height: 1.5; color: var(--text-main);" data-i18n="eco_disclaimer">
           <strong>🤝 Transparence & Parrainage :</strong> Les liens ci-dessous sont des liens d'affiliation et de parrainage. En ouvrant un compte via ces accès, vous pouvez bénéficier des bonus de bienvenue proposés par les plateformes tout en soutenant le développement gratuit de la suite KLON.
         </div>
@@ -538,10 +477,10 @@
       <div class="card">
         <div class="card-title" data-i18n="eco_suite">🧰 La Suite KLON</div>
         <div style="display: flex; flex-direction: column; gap: 10px;">
-          <a href="https://alphapicker.github.io/klon/" target="_blank" rel="noopener noreferrer" class="link-btn link-btn-blue">KLON — Simulateur de liberté financière</a>
-          <a href="https://alphapicker.github.io/klon-corp/" target="_blank" rel="noopener noreferrer" class="link-btn link-btn-purple">KLON Corp — Simulateur de capacité financière</a>
-          <a href="https://alphapicker.github.io/klon-stake/" target="_blank" rel="noopener noreferrer" class="link-btn link-btn-orange">KLON Stake — Simulateur de propriété réelle</a>
-          <a href="https://alphapicker.github.io/klon-pulse/" target="_blank" rel="noopener noreferrer" class="link-btn link-btn-yellow">KLON Pulse — Simulateur de transmission vivante</a>
+          <a href="https://alphapicker.github.io/klon/" target="_blank" rel="noopener noreferrer" class="link-btn" style="color: var(--brand-bright);">KLON — Simulateur de liberté financière</a>
+          <a href="https://alphapicker.github.io/klon-corp/" target="_blank" rel="noopener noreferrer" class="link-btn" style="color: var(--accent-purple);">KLON Corp — Simulateur de capacité financière</a>
+          <a href="https://alphapicker.github.io/klon-stake/" target="_blank" rel="noopener noreferrer" class="link-btn" style="color: #f97316;">KLON Stake — Simulateur de propriété réelle</a>
+          <a href="https://alphapicker.github.io/klon-pulse/" target="_blank" rel="noopener noreferrer" class="link-btn" style="color: #f5a60b;">KLON Pulse — Simulateur de transmission vivante</a>
         </div>
       </div>
 
@@ -550,7 +489,7 @@
         <p style="font-size: 0.9rem; line-height: 1.4;" data-i18n="eco_support_desc">
           Si cet outil vous aide dans votre parcours d'optimisation financière et de liberté, vous pouvez soutenir le projet via les liens ci-dessus ou par un don.
         </p>
-        <a href="https://www.paypal.me/AlphaPicker" target="_blank" rel="noopener noreferrer" class="link-btn link-btn-paypal" data-i18n="eco_paypal">Faire un don via PayPal</a>
+        <a href="https://www.paypal.me/AlphaPicker" target="_blank" rel="noopener noreferrer" class="link-btn" style="background: var(--btn-paypal-bg); color: white;" data-i18n="eco_paypal">Faire un don via PayPal</a>
       </div>
     </div>
 
@@ -562,45 +501,21 @@
     </footer>
   </div>
 
-  <!-- MODALE D'AIDE : EXPLICATION DES 4 ICÔNES -->
-  <div id="help-icons-modal" class="modal-overlay" onclick="if(event.target === this) closeHelpIconsModal();">
+  <!-- MODALE CAMEMBERT -->
+  <div id="pie-modal" class="modal-overlay" onclick="if(event.target === this) closePieModal();">
     <div class="modal-card">
-      <div class="card-title" style="justify-content: center; font-size: 1.15rem;" data-i18n="m_help_title">🎯 Comment classer tes fiches ?</div>
-      <div style="font-size: 0.85rem; line-height: 1.6; color: var(--text-main); display: flex; flex-direction: column; gap: 8px;">
-        <div><strong style="color: var(--accent-blue);">⭐ Habitude récurrente :</strong> <span data-i18n="m_help_fav">Une discipline ou un réflexe que tu pratiques régulièrement dans ton quotidien.</span></div>
-        <div><strong style="color: var(--accent-green-bright);">✅ Action One-Shot :</strong> <span data-i18n="m_help_done">Fait une fois pour toutes ! L'avantage tourne tout seul en continu.</span></div>
-        <div><strong style="color: var(--accent-orange);">🕓 À faire plus tard :</strong> <span data-i18n="m_help_todo">Une idée mise de côté pour quand tu auras un moment.</span></div>
-        <div><strong style="color: var(--gray-card);">🗑️ Poubelle / Ignoré :</strong> <span data-i18n="m_help_trash">Ne correspond pas à ta situation personnelle (masqué de la bibliothèque).</span></div>
-      </div>
-      <button class="btn-primary" onclick="closeHelpIconsModal()" style="margin-top: 4px; width: 100%;" data-i18n="btn_understood">Compris !</button>
+      <div class="card-title" style="justify-content: center; font-size: 1.15rem; color: var(--accent-blue);">🍕 Répartition par Catégorie</div>
+      <div id="pie-chart-body" style="display: flex; flex-direction: column; align-items: center; gap: 12px;"></div>
+      <button class="btn-primary" onclick="closePieModal()" style="margin-top: 6px; width: 100%;">Fermer</button>
     </div>
   </div>
 
-  <!-- MODALE HERO HABITUDES ACTIVES (AVEC PRÉNOM) -->
-  <div id="hero-habits-modal" class="modal-overlay" onclick="if(event.target === this) closeHeroHabitsModal();">
+  <!-- MODALE TRAJECTOIRE -->
+  <div id="timeline-modal" class="modal-overlay" onclick="if(event.target === this) closeTimelineModal();">
     <div class="modal-card">
-      <div style="font-size: 2.6rem; text-align: center;">⭐</div>
-      <div class="card-title" style="justify-content: center; font-size: 1.2rem;" id="m-habits-title">Habitudes en place</div>
-      <div style="font-size: 0.88rem; line-height: 1.5; color: var(--text-bright); font-weight: bold; text-align: center;" id="m-habits-greeting"></div>
-      <p style="font-size: 0.82rem; line-height: 1.5; color: var(--text-main); opacity: 0.9;" data-i18n="m_habits_text">
-        La vraie asymétrie ne vient pas de coups d'éclat isolés, mais de petites routines indolores répétées chaque semaine. Chaque habitude en place réduit tes coûts cachés sans aucun effort mental !
-      </p>
-      <div id="m-habits-list" style="display: flex; flex-direction: column; gap: 6px; max-height: 180px; overflow-y: auto;"></div>
-      <button class="btn-primary" onclick="closeHeroHabitsModal()" style="margin-top: 4px; width: 100%;" data-i18n="btn_continue">Continuer comme ça !</button>
-    </div>
-  </div>
-
-  <!-- MODALE HERO ACTIONS VALIDÉES (AVEC PRÉNOM) -->
-  <div id="hero-done-modal" class="modal-overlay" onclick="if(event.target === this) closeHeroDoneModal();">
-    <div class="modal-card">
-      <div style="font-size: 2.6rem; text-align: center;">🏆</div>
-      <div class="card-title" style="justify-content: center; font-size: 1.2rem;" id="m-done-title">Actions One-Shot Validées</div>
-      <div style="font-size: 0.88rem; line-height: 1.5; color: var(--accent-green-bright); font-weight: bold; text-align: center;" id="m-done-greeting"></div>
-      <p style="font-size: 0.82rem; line-height: 1.5; color: var(--text-main); opacity: 0.9;" data-i18n="m_done_text">
-        C'est le retour sur investissement ultime : tu y as passé quelques minutes une seule fois, et l'économie tourne pour toujours en arrière-plan. Zéro charge mentale, du cash libéré à vie !
-      </p>
-      <div id="m-done-list" style="display: flex; flex-direction: column; gap: 6px; max-height: 180px; overflow-y: auto;"></div>
-      <button class="btn-primary" onclick="closeHeroDoneModal()" style="margin-top: 4px; width: 100%;" data-i18n="btn_awesome">Génial !</button>
+      <div class="card-title" style="justify-content: center; font-size: 1.15rem; color: var(--accent-purple);">📈 Courbe d'évolution cumulative</div>
+      <div id="timeline-chart-body"></div>
+      <button class="btn-primary" onclick="closeTimelineModal()" style="margin-top: 6px; width: 100%;">Fermer</button>
     </div>
   </div>
 
@@ -622,63 +537,48 @@
         subtitle: "L'avantage asymétrique du quotidien",
         desc: "Réduis ton OPEX sans sacrifier ton confort ni ton temps, et réinjecte le FCF libéré dans ton capital.",
         nav_library: "Bibliothèque",
-        nav_plan: "Plan KLON",
+        nav_plan: "Plan & Analyses",
         nav_eco: "Écosystème",
         theme_dark: "🌙 Sombre",
         theme_light: "☀️ Clair",
-        theme_cb: "👁️ Daltonien",
         user_name_placeholder: "Alpha Picker",
-        hero_active: "⭐ HABITUDES ACTIVES",
-        hero_done: "✅ ACTIONS VALIDÉES",
-        search_ph: "🔍 Rechercher une astuce...",
-        filter_cat_all: "Domaine : Tous",
+        filter_cat_all: "Catégorie : Toutes",
         cat_logement: "🏠 Logement",
-        cat_vehicule: "🚗 Véhicule",
-        cat_nourriture: "🛒 Nourriture",
-        cat_achat: "🛍️ Achat / Tech",
-        filter_source_all: "Source : Toutes",
-        filter_source_core: "Officielle",
-        filter_source_custom: "Mes astuces",
-        filter_source_poubelle: "🗑️ Poubelle",
-        add_title: "🛠️ Ajouter ma propre astuce",
+        cat_energie: "⚡ Énergie & Fluides",
+        cat_abonnements: "📱 Abonnements & Services",
+        cat_transports: "🚗 Transports & Véhicules",
+        cat_nourriture: "🛒 Nourriture & Quotidien",
+        cat_finance: "🏦 Banque & Finance",
+        cat_achats: "🛍️ Achats & Équipements",
+        cat_bricolage: "🧰 Bricolage & Travaux",
+        cat_divers: "🌀 Divers",
+        add_title: "🛠️ Ajoute ton astuce et son gain",
+        edit_title: "✏️ Modifier mon astuce",
+        list_title: "📚 Mes astuces",
         in_title_ph: "Titre de l'astuce",
-        in_desc_ph: "Description, sans corvée inutile...",
+        in_gain_ph: "Gain estimé (€)",
+        in_desc_ph: "Détail (optionnel)...",
+        freq_once: "Ponctuel (une fois)",
+        freq_monthly: "Mensuel (récurrent)",
+        freq_yearly: "Annuel (récurrent)",
+        gain_suffix_once: "(ponctuel)",
+        gain_suffix_monthly: "/ mois",
+        gain_suffix_yearly: "/ an",
         btn_add: "Ajouter à ma bibliothèque",
+        btn_update: "Enregistrer les modifications",
+        btn_cancel: "Annuler",
         data_mgmt_title: "💾 Gestion des Données",
         btn_export: "💾 Exporter",
         btn_import: "📂 Importer",
         btn_reset: "Réinitialiser",
-        plan_favori_title: "⭐ Habitudes — récurrentes",
-        plan_realise_title: "✅ Validé — One-Shot réalisé",
-        plan_non_realise_title: "🕓 À faire — pour plus tard",
-        btn_delete: "Suppr",
-        custom_tag: "· perso",
-        empty_search: "Aucune fiche ne correspond à ta recherche.",
-        empty_plan: "Rien ici pour l'instant.",
+        empty_search: "Aucune astuce trouvée.",
         alert_need_title: "Veuillez donner un titre à votre astuce.",
         alert_import_error: "Le fichier importé n'est pas un JSON valide de fiches KLON Edge.",
         confirm_delete_title: "Supprimer l'astuce",
-        confirm_delete_msg: "Es-tu sûr de vouloir supprimer définitivement cette astuce personnelle ?",
-        confirm_trash_title: "Mettre à la poubelle",
-        confirm_trash_msg: "Déplacer « {title} » vers la poubelle ? Elle sera masquée de ta bibliothèque.",
-        btn_trash: "Mettre à la poubelle",
+        confirm_delete_msg: "Es-tu sûr de vouloir supprimer définitivement cette astuce ?",
         backup_unsaved_title: "Sauvegarde Recommandée",
-        backup_unsaved_msg: "De nouvelles modifications ont été enregistrées localement dans ton navigateur, mais n'ont pas encore été exportées en fichier JSON de sauvegarde.",
-        m_help_title: "🎯 Comment classer tes fiches ?",
-        m_help_fav: "Une discipline ou un réflexe que tu pratiques régulièrement dans ton quotidien.",
-        m_help_done: "Fait une fois pour toutes ! L'avantage tourne tout seul en continu.",
-        m_help_todo: "Une idée mise de côté pour quand tu auras un moment.",
-        m_help_trash: "Ne correspond pas à ta situation personnelle (masqué de la bibliothèque).",
-        btn_understood: "Compris !",
-        btn_awesome: "Génial !",
-        btn_continue: "Continuer comme ça !",
-        m_habits_named: "Bravo {name} ! Tu as {n} habitude{s} active{s} en place.",
-        m_habits_unnamed: "Bravo ! Tu as {n} habitude{s} active{s} en place.",
-        m_done_named: "Félicitations {name} ! Tu as verrouillé {n} action{s} One-Shot.",
-        m_done_unnamed: "Félicitations ! Tu as verrouillé {n} action{s} One-Shot.",
-        m_habits_text: "La vraie asymétrie ne vient pas de coups d'éclat isolés, mais de petites routines indolores répétées chaque semaine. Chaque habitude en place réduit tes coûts cachés sans aucun effort mental !",
-        m_done_text: "C'est le retour sur investissement ultime : tu y as passé quelques minutes une seule fois, et l'économie tourne pour toujours en arrière-plan. Zéro charge mentale, du cash libéré à vie !",
-        eco_disclaimer: "<strong>🤝 Transparence & Parrainage :</strong> Les liens ci-dessous sont des liens d'affiliation et de parrainage. En ouvrant un compte via ces accès, vous pouvez bénéficier des bonus de bienvenue proposés par les plateformes tout en soutenant le développement gratuit de la suite KLON.",
+        backup_unsaved_msg: "De nouvelles modifications ont été enregistrées localement dans ton navigateur, mais n'ont pas encore été exportées.",
+        eco_disclaimer: "<strong>🤝 Transparence & Parrainage :</strong> Les liens ci-dessous sont des liens d'affiliation...",
         eco_brokers: "📈 Banques & Courtiers",
         eco_crypto: "🪙 Crypto & Rendement Alternatif",
         eco_portfolio: "🎯 Portefeuille & Performances",
@@ -687,151 +587,110 @@
         eco_substack: "Suivre le Substack Alpha Picker",
         eco_suite: "🧰 La Suite KLON",
         eco_support: "☕ Soutenir le Projet",
-        eco_support_desc: "Si cet outil vous aide dans votre parcours d'optimisation financière et de liberté, vous pouvez soutenir le projet via les liens ci-dessus ou par un don.",
+        eco_support_desc: "Si cet outil vous aide dans votre parcours...",
         eco_paypal: "Faire un don via PayPal",
-        footer_dev: "<strong>KLON Edge</strong> — Application gratuite & Open Source développée par <strong>Alpha Picker</strong> et hébergée sur GitHub Pages.",
-        footer_privacy: "🛡️ <strong>Confidentialité :</strong> Aucun cookie de suivi, aucune collecte de données. Toutes vos saisies restent exclusivement stockées dans votre navigateur.",
-        footer_disclaimer: "⚠️ <strong>Avertissement :</strong> Cet outil me sert de simulation personnelle et éducative. Il ne constitue en aucun cas un conseil en investissement ou une incitation financière."
+        footer_dev: "<strong>KLON Edge</strong> — Application gratuite & Open Source développée par <strong>Alpha Picker</strong>.",
+        footer_privacy: "🛡️ <strong>Confidentialité :</strong> Aucun cookie de suivi...",
+        footer_disclaimer: "⚠️ <strong>Avertissement :</strong> Cet outil sert de simulation personnelle..."
       },
       en: {
         subtitle: "Your asymmetric daily edge",
-        desc: "Cut your OPEX without sacrificing comfort or time, and reinvest the freed-up cash flow into your capital.",
+        desc: "Cut your OPEX without sacrificing comfort or time...",
         nav_library: "Library",
-        nav_plan: "KLON Plan",
+        nav_plan: "Plan & Analytics",
         nav_eco: "Ecosystem",
         theme_dark: "🌙 Dark",
         theme_light: "☀️ Light",
-        theme_cb: "👁️ Colorblind",
         user_name_placeholder: "Alpha Picker",
-        hero_active: "⭐ ACTIVE HABITS",
-        hero_done: "✅ VALIDATED ACTIONS",
-        search_ph: "🔍 Search a tip...",
         filter_cat_all: "Category: All",
         cat_logement: "🏠 Housing",
-        cat_vehicule: "🚗 Vehicle",
-        cat_nourriture: "🛒 Food",
-        cat_achat: "🛍️ Shopping / Tech",
-        filter_source_all: "Source: All",
-        filter_source_core: "Official",
-        filter_source_custom: "My tips",
-        filter_source_poubelle: "🗑️ Trash",
-        add_title: "🛠️ Add my own tip",
+        cat_energie: "⚡ Energy & Utilities",
+        cat_abonnements: "📱 Subscriptions & Services",
+        cat_transports: "🚗 Transport & Vehicles",
+        cat_nourriture: "🛒 Food & Daily",
+        cat_finance: "🏦 Banking & Finance",
+        cat_achats: "🛍️ Purchases & Equipment",
+        cat_bricolage: "🧰 DIY & Works",
+        cat_divers: "🌀 Miscellaneous",
+        add_title: "🛠️ Add your tip and gain",
+        edit_title: "✏️ Edit my tip",
+        list_title: "📚 My tips",
         in_title_ph: "Tip title",
-        in_desc_ph: "Description, no needless chores...",
+        in_gain_ph: "Estimated gain (€)",
+        in_desc_ph: "Details (optional)...",
+        freq_once: "One-off (once)",
+        freq_monthly: "Monthly (recurring)",
+        freq_yearly: "Yearly (recurring)",
+        gain_suffix_once: "(one-off)",
+        gain_suffix_monthly: "/ month",
+        gain_suffix_yearly: "/ year",
         btn_add: "Add to my library",
+        btn_update: "Save changes",
+        btn_cancel: "Cancel",
         data_mgmt_title: "💾 Data Management",
         btn_export: "💾 Export",
         btn_import: "📂 Import",
         btn_reset: "Reset",
-        plan_favori_title: "⭐ Habits — recurring",
-        plan_realise_title: "✅ Validated — One-Shot done",
-        plan_non_realise_title: "🕓 To do — for later",
-        btn_delete: "Delete",
-        custom_tag: "· custom",
-        empty_search: "No tip matches your search.",
-        empty_plan: "Nothing here yet.",
+        empty_search: "No tips found.",
         alert_need_title: "Please give your tip a title.",
-        alert_import_error: "The imported file is not a valid KLON Edge JSON.",
+        alert_import_error: "Invalid KLON Edge JSON backup file.",
         confirm_delete_title: "Delete Tip",
-        confirm_delete_msg: "Are you sure you want to permanently delete this personal tip?",
-        confirm_trash_title: "Move to Trash",
-        confirm_trash_msg: "Move \"{title}\" to trash? It will be hidden from your library.",
-        btn_trash: "Trash it",
+        confirm_delete_msg: "Are you sure you want to permanently delete this tip?",
         backup_unsaved_title: "Unsaved Changes",
-        backup_unsaved_msg: "New updates have been saved in your browser, but not exported to a JSON file yet.",
-        m_help_title: "🎯 How to organize your tips?",
-        m_help_fav: "A discipline or reflex you practice regularly in your daily life.",
-        m_help_done: "Done once and for all! The advantage keeps compounding in the background.",
-        m_help_todo: "An idea set aside for when you have time.",
-        m_help_trash: "Doesn't fit your personal situation (hidden from library).",
-        btn_understood: "Got it!",
-        btn_awesome: "Awesome!",
-        btn_continue: "Keep it up!",
-        m_habits_named: "Well done {name}! You have {n} active habit{s} in place.",
-        m_habits_unnamed: "Well done! You have {n} active habit{s} in place.",
-        m_done_named: "Congratulations {name}! You have locked in {n} One-Shot action{s}.",
-        m_done_unnamed: "Congratulations! You have locked in {n} One-Shot action{s}.",
-        m_habits_text: "True asymmetry doesn't come from isolated heroic acts, but from effortless routines repeated every week. Each habit reduces hidden costs without any cognitive load!",
-        m_done_text: "This is the ultimate ROI: you spent a few minutes once, and the savings compound forever in the background. Zero ongoing stress, lifetime cash freed up!",
-        eco_disclaimer: "<strong>🤝 Transparency & Referrals :</strong> Links below are affiliate/referral links. Opening an account provides welcome bonuses while supporting free development of the KLON suite.",
+        backup_unsaved_msg: "New updates are saved locally but not exported yet.",
+        eco_disclaimer: "<strong>🤝 Transparency & Referrals:</strong> Referral links...",
         eco_brokers: "📈 Banks & Brokers",
-        eco_crypto: "🪙 Crypto & Alternative Yield",
-        eco_portfolio: "🎯 Portfolio & Track Record",
-        eco_wikifolio: "Follow Alpha Picker Wikifolio",
-        eco_theses: "🔬 Theses & Analysis",
-        eco_substack: "Follow Alpha Picker Substack",
+        eco_crypto: "🪙 Crypto & Yield",
+        eco_portfolio: "🎯 Portfolio",
+        eco_wikifolio: "Follow Wikifolio",
+        eco_theses: "🔬 Analysis",
+        eco_substack: "Follow Substack",
         eco_suite: "🧰 The KLON Suite",
-        eco_support: "☕ Support the Project",
-        eco_support_desc: "If this tool helps you on your path to financial optimization and freedom, you can support development with a donation.",
+        eco_support: "☕ Support Project",
+        eco_support_desc: "If this tool helps you on your path to financial freedom...",
         eco_paypal: "Donate via PayPal",
-        footer_dev: "<strong>KLON Edge</strong> — Free & Open Source app developed by <strong>Alpha Picker</strong> and hosted on GitHub Pages.",
-        footer_privacy: "🛡️ <strong>Privacy:</strong> No tracking cookies, no data collection. All inputs remain exclusively stored in your browser.",
-        footer_disclaimer: "⚠️ <strong>Disclaimer:</strong> This tool serves personal and educational simulation purposes only. It does not constitute investment advice or financial solicitation."
+        footer_dev: "<strong>KLON Edge</strong> — Free & Open Source app.",
+        footer_privacy: "🛡️ <strong>Privacy:</strong> No tracking cookies...",
+        footer_disclaimer: "⚠️ <strong>Disclaimer:</strong> Educational simulation only..."
       }
     };
 
     function t(key, params = {}) {
       const lang = db.lang || 'fr';
       let text = I18N[lang]?.[key] || I18N.fr?.[key] || key;
-      Object.keys(params).forEach(p => {
-        text = text.replace(new RegExp(`\\{${p}\\}`, 'g'), params[p]);
-      });
+      Object.keys(params).forEach(p => { text = text.replace(new RegExp(`\\{${p}\\}`, 'g'), params[p]); });
       return text;
     }
 
-    const CORE_EDGE = [
-      {
-        id: "core-telephone",
-        title: "Téléphone : le juste prix, pas le superflu",
-        cat: "achat",
-        desc: "Achète le téléphone qui te convient au meilleur prix plutôt que le dernier modèle à la mode. La différence investie en bourse fait que tes prochains téléphones deviennent mécaniquement gratuits. S'il tient 2 à 3 ans sans coque blindée, c'est suffisant.",
-        tiers: [150, 250, 400]
-      },
-      {
-        id: "core-cashback",
-        title: "Marge de prix + optimisation maximale",
-        cat: "achat",
-        desc: "Fixe-toi une fourchette de prix plutôt qu'un budget fixe, choisis ce qui te convient le mieux, puis optimise ce choix précis : cashback, comparateurs de prix et réductions.",
-        tiers: []
-      },
-      {
-        id: "core-jointoyage",
-        title: "Vérifier le jointoyage des entrées d'air",
-        cat: "logement",
-        desc: "Démonte et vérifie que les entrées d'air sont bien jointoyées au mastic ou silicone. Une action ponctuelle qui élimine des pertes de chaleur continues chaque hiver.",
-        tiers: []
-      },
-      {
-        id: "core-ecoconduite",
-        title: "Éco-conduite prédictive",
-        cat: "vehicule",
-        desc: "Anticipation des ralentissements, frein moteur, pression des pneus optimale. Une discipline passive qui réduit l'usure des freins et la consommation de 15 %.",
-        tiers: []
-      }
-    ];
+    function formatEUR(n) { return Math.round(n || 0).toLocaleString('fr-FR'); }
+
+    /* PALETTE HARMONISÉE STRICTEMENT UNIFORME SUR TOUTE L'APPLICATION */
+    const CAT_COLORS = {
+      logement: '#38bdf8',     /* Bleu Ciel (Logement) */
+      energie: '#f97316',      /* Orange Ambré */
+      abonnements: '#ec4899',  /* Rose / Fuchsia */
+      transports: '#34d399',   /* Vert Émeraude */
+      nourriture: '#10b981',   /* Vert Vert */
+      finance: '#a855f7',      /* Violet (Banque & Finance - Nette distinction) */
+      achats: '#eab308',       /* Jaune Or */
+      bricolage: '#ef4444',     /* Rouge Rouge */
+      divers: '#64748b'        /* Gris Ardoise */
+    };
+    const CAT_ORDER = ["logement", "energie", "abonnements", "transports", "nourriture", "finance", "achats", "bricolage", "divers"];
 
     let dialogConfirmCallback = null;
     let expandedCardIds = new Set();
+    let editingId = null;
 
     let localData = JSON.parse(localStorage.getItem('klon_edge_db'));
     if (!localData || typeof localData !== 'object') {
-      localData = {
-        theme: 'dark',
-        lang: 'fr',
-        userName: '',
-        hasUnsavedChanges: false,
-        customEdges: [],
-        statusMap: {}
-      };
+      localData = { theme: 'dark', lang: 'fr', userName: '', hasUnsavedChanges: false, customEdges: [] };
       localStorage.setItem('klon_edge_db', JSON.stringify(localData));
     }
     let db = localData;
     if (!db.theme) db.theme = 'dark';
     if (!db.lang) db.lang = 'fr';
-    if (db.userName === undefined) db.userName = '';
     if (!Array.isArray(db.customEdges)) db.customEdges = [];
-    if (!db.statusMap || typeof db.statusMap !== 'object') db.statusMap = {};
-    if (db.hasUnsavedChanges === undefined) db.hasUnsavedChanges = false;
 
     function saveData() { localStorage.setItem('klon_edge_db', JSON.stringify(db)); }
 
@@ -840,22 +699,11 @@
       if (badge) badge.style.display = db.hasUnsavedChanges ? 'inline-flex' : 'none';
     }
 
-    function markUnsavedChanges() {
-      db.hasUnsavedChanges = true;
-      saveData();
-      updateBackupWarningUI();
-    }
-
-    function showBackupWarningInfo() {
-      showCustomDialog('💾', t('backup_unsaved_title'), t('backup_unsaved_msg'));
-    }
+    function markUnsavedChanges() { db.hasUnsavedChanges = true; saveData(); updateBackupWarningUI(); }
 
     function saveUserName() {
       const newName = document.getElementById('user-name-input').value.trim();
-      if (db.userName !== newName) {
-        db.userName = newName;
-        markUnsavedChanges();
-      }
+      if (db.userName !== newName) { db.userName = newName; markUnsavedChanges(); }
     }
 
     function switchTab(tabId, e) {
@@ -868,223 +716,96 @@
     }
 
     function changeTheme(themeName) {
-      db.theme = themeName;
-      saveData();
+      db.theme = themeName; saveData();
       document.documentElement.setAttribute('data-theme', themeName);
-      const themeSelect = document.getElementById('theme-select');
-      if (themeSelect) themeSelect.value = themeName;
+      const sel = document.getElementById('theme-select');
+      if (sel) sel.value = themeName;
     }
 
     function changeLanguage(langCode) {
-      db.lang = langCode;
-      saveData();
+      db.lang = langCode; saveData();
       document.documentElement.setAttribute('lang', langCode);
-
-      const langSelect = document.getElementById('lang-select');
-      if (langSelect) langSelect.value = langCode;
+      const sel = document.getElementById('lang-select');
+      if (sel) sel.value = langCode;
 
       document.querySelectorAll('[data-i18n]').forEach(el => {
         const k = el.getAttribute('data-i18n');
         if (k) el.innerHTML = t(k);
       });
-
       document.querySelectorAll('[data-i18n-ph]').forEach(el => {
         const k = el.getAttribute('data-i18n-ph');
         if (k) el.placeholder = t(k);
       });
-
-      const nameInput = document.getElementById('user-name-input');
-      if (nameInput) nameInput.placeholder = t('user_name_placeholder');
-
       renderAll();
     }
 
     function copyFortuneoCode() {
       const code = "12874482";
       const btn = document.getElementById('fortuneo-btn');
-      if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(code);
-      if (btn) btn.innerText = db.lang === 'en' ? "✅ Code copied! Opening..." : "✅ Code copié ! Redirection...";
+      if (navigator.clipboard) navigator.clipboard.writeText(code);
+      if (btn) btn.innerText = db.lang === 'en' ? "✅ Code copied!" : "✅ Code copié !";
       window.open("https://www.fortuneo.fr", "_blank");
       setTimeout(() => { if (btn) btn.innerText = "Fortuneo (Code Parrain : 12874482)"; }, 1800);
     }
 
-    function allEdges() {
-      return CORE_EDGE.concat(db.customEdges);
-    }
-
+    function allEdges() { return db.customEdges; }
     function catLabel(cat) { return t("cat_" + cat); }
 
-    function setStatus(id, status, e) {
-      if (e) e.stopPropagation();
-      expandedCardIds.add(id);
-
-      if (db.statusMap[id] === status) {
-        delete db.statusMap[id];
-      } else {
-        db.statusMap[id] = status;
-      }
-      markUnsavedChanges();
-      renderAll();
+    function annualValue(edge) {
+      const gain = edge.gain || 0;
+      if (edge.freq === 'monthly') return gain * 12;
+      return gain;
     }
 
-    // CONFIRMATION AVANT MISE À LA POUBELLE
-    function confirmMoveToTrash(id, e) {
-      if (e) e.stopPropagation();
-      const edge = allEdges().find(item => item.id === id);
-      const title = edge ? edge.title : '';
-      const confirmMsg = t('confirm_trash_msg', { title });
-
-      showCustomDialog(
-        '🗑️',
-        t('confirm_trash_title'),
-        confirmMsg,
-        true,
-        () => {
-          setStatus(id, 'poubelle', e);
-        },
-        t('btn_trash')
-      );
+    function monthlyValue(edge) {
+      const gain = edge.gain || 0;
+      if (edge.freq === 'monthly') return gain;
+      if (edge.freq === 'yearly') return gain / 12;
+      return 0;
     }
 
-    // DÉPLIAGE CIBLÉ SUR L'ÉLÉMENT DIRECT (SANS CONFLIT D'ID ENTRE LES COLONNES)
+    function gainBadge(edge) {
+      const amt = edge.gain || 0;
+      if (!amt) return '';
+      let suffix = t('gain_suffix_once');
+      if (edge.freq === 'monthly') suffix = t('gain_suffix_monthly');
+      if (edge.freq === 'yearly') suffix = t('gain_suffix_yearly');
+      const catColor = CAT_COLORS[edge.cat] || 'var(--brand-bright)';
+      return `<div class="gain-badge" style="color:${catColor}; border:1px solid ${catColor};">+${formatEUR(amt)} € ${suffix}</div>`;
+    }
+
     function toggleCardExpandDirect(summaryEl, cardId, e) {
       if (e) e.stopPropagation();
       const card = summaryEl.closest('.edge-card');
       if (!card) return;
-
       const isNowExpanded = card.classList.toggle('expanded');
-      if (isNowExpanded) {
-        expandedCardIds.add(cardId);
-      } else {
-        expandedCardIds.delete(cardId);
-      }
+      if (isNowExpanded) expandedCardIds.add(cardId);
+      else expandedCardIds.delete(cardId);
     }
 
-    function openHelpIconsModal() {
-      document.getElementById('help-icons-modal').classList.add('active');
-      document.body.style.overflow = 'hidden';
-    }
-
-    function closeHelpIconsModal() {
-      document.getElementById('help-icons-modal').classList.remove('active');
-      document.body.style.overflow = '';
-    }
-
-    /* --- MODALES DU HERO DASHBOARD --- */
-    function openHeroHabitsModal() {
-      const habits = allEdges().filter(e => db.statusMap[e.id] === 'favori');
-      const name = (db.userName || '').trim();
-      const n = habits.length;
-      const s = n > 1 ? 's' : '';
-      const isEn = db.lang === 'en';
-
-      const greeting = name 
-        ? t('m_habits_named', { name, n, s })
-        : t('m_habits_unnamed', { n, s });
-
-      document.getElementById('m-habits-greeting').innerText = greeting;
-
-      const listEl = document.getElementById('m-habits-list');
-      listEl.innerHTML = '';
-      if (habits.length === 0) {
-        listEl.innerHTML = `<div style="text-align:center; opacity:0.6; padding:10px; font-size:0.8rem;">${isEn ? 'No active habits yet.' : 'Aucune habitude active pour l\'instant.'}</div>`;
-      } else {
-        habits.forEach(h => {
-          listEl.innerHTML += `
-            <div style="background:var(--bg-color); border:1px solid var(--border-color); padding:6px 10px; border-radius:6px; font-size:0.8rem; display:flex; justify-content:space-between; align-items:center;">
-              <strong style="color:var(--text-bright);">${h.title}</strong>
-              <span style="color:var(--accent-blue); font-size:0.75rem;">⭐</span>
-            </div>
-          `;
-        });
-      }
-
-      document.getElementById('hero-habits-modal').classList.add('active');
-      document.body.style.overflow = 'hidden';
-    }
-
-    function closeHeroHabitsModal() {
-      document.getElementById('hero-habits-modal').classList.remove('active');
-      document.body.style.overflow = '';
-    }
-
-    function openHeroDoneModal() {
-      const doneItems = allEdges().filter(e => db.statusMap[e.id] === 'realise');
-      const name = (db.userName || '').trim();
-      const n = doneItems.length;
-      const s = n > 1 ? 's' : '';
-      const isEn = db.lang === 'en';
-
-      const greeting = name 
-        ? t('m_done_named', { name, n, s })
-        : t('m_done_unnamed', { n, s });
-
-      document.getElementById('m-done-greeting').innerText = greeting;
-
-      const listEl = document.getElementById('m-done-list');
-      listEl.innerHTML = '';
-      if (doneItems.length === 0) {
-        listEl.innerHTML = `<div style="text-align:center; opacity:0.6; padding:10px; font-size:0.8rem;">${isEn ? 'No validated actions yet.' : 'Aucune action validée pour l\'instant.'}</div>`;
-      } else {
-        doneItems.forEach(d => {
-          listEl.innerHTML += `
-            <div style="background:var(--bg-color); border:1px solid var(--border-color); padding:6px 10px; border-radius:6px; font-size:0.8rem; display:flex; justify-content:space-between; align-items:center;">
-              <strong style="color:var(--text-bright);">${d.title}</strong>
-              <span style="color:var(--accent-green-bright); font-size:0.75rem;">✅</span>
-            </div>
-          `;
-        });
-      }
-
-      document.getElementById('hero-done-modal').classList.add('active');
-      document.body.style.overflow = 'hidden';
-    }
-
-    function closeHeroDoneModal() {
-      document.getElementById('hero-done-modal').classList.remove('active');
-      document.body.style.overflow = '';
-    }
-
-    /* --- RENDU DE LA CARTE --- */
     function edgeCardHTML(edge) {
-      const st = db.statusMap[edge.id] || null;
-      const isCustom = edge.id.startsWith("custom-");
       const isExpanded = expandedCardIds.has(edge.id);
-
-      let tiersHTML = "";
-      if (edge.tiers && edge.tiers.length) {
-        tiersHTML = '<div class="price-tiers">' + edge.tiers.map(val => `<span class="price-pill">≈ ${val} €</span>`).join("") + '</div>';
-      }
-
-      const statusClass = st ? ("st-" + st) : "";
-      const delBtn = isCustom ? `<button class="btn-danger" onclick="deleteCustom('${edge.id}', event)" title="Supprimer">${t("btn_delete")}</button>` : "";
-
+      const catColor = CAT_COLORS[edge.cat] || 'var(--accent-blue)';
       return `
-        <div class="edge-card ${statusClass} ${isExpanded ? 'expanded' : ''}">
-          <!-- Ligne visible au repos (très fine, sans boutons d'action) -->
+        <div class="edge-card ${isExpanded ? 'expanded' : ''}" style="border-left: 4px solid ${catColor};">
           <div class="edge-summary-row" onclick="toggleCardExpandDirect(this, '${edge.id}', event)">
             <div style="display:flex; align-items:center; gap:6px; flex:1; min-width:0;">
-              <span class="edge-title-text" style="overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">${edge.title}</span>
-              ${isCustom ? `<span class="custom-tag">${t("custom_tag")}</span>` : ''}
+              <span class="edge-title-text">${edge.title}</span>
             </div>
             <div style="display:flex; align-items:center; gap:6px; flex-shrink:0;">
-              <span class="edge-cat-badge">${catLabel(edge.cat)}</span>
-              <span class="edge-chevron-btn">▾</span>
+              <span class="edge-cat-badge" style="background:${catColor}1f; color:${catColor}; border:1px solid ${catColor};">${catLabel(edge.cat)}</span>
+              <span class="edge-chevron-btn" style="color:${catColor};">▾</span>
             </div>
           </div>
-
-          <!-- Corps déplié complet -->
           <div class="edge-body-expanded">
-            <div class="edge-desc">${edge.desc}</div>
-            ${tiersHTML}
-            <div class="edge-action-row">
-              <div>${delBtn}</div>
-              <div class="edge-icons-group">
-                <button type="button" class="icon-action-btn ${st === 'favori' ? 'on-favori' : ''}" onclick="setStatus('${edge.id}', 'favori', event)" title="⭐ Habitude active">⭐</button>
-                <button type="button" class="icon-action-btn ${st === 'realise' ? 'on-realise' : ''}" onclick="setStatus('${edge.id}', 'realise', event)" title="✅ Action One-Shot validée">✅</button>
-                <button type="button" class="icon-action-btn ${st === 'non_realise' ? 'on-non_realise' : ''}" onclick="setStatus('${edge.id}', 'non_realise', event)" title="🕓 À faire plus tard">🕓</button>
-                <button type="button" class="icon-action-btn ${st === 'poubelle' ? 'on-poubelle' : ''}" onclick="confirmMoveToTrash('${edge.id}', event)" title="🗑️ Mettre à la poubelle">🗑️</button>
-                <button type="button" class="tooltip-btn" onclick="event.stopPropagation(); openHelpIconsModal()" title="Explication des classements">?</button>
+            <div class="edge-expanded-row">
+              <div style="display:flex; flex-direction:column; gap:4px; flex:1; min-width:0;">
+                ${gainBadge(edge)}
+                ${edge.desc ? `<div class="edge-desc">${edge.desc}</div>` : ''}
+              </div>
+              <div class="edge-actions-right">
+                <button class="btn-secondary" style="padding:6px 9px;" onclick="startEditEdge('${edge.id}', event)">✏️</button>
+                <button class="btn-danger" onclick="deleteCustom('${edge.id}', event)">🗑️</button>
               </div>
             </div>
           </div>
@@ -1093,65 +814,219 @@
     }
 
     function renderLibrary() {
-      const q = document.getElementById("search").value.toLowerCase();
       const cat = document.getElementById("filter-cat").value;
-      const src = document.getElementById("filter-source").value;
-
       let list = allEdges();
       if (cat !== "all") list = list.filter(e => e.cat === cat);
-      if (src === "core") list = list.filter(e => !e.id.startsWith("custom-"));
-      if (src === "custom") list = list.filter(e => e.id.startsWith("custom-"));
-      if (q) list = list.filter(e => (e.title + " " + e.desc).toLowerCase().includes(q));
-
-      if (src === "poubelle") {
-        list = list.filter(e => db.statusMap[e.id] === "poubelle");
-      } else {
-        list = list.filter(e => db.statusMap[e.id] !== "poubelle");
-      }
 
       const container = document.getElementById("library-list");
       if (list.length === 0) {
         container.innerHTML = `<div class="card" style="text-align:center; padding:16px; opacity:0.6;">${t("empty_search")}</div>`;
         return;
       }
-
-      const shouldGroup = (cat === "all") && list.length > 5;
-      if (!shouldGroup) {
-        container.innerHTML = list.map(e => edgeCardHTML(e)).join("");
-        return;
-      }
-
-      const order = ["logement", "vehicule", "nourriture", "achat"];
-      const html = order.map(c => {
-        const items = list.filter(e => e.cat === c);
-        if (items.length === 0) return "";
-        return `
-          <details class="cat-group" open>
-            <summary>${catLabel(c)} <span class="count">${items.length}</span></summary>
-            <div class="cat-body">${items.map(e => edgeCardHTML(e)).join("")}</div>
-          </details>
-        `;
-      }).join("");
-
-      container.innerHTML = html;
+      container.innerHTML = list.map(e => edgeCardHTML(e)).join("");
     }
 
+    /* --- RENDU TABLEAU DE BORD --- */
     function renderPlan() {
-      const groups = { favori: [], realise: [], non_realise: [] };
-      allEdges().forEach(e => {
-        const st = db.statusMap[e.id];
-        if (st && groups[st]) groups[st].push(e);
+      const edges = allEdges();
+
+      const monthlyTotal = edges.reduce((s, e) => s + monthlyValue(e), 0);
+      const yearlyTotal = edges.reduce((s, e) => {
+        if (e.freq === 'monthly') return s + ((e.gain || 0) * 12);
+        if (e.freq === 'yearly') return s + (e.gain || 0);
+        return s;
+      }, 0);
+
+      const onceTotal = edges.filter(e => e.freq === 'once').reduce((s, e) => s + (e.gain || 0), 0);
+
+      document.getElementById("dash-monthly").textContent = '+' + formatEUR(monthlyTotal) + ' € / m';
+      document.getElementById("dash-yearly").textContent = 'soit +' + formatEUR(yearlyTotal) + ' € / an à vie';
+      document.getElementById("dash-once").textContent = formatEUR(onceTotal) + ' €';
+
+      // Multi-barre par catégorie avec couleurs harmonisées
+      const catTotals = {};
+      CAT_ORDER.forEach(c => catTotals[c] = 0);
+      edges.forEach(e => {
+        if (e.freq !== 'once') catTotals[e.cat] = (catTotals[e.cat] || 0) + annualValue(e);
       });
 
-      ["favori", "realise", "non_realise"].forEach(key => {
-        const el = document.getElementById("plan-" + key);
-        el.innerHTML = groups[key].length
-          ? groups[key].map(e => edgeCardHTML(e)).join("")
-          : `<div style="text-align:center; padding:12px; opacity:0.6; font-size:0.85rem;">${t("empty_plan")}</div>`;
-      });
+      const totalRec = Object.values(catTotals).reduce((a, b) => a + b, 0);
+      const multiBarEl = document.getElementById("multi-cat-bar");
+      const multiLegendEl = document.getElementById("multi-bar-legend");
 
-      document.getElementById("hero-fav").textContent = groups.favori.length;
-      document.getElementById("hero-done").textContent = groups.realise.length;
+      if (totalRec > 0) {
+        multiBarEl.innerHTML = CAT_ORDER.map(c => {
+          const val = catTotals[c];
+          if (val <= 0) return '';
+          const pct = ((val / totalRec) * 100).toFixed(1);
+          return `<div class="multi-segment" style="width:${pct}%; background:${CAT_COLORS[c]};" title="${catLabel(c)}: ${pct}%"></div>`;
+        }).join('');
+
+        multiLegendEl.innerHTML = CAT_ORDER.map(c => {
+          if (catTotals[c] <= 0) return '';
+          const pct = Math.round((catTotals[c] / totalRec) * 100);
+          return `
+            <div style="display:flex; align-items:center; gap:4px;">
+              <div style="width:8px; height:8px; border-radius:50%; background:${CAT_COLORS[c]};"></div>
+              <span>${catLabel(c)} <strong>(${pct}%)</strong></span>
+            </div>
+          `;
+        }).join('');
+      } else {
+        multiBarEl.innerHTML = `<div style="width:100%; height:100%; background:var(--border-color); opacity:0.3;"></div>`;
+        multiLegendEl.innerHTML = `<span style="opacity:0.6;">Aucune donnée récurrente</span>`;
+      }
+
+      // Top 3 exclusif des leviers récurrents
+      const recurringEdges = edges.filter(e => e.freq !== 'once');
+      const sortedEdges = [...recurringEdges].sort((a, b) => annualValue(b) - annualValue(a));
+      const top3 = sortedEdges.slice(0, 3);
+      const topListEl = document.getElementById("top-levers-list");
+
+      if (topListEl) {
+        if (top3.length === 0) {
+          topListEl.innerHTML = `<div style="text-align:center; opacity:0.6; padding:8px; font-size:0.8rem;">Ajoute des astuces récurrentes pour voir tes tops leviers.</div>`;
+        } else {
+          topListEl.innerHTML = top3.map((e, idx) => `
+            <div class="top-lever-item">
+              <div style="display:flex; align-items:center; gap:6px;">
+                <strong style="color:var(--accent-purple);">#${idx + 1}</strong>
+                <span>${e.title}</span>
+              </div>
+              <span style="color:${CAT_COLORS[e.cat] || 'var(--brand-bright)'}; font-weight:800;">+${formatEUR(annualValue(e))} €/an</span>
+            </div>
+          `).join('');
+        }
+      }
+
+      const statsEl = document.getElementById('plan-summary-stats');
+      if (statsEl) {
+        statsEl.innerHTML = `
+          <div style="display:flex; justify-content:space-between; padding:4px 0; border-bottom:1px solid var(--border-color);">
+            <span>Nombre total d'astuces :</span>
+            <strong>${edges.length}</strong>
+          </div>
+          <div style="display:flex; justify-content:space-between; padding:4px 0; border-bottom:1px solid var(--border-color);">
+            <span>Gains récurrents :</span>
+            <strong style="color:var(--brand-bright);">${edges.filter(e => e.freq !== 'once').length}</strong>
+          </div>
+          <div style="display:flex; justify-content:space-between; padding:4px 0;">
+            <span>Gains ponctuels :</span>
+            <strong style="color:var(--accent-pink);">${edges.filter(e => e.freq === 'once').length}</strong>
+          </div>
+        `;
+      }
+    }
+
+    /* --- MODALE CAMEMBERT (SVG) --- */
+    function openPieModal() {
+      const totals = {};
+      CAT_ORDER.forEach(c => totals[c] = 0);
+      allEdges().forEach(e => { totals[e.cat] = (totals[e.cat] || 0) + annualValue(e); });
+
+      const grandTotal = Object.values(totals).reduce((a, b) => a + b, 0);
+      const container = document.getElementById('pie-chart-body');
+
+      if (grandTotal <= 0) {
+        container.innerHTML = `<div style="text-align:center; padding:20px; opacity:0.6;">Renseigne des gains récurrents pour afficher le camembert.</div>`;
+      } else {
+        let cumulativeAngle = 0;
+        const slices = [];
+        const legendItems = [];
+
+        CAT_ORDER.forEach(c => {
+          const val = totals[c];
+          if (val > 0) {
+            const pct = (val / grandTotal);
+            const angle = pct * 360;
+            const startAngle = cumulativeAngle;
+            const endAngle = cumulativeAngle + angle;
+            cumulativeAngle = endAngle;
+
+            const x1 = 50 + 40 * Math.cos(Math.PI * startAngle / 180);
+            const y1 = 50 + 40 * Math.sin(Math.PI * startAngle / 180);
+            const x2 = 50 + 40 * Math.cos(Math.PI * endAngle / 180);
+            const y2 = 50 + 40 * Math.sin(Math.PI * endAngle / 180);
+            const largeArcFlag = angle > 180 ? 1 : 0;
+
+            const pathData = `M 50 50 L ${x1.toFixed(2)} ${y1.toFixed(2)} A 40 40 0 ${largeArcFlag} 1 ${x2.toFixed(2)} ${y2.toFixed(2)} Z`;
+
+            slices.push(`<path d="${pathData}" fill="${CAT_COLORS[c]}" />`);
+            legendItems.push(`
+              <div style="display:flex; align-items:center; gap:6px; font-size:0.78rem;">
+                <div style="width:10px; height:10px; border-radius:50%; background:${CAT_COLORS[c]};"></div>
+                <span>${catLabel(c)}: <strong>${formatEUR(val)} €/an</strong> (${Math.round(pct * 100)}%)</span>
+              </div>
+            `);
+          }
+        });
+
+        container.innerHTML = `
+          <svg viewBox="0 0 100 100" style="width:180px; height:180px; transform: rotate(-90deg); border-radius:50%;">
+            ${slices.join('')}
+          </svg>
+          <div style="display:flex; flex-wrap:wrap; gap:8px 12px; justify-content:center; margin-top:8px;">${legendItems.join('')}</div>
+        `;
+      }
+
+      document.getElementById('pie-modal').classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closePieModal() {
+      document.getElementById('pie-modal').classList.remove('active');
+      document.body.style.overflow = '';
+    }
+
+    /* --- MODALE TRAJECTOIRE (SVG) --- */
+    function openTimelineModal() {
+      const container = document.getElementById('timeline-chart-body');
+      const edges = allEdges();
+
+      if (edges.length === 0) {
+        container.innerHTML = `<div style="text-align:center; padding:20px; opacity:0.6;">Ajoute des astuces pour générer la trajectoire de Free Cash-Flow.</div>`;
+      } else {
+        const events = [];
+        edges.forEach(e => { if (e.createdAt) events.push({ date: e.createdAt, amount: annualValue(e) }); });
+        events.sort((a, b) => new Date(a.date) - new Date(b.date));
+
+        let cum = 0;
+        const points = events.map(ev => { cum += ev.amount; return cum; });
+
+        const w = 300, h = 120, pad = 12;
+        const maxCum = Math.max(...points, 1);
+        const n = points.length;
+
+        const coords = points.map((v, i) => {
+          const x = n === 1 ? w / 2 : pad + (i / (n - 1)) * (w - 2 * pad);
+          const y = h - pad - (v / maxCum) * (h - 2 * pad);
+          return [x, y];
+        });
+
+        const linePath = coords.map((p, i) => (i === 0 ? 'M' : 'L') + p[0].toFixed(1) + ',' + p[1].toFixed(1)).join(' ');
+        const lastX = coords[coords.length - 1][0].toFixed(1);
+        const firstX = coords[0][0].toFixed(1);
+        const areaPath = linePath + ' L' + lastX + ',' + (h - pad) + ' L' + firstX + ',' + (h - pad) + ' Z';
+
+        container.innerHTML = `
+          <svg viewBox="0 0 ${w} ${h}" style="width:100%; height:130px; display:block;">
+            <path d="${areaPath}" fill="var(--accent-purple)" opacity="0.15"></path>
+            <path d="${linePath}" fill="none" stroke="var(--accent-purple)" stroke-width="2.5" stroke-linejoin="round"></path>
+            ${coords.map(p => `<circle cx="${p[0].toFixed(1)}" cy="${p[1].toFixed(1)}" r="3" fill="var(--accent-purple)"></circle>`).join('')}
+          </svg>
+          <div style="font-size:0.85rem; text-align:center; font-weight:700; color:var(--brand-bright); margin-top:8px;">
+            Trésorerie théorique cumulée : ${formatEUR(cum)} € / an
+          </div>
+        `;
+      }
+
+      document.getElementById('timeline-modal').classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeTimelineModal() {
+      document.getElementById('timeline-modal').classList.remove('active');
+      document.body.style.overflow = '';
     }
 
     function renderAll() {
@@ -1159,9 +1034,19 @@
       renderPlan();
     }
 
-    function addCustomEdge() {
+    function resetEdgeForm() {
+      document.getElementById("in-title").value = "";
+      document.getElementById("in-cat").value = "logement";
+      document.getElementById("in-gain").value = "";
+      document.getElementById("in-freq").value = "once";
+      document.getElementById("in-desc").value = "";
+    }
+
+    function submitEdgeForm() {
       const title = document.getElementById("in-title").value.trim();
       const cat = document.getElementById("in-cat").value;
+      const gain = parseFloat(document.getElementById("in-gain").value) || 0;
+      const freq = document.getElementById("in-freq").value;
       const desc = document.getElementById("in-desc").value.trim();
 
       if (!title) {
@@ -1169,29 +1054,64 @@
         return;
       }
 
-      const id = "custom-" + Date.now();
-      db.customEdges.push({ id, title, cat, desc, tiers: [] });
-      expandedCardIds.add(id);
-      markUnsavedChanges();
+      if (editingId) {
+        const edge = db.customEdges.find(e => e.id === editingId);
+        if (edge) { edge.title = title; edge.cat = cat; edge.gain = gain; edge.freq = freq; edge.desc = desc; }
+        markUnsavedChanges();
+        cancelEditEdge();
+        renderAll();
+        return;
+      }
 
-      document.getElementById("in-title").value = "";
-      document.getElementById("in-desc").value = "";
+      const id = "edge-" + Date.now();
+      const createdAt = new Date().toISOString().slice(0, 10);
+      db.customEdges.push({ id, title, cat, desc, gain, freq, createdAt });
+      expandedCardIds.add(id);
+
+      resetEdgeForm();
+      markUnsavedChanges();
       renderAll();
+    }
+
+    function startEditEdge(id, e) {
+      if (e) e.stopPropagation();
+      const edge = db.customEdges.find(x => x.id === id);
+      if (!edge) return;
+
+      editingId = id;
+      document.getElementById("in-title").value = edge.title;
+      document.getElementById("in-cat").value = edge.cat;
+      document.getElementById("in-gain").value = edge.gain || "";
+      document.getElementById("in-freq").value = edge.freq || "once";
+      document.getElementById("in-desc").value = edge.desc || "";
+
+      document.getElementById("form-title").textContent = t("edit_title");
+      document.getElementById("btn-submit-edge").textContent = t("btn_update");
+      document.getElementById("btn-cancel-edge").style.display = "inline-flex";
+
+      document.getElementById("form-card").scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+
+    function cancelEditEdge() {
+      editingId = null;
+      resetEdgeForm();
+      document.getElementById("form-title").textContent = t("add_title");
+      document.getElementById("btn-submit-edge").textContent = t("btn_add");
+      document.getElementById("btn-cancel-edge").style.display = "none";
     }
 
     function deleteCustom(id, e) {
       if (e) e.stopPropagation();
       showCustomDialog('🗑️', t('confirm_delete_title'), t('confirm_delete_msg'), true, () => {
         db.customEdges = db.customEdges.filter(e => e.id !== id);
-        delete db.statusMap[id];
         expandedCardIds.delete(id);
+        if (editingId === id) cancelEditEdge();
         markUnsavedChanges();
         renderAll();
       });
     }
 
-    /* --- DIALOGUES ET MODALES --- */
-    function showCustomDialog(icon, title, message, isConfirm = false, onConfirm = null, confirmBtnLabel = null) {
+    function showCustomDialog(icon, title, message, isConfirm = false, onConfirm = null) {
       document.getElementById('dialog-icon').innerText = icon || 'ℹ️';
       document.getElementById('dialog-title').innerText = title || 'Notification';
       document.getElementById('dialog-message').innerHTML = message || '';
@@ -1200,15 +1120,12 @@
       dialogConfirmCallback = onConfirm;
 
       if (isConfirm) {
-        const label = confirmBtnLabel || t('btn_delete');
         btnBox.innerHTML = `
-          <button class="btn-reset" onclick="executeDialogConfirm()" style="flex: 1; padding: 8px;">${label}</button>
-          <button class="btn-secondary" onclick="closeCustomDialog()" style="flex: 1; padding: 8px;">${db.lang === 'en' ? 'Cancel' : 'Annuler'}</button>
+          <button class="btn-reset" onclick="executeDialogConfirm()" style="flex:1;">Supprimer</button>
+          <button class="btn-secondary" onclick="closeCustomDialog()" style="flex:1;">Annuler</button>
         `;
       } else {
-        btnBox.innerHTML = `
-          <button class="btn-primary" onclick="closeCustomDialog()" style="width: 100%; padding: 8px;">OK</button>
-        `;
+        btnBox.innerHTML = `<button class="btn-primary" onclick="closeCustomDialog()" style="width:100%;">OK</button>`;
       }
       document.getElementById('custom-dialog-modal').classList.add('active');
       document.body.style.overflow = 'hidden';
@@ -1226,28 +1143,16 @@
       if (typeof cb === 'function') cb();
     }
 
-    /* --- EXPORTATION ET IMPORTATION INTÉGRALE --- */
     function exportJSON() {
       try {
         const jsonContent = JSON.stringify(db, null, 2);
-        const today = new Date().toISOString().slice(0, 10);
-        const fileName = `KLON_EDGE_backup_${today}.json`;
+        const fileName = `KLON_EDGE_backup_${new Date().toISOString().slice(0, 10)}.json`;
         const blob = new Blob([jsonContent], { type: "application/json" });
-
         const url = URL.createObjectURL(blob);
         const a = document.createElement("a");
-        a.href = url;
-        a.download = fileName;
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-        setTimeout(() => URL.revokeObjectURL(url), 1000);
-
-        db.hasUnsavedChanges = false;
-        saveData();
-        updateBackupWarningUI();
-
-        showCustomDialog('💾', db.lang === 'en' ? 'Export Successful' : 'Exportation Réussie', db.lang === 'en' ? 'Your KLON Edge backup file has been successfully downloaded!' : 'Votre fichier de sauvegarde KLON Edge a été téléchargé avec succès !');
+        a.href = url; a.download = fileName; document.body.appendChild(a); a.click(); document.body.removeChild(a);
+        db.hasUnsavedChanges = false; saveData(); updateBackupWarningUI();
+        showCustomDialog('💾', 'Export Réussi', 'Votre fichier de sauvegarde a été téléchargé !');
       } catch (e) {
         showCustomDialog('⚠️', 'Erreur', 'Impossible d\'exporter les données.');
       }
@@ -1256,7 +1161,6 @@
     function importJSON(evt) {
       const file = evt.target.files[0];
       if (!file) return;
-
       const reader = new FileReader();
       reader.onload = function(e) {
         try {
@@ -1265,45 +1169,25 @@
             if (Array.isArray(imported)) {
               imported.forEach(item => {
                 if (item && item.title) {
-                  item.id = "custom-" + Date.now() + "-" + Math.floor(Math.random() * 1000);
+                  item.id = "edge-" + Date.now() + "-" + Math.floor(Math.random() * 1000);
+                  if (!item.createdAt) item.createdAt = new Date().toISOString().slice(0, 10);
                   db.customEdges.push(item);
                 }
               });
-            } else {
-              db = imported;
-            }
-
-            db.hasUnsavedChanges = false;
-            saveData();
-            document.getElementById('user-name-input').value = db.userName || '';
-            document.getElementById('lang-select').value = db.lang || 'fr';
-            document.getElementById('theme-select').value = db.theme || 'dark';
-            document.documentElement.setAttribute('data-theme', db.theme || 'dark');
-            updateBackupWarningUI();
-            changeLanguage(db.lang || 'fr');
-            showCustomDialog('✅', db.lang === 'en' ? 'Import Successful' : 'Importation Réussie', db.lang === 'en' ? 'KLON Edge database restored successfully!' : 'Vos données KLON Edge ont été restaurées avec succès !');
-          } else {
-            showCustomDialog('⚠️', 'Fichier Invalide', t("alert_import_error"));
-          }
-        } catch (err) {
-          showCustomDialog('⚠️', 'Erreur', t("alert_import_error"));
-        }
+            } else { db = imported; }
+            db.hasUnsavedChanges = false; saveData(); renderAll();
+            showCustomDialog('✅', 'Importation Réussie', 'Vos données KLON Edge ont été restaurées !');
+          } else { showCustomDialog('⚠️', 'Fichier Invalide', t("alert_import_error")); }
+        } catch (err) { showCustomDialog('⚠️', 'Erreur', t("alert_import_error")); }
       };
       reader.readAsText(file);
       evt.target.value = '';
     }
 
     function confirmResetDialog() {
-      showCustomDialog('🗑️', t('btn_reset'), db.lang === 'en' ? 'Are you sure you want to reset all your custom tips and plan?' : 'Es-tu sûr de vouloir réinitialiser toutes tes astuces personnelles et ton plan ?', true, () => {
-        db.customEdges = [];
-        db.statusMap = {};
-        db.userName = '';
-        db.hasUnsavedChanges = false;
-        expandedCardIds.clear();
-        saveData();
-        updateBackupWarningUI();
-        document.getElementById('user-name-input').value = '';
-        renderAll();
+      showCustomDialog('🗑️', t('btn_reset'), 'Es-tu sûr de vouloir réinitialiser toutes tes astuces personnelles ?', true, () => {
+        db.customEdges = []; db.userName = ''; db.hasUnsavedChanges = false; expandedCardIds.clear();
+        saveData(); updateBackupWarningUI(); renderAll();
       });
     }
 
@@ -1312,10 +1196,6 @@
       document.getElementById('lang-select').value = db.lang || 'fr';
       document.getElementById('theme-select').value = db.theme || 'dark';
       document.documentElement.setAttribute('data-theme', db.theme || 'dark');
-
-      const nameInput = document.getElementById('user-name-input');
-      if (nameInput) nameInput.placeholder = t('user_name_placeholder');
-
       updateBackupWarningUI();
       changeLanguage(db.lang || 'fr');
     });
