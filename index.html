@@ -107,10 +107,14 @@
       padding-bottom: env(safe-area-inset-bottom);
     }
 
-    /* NEUTRALISATION ABSOLUE DES SPINNERS */
     input::-webkit-outer-spin-button,
-    input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
-    input[type=number] { -moz-appearance: textfield; }
+    input::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+    input[type=number] {
+      -moz-appearance: textfield;
+    }
 
     ::-webkit-scrollbar { width: 6px; height: 6px; }
     ::-webkit-scrollbar-track { background: var(--bg-color); }
@@ -202,7 +206,7 @@
     #gauge-bar-cap { background-color: var(--accent-blue) !important; }
     #gauge-bar-annual { background-color: var(--accent-purple) !important; }
 
-    /* BADGES DE RÉCOMPENSES */
+    /* RÉCOMPENSES */
     .hero-rewards-toggle-row { display: none; justify-content: center; padding-top: 6px; border-top: 1px solid rgba(16, 185, 129, 0.2); }
     .hero-rewards-toggle-row.has-rewards { display: flex; }
     .rewards-toggle-btn {
@@ -220,23 +224,44 @@
     }
     .corp-reward-pill:hover { transform: translateY(-2px); box-shadow: 0 0 10px rgba(16, 185, 129, 0.4); }
 
-    /* INVENTAIRE SCROLLABLE (ONGLET 1) */
+    /* INVENTAIRE SCROLLABLE */
     .inventory-scroll-box {
-      max-height: 460px; overflow-y: auto; display: flex; flex-direction: column; gap: 6px; padding-right: 2px;
+      max-height: 460px; overflow-y: auto; display: flex; flex-direction: column; gap: 8px; padding-right: 2px;
     }
 
-    /* CARTES D'INVENTAIRE ÉPURÉES SUR UNE LIGNE (ONGLET 1) */
+    /* CARTE D'INVENTAIRE SUR 2 LIGNES SPACIEUSES */
     .edge-card {
       background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 8px;
       display: flex; flex-direction: column; transition: border-color 0.15s; overflow: hidden; flex-shrink: 0;
     }
     .edge-summary-row {
-      padding: 10px 12px; display: flex; justify-content: space-between; align-items: center;
-      gap: 8px; cursor: pointer; user-select: none;
+      padding: 10px 12px; display: flex; flex-direction: column; gap: 6px; cursor: pointer; user-select: none;
     }
     .edge-summary-row:hover { background: rgba(255, 255, 255, 0.02); }
-    .edge-title-text { font-weight: 700; color: var(--text-bright); font-size: 0.88rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-    .edge-cat-badge { font-size: 0.65rem; padding: 1px 6px; border-radius: 6px; font-weight: 800; white-space: nowrap; }
+    .edge-line-top {
+      display: flex; align-items: center; justify-content: space-between; gap: 8px;
+    }
+    .edge-title-text {
+      font-weight: 700; color: var(--text-bright); font-size: 0.95rem; line-height: 1.3;
+    }
+    .edge-line-bottom {
+      display: flex; align-items: center; justify-content: space-between; gap: 8px; font-size: 0.78rem;
+    }
+
+    /* BADGE DE SECTEUR PROPRE SANS EFFET SURLIGNÉ BAVEUX */
+    .edge-cat-badge {
+      font-size: 0.72rem;
+      padding: 3px 8px;
+      border-radius: 6px;
+      font-weight: 600;
+      white-space: nowrap;
+      background: var(--card-inner);
+      color: var(--text-bright);
+      border: 1px solid var(--border-color);
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+    }
 
     .edge-chevron-btn { font-size: 0.8rem; opacity: 0.5; transition: transform 0.2s ease; display: inline-flex; }
     .edge-card.expanded .edge-chevron-btn { transform: rotate(180deg); opacity: 1; }
@@ -247,7 +272,7 @@
     }
     .edge-card.expanded .edge-body-expanded { display: flex; }
 
-    /* CARTES ANALYTIQUES DU PLAN (ONGLET 2) */
+    /* CARTES ANALYTIQUES DU PLAN */
     .stake-edge-card {
       background-color: var(--card-bg); border: 1px solid var(--border-color); border-radius: 8px;
       padding: 12px 14px; position: relative; display: flex; flex-direction: column; gap: 8px;
@@ -394,7 +419,7 @@
     <!-- ONGLET 1 : SAISIE & LEVIERS -->
     <div id="tab1" class="tab-content active">
 
-      <!-- BANDEAU COMPACT : PAYS SANS DRAPEAUX GÊNANTS SUR PC -->
+      <!-- BANDEAU COMPACT -->
       <div class="card" style="padding: 10px 14px;">
         <div style="display: flex; justify-content: space-between; align-items: center; gap: 8px;">
           <div style="flex: 1;">
@@ -402,13 +427,12 @@
           </div>
 
           <div style="display: flex; align-items: center; gap: 6px; flex-shrink: 0;">
-            <select id="region-select" onchange="changeRegion(this.value)" style="width: auto; padding: 6px 8px; font-size: 0.85rem;" title="Pays & Modèle d'Inflation">
-              <option value="FR">France (EUR €)</option>
-              <option value="BE">Belgique (EUR €)</option>
-              <option value="CH">Suisse (CHF)</option>
-              <option value="CA">Canada (CAD $)</option>
-              <option value="US">États-Unis (USD $)</option>
-              <option value="UK">Royaume-Uni (GBP £)</option>
+            <select id="region-select" onchange="changeRegion(this.value)" style="width: auto; padding: 6px 8px; font-size: 0.85rem;" title="Devise & Modèle d'Inflation">
+              <option value="FR">EUR (€)</option>
+              <option value="US">USD ($)</option>
+              <option value="CH">CHF</option>
+              <option value="CA">CAD ($)</option>
+              <option value="UK">GBP (£)</option>
             </select>
 
             <select id="theme-select" onchange="changeTheme(this.value)" style="width: auto; padding: 6px 8px; font-size: 0.85rem;">
@@ -468,14 +492,14 @@
         </div>
       </div>
 
-      <!-- INVENTAIRE FIXE ET SCROLLABLE DES ASTUCES -->
+      <!-- INVENTAIRE FIXE ET SCROLLABLE -->
       <div class="card">
-        <div class="card-title">
-          <div style="display:flex; align-items:center; gap:8px;">
-            <span id="lbl-inventory-title">📦 Inventaire des Leviers</span>
-            <span id="items-count-badge" style="font-size: 0.72rem; opacity: 0.7;">0 levier</span>
-          </div>
-          <select id="filter-cat" onchange="renderLibrary()" style="width: auto; padding: 2px 6px; font-size: 0.78rem;">
+        <div class="card-title" style="margin-bottom: 2px;">
+          <span id="lbl-inventory-title">📦 Inventaire des Leviers</span>
+        </div>
+
+        <div>
+          <select id="filter-cat" onchange="renderLibrary()" style="width: 100%; padding: 6px 8px; font-size: 0.82rem;">
             <option value="all" data-i18n="filter_all">Tous les secteurs</option>
             <option value="energie" data-i18n="cat_energie">⚡ Énergie & Eau</option>
             <option value="nourriture" data-i18n="cat_nourriture">🛒 Alimentation</option>
@@ -486,7 +510,7 @@
           </select>
         </div>
 
-        <div id="library-list" class="inventory-scroll-box"></div>
+        <div id="library-list" class="inventory-scroll-box" style="margin-top: 4px;"></div>
       </div>
 
       <!-- GESTION DES DONNÉES -->
@@ -508,7 +532,7 @@
       </div>
     </div>
 
-    <!-- ONGLET 2 : PLAN KLON (DRAG & DROP SANS TRI POLLUANT) -->
+    <!-- ONGLET 2 : PLAN KLON -->
     <div id="tab2" class="tab-content">
 
       <!-- HERO SYNTHÈSE À DEUX BLOCS PERSONNALISÉ -->
@@ -591,18 +615,17 @@
         <div id="multi-bar-legend" style="display: flex; flex-wrap: wrap; gap: 6px 12px; font-size: 0.72rem; margin-top: 2px;"></div>
       </div>
 
-      <!-- TOUTES LES CARTES DU PLAN (SANS SÉLECTEUR DE TRI INUTILE) -->
+      <!-- TOUTES LES CARTES DU PLAN -->
       <div class="card">
         <div class="card-title">
           <span id="lbl-plan-title">🚀 Leviers sous Gestion</span>
-          <span style="font-size: 0.7rem; opacity: 0.65;">(glisser pour réordonner)</span>
         </div>
 
         <div id="plan-cards-container" style="display: flex; flex-direction: column; gap: 8px;"></div>
       </div>
     </div>
 
-    <!-- ONGLET 3 : ÉCOSYSTÈME COMPLET ALPHA PICKER -->
+    <!-- ONGLET 3 : ÉCOSYSTÈME COMPLET -->
     <div id="tab3" class="tab-content">
       <div class="card" style="border-left: 4px solid var(--brand);">
         <div style="font-size: 0.85rem; line-height: 1.5; color: var(--text-main);" data-i18n="eco_disclaimer">
@@ -699,7 +722,7 @@
     </div>
   </div>
 
-  <!-- MODALE DÉTAIL D'UN LEVIER (CORRIGÉE DU SYMBOLE € EN DUR) -->
+  <!-- MODALE DÉTAIL D'UN LEVIER -->
   <div id="lever-detail-modal" class="modal-overlay" onclick="if(event.target === this) closeLeverDetailModal();">
     <div class="modal-card" style="max-width: 420px; text-align: left;">
       <div style="display: flex; justify-content: space-between; align-items: center;">
@@ -827,7 +850,188 @@
 
   <script>
     /* ==========================================================================
-       ENDPOINT DU WORKER CLOUDFLARE POUR L'INFLATION EN DIRECT
+       0. DICTIONNAIRE I18N ET FONCTION D'APPLICATION DES TRADUCTIONS
+       ========================================================================== */
+    const I18N = {
+      fr: {
+        subtitle: "L'avantage asymétrique du quotidien",
+        desc: "Réduis ton OPEX sans sacrifier ton confort, protège ton pouvoir d'achat contre l'inflation et réinjecte le FCF libéré dans ton capital.",
+        tab_input: "Saisie & Leviers",
+        tab_plan: "Plan KLON",
+        tab_eco: "Écosystème",
+        theme_dark: "🌙 Sombre",
+        theme_light: "☀️ Clair",
+        theme_cb: "👁️ Daltonien",
+        form_new_title: "🛠️ Nouveau Levier Récurrent",
+        lbl_gain: "Gain départ (€/m)",
+        lbl_month: "Mois",
+        lbl_year: "Année",
+        ph_title: "Intitulé de l'optimisation",
+        ph_desc: "Note ou méthode appliquée (optionnel)...",
+        btn_submit: "Valider le levier",
+        btn_update: "Mettre à jour",
+        btn_cancel: "Annuler",
+        filter_all: "Tous les secteurs",
+        cat_energie: "⚡ Énergie & Eau",
+        cat_nourriture: "🛒 Alimentation & Quotidien",
+        cat_logement: "🏠 Logement & Assurances",
+        cat_transports: "🚗 Carburant & Mobilité",
+        cat_abonnements: "📱 Télécoms & Numérique",
+        cat_divers: "🛍️ Biens & Services Divers",
+        data_mgmt_title: "💾 Gestion des Données",
+        btn_export: "💾 Exporter",
+        btn_import: "📂 Importer",
+        btn_reset: "Réinitialiser",
+        hero_fcf: "FCF RÉCURRENT INDEXÉ",
+        hero_cumul: "TRÉSORERIE CUMULÉE",
+        stat_cumul_sub: "Économies réelles à ce jour",
+        g_shield: "🛡️ Bouclier Inflation",
+        g_annuity: "⛽ Rente Passive (4%)",
+        g_capital: "🏛️ Capital Équivalent",
+        g_annual: "⚡ Gain Annuel Libéré",
+        sector_breakdown: "💧 Répartition du FCF par Secteur",
+        btn_rewards: "🏆 Voir les Récompenses ▾",
+        btn_rewards_hide: "🏆 Masquer les Récompenses ▴",
+        btn_understood: "Compris",
+        btn_close: "Fermer",
+        btn_awesome: "Génial !",
+        m_rec_title: "Pourquoi uniquement du récurrent ?",
+        m_rec_desc: "<strong>L'avantage asymétrique du Free Cash-Flow :</strong><br><br>Une économie ponctuelle (ex: revendre un objet) n'enrichit ton capital qu'une seule fois.<br><br>En revanche, <strong>éradiquer ou réduire une dépense récurrente</strong> (ex: forfait, électricité, courses) libère un flux perpétuel. Ce flux grandit chaque année avec l'inflation évitée et équivaut mathématiquement à détenir un actif financier qui te verse un dividende mensuel à vie.",
+        m_pie_title: "Répartition du FCF par Secteur",
+        m_lever_cur_title: "FCF MENSUEL RÉEL ACTUEL",
+        m_lever_cumul_lbl: "Trésorerie historique cumulée :",
+        m_lever_cap_lbl: "Capital équivalent à 4% :",
+        m_lever_age_lbl: "Ancienneté du levier :",
+        m_traj_header: "📈 Trajectoire d'Accumulation",
+        m_hover_tip: "Survolez les points",
+        m_nominal_legend: "Base nominale",
+        m_real_legend: "Réel indexé (Inflation absorbée)",
+        m_total_saved_lbl: "TRÉSORERIE SAUVÉE TOTALE",
+        m_since_first: "depuis le premier levier",
+        m_shield_total_lbl: "BOUCLIER INFLATION TOTAL",
+        m_shield_sub: "hausse des prix neutralisée",
+        m_compound_5y: "Projection à 5 ans réinvestie à 7% :",
+        m_passive_annuity_lbl: "Rente passive perpétuelle générée :"
+      },
+      en: {
+        subtitle: "The daily asymmetric advantage",
+        desc: "Reduce your OPEX without sacrificing comfort, protect purchasing power against inflation, and inject freed FCF into your capital.",
+        tab_input: "Input & Levers",
+        tab_plan: "KLON Plan",
+        tab_eco: "Ecosystem",
+        theme_dark: "🌙 Dark",
+        theme_light: "☀️ Light",
+        theme_cb: "👁️ Colorblind",
+        form_new_title: "🛠️ New Recurring Lever",
+        lbl_gain: "Base Gain ($/m)",
+        lbl_month: "Month",
+        lbl_year: "Year",
+        ph_title: "Optimization name",
+        ph_desc: "Note or method applied (optional)...",
+        btn_submit: "Add lever",
+        btn_update: "Update",
+        btn_cancel: "Cancel",
+        filter_all: "All sectors",
+        cat_energie: "⚡ Energy & Utilities",
+        cat_nourriture: "🛒 Food & Daily Expenses",
+        cat_logement: "🏠 Housing & Insurance",
+        cat_transports: "🚗 Fuel & Transport",
+        cat_abonnements: "📱 Subscriptions & Telecom",
+        cat_divers: "🛍️ Gear & Miscellaneous",
+        data_mgmt_title: "💾 Data Management",
+        btn_export: "💾 Export",
+        btn_import: "📂 Import",
+        btn_reset: "Reset",
+        hero_fcf: "INDEXED RECURRING FCF",
+        hero_cumul: "CUMULATIVE SAVINGS",
+        stat_cumul_sub: "Real savings to date",
+        g_shield: "🛡️ Inflation Shield",
+        g_annuity: "⛽ Passive Yield (4%)",
+        g_capital: "🏛️ Equivalent Capital",
+        g_annual: "⚡ Unlocked Annual Gain",
+        sector_breakdown: "💧 FCF Breakdown by Sector",
+        btn_rewards: "🏆 View Rewards ▾",
+        btn_rewards_hide: "🏆 Hide Rewards ▴",
+        btn_understood: "Understood",
+        btn_close: "Close",
+        btn_awesome: "Awesome!",
+        m_rec_title: "Why recurring gains only?",
+        m_rec_desc: "<strong>The asymmetric advantage of Free Cash Flow:</strong><br><br>A one-off saving (e.g. selling an item) enriches your capital only once.<br><br>However, <strong>eliminating or reducing a recurring expense</strong> (e.g. phone plan, electricity, groceries) unleashes a perpetual cash flow. This flow grows every year with avoided inflation and is mathematically equivalent to holding a financial asset that pays you a monthly dividend for life.",
+        m_pie_title: "FCF Breakdown by Sector",
+        m_lever_cur_title: "CURRENT REAL MONTHLY FCF",
+        m_lever_cumul_lbl: "Cumulative historical savings:",
+        m_lever_cap_lbl: "Equivalent capital at 4%:",
+        m_lever_age_lbl: "Lever age:",
+        m_traj_header: "📈 Accumulation Trajectory",
+        m_hover_tip: "Hover over points",
+        m_nominal_legend: "Nominal base",
+        m_real_legend: "Real indexed (Inflation beaten)",
+        m_total_saved_lbl: "TOTAL SAVED CASH",
+        m_since_first: "since first lever",
+        m_shield_total_lbl: "TOTAL INFLATION SHIELD",
+        m_shield_sub: "price increases neutralized",
+        m_compound_5y: "5-year projection compounded at 7%:",
+        m_passive_annuity_lbl: "Perpetual passive yield generated:"
+      }
+    };
+
+    function applyLanguageUI() {
+      const lang = (typeof db !== 'undefined' && db && db.lang) ? db.lang : 'fr';
+      
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (I18N[lang] && I18N[lang][key]) {
+          el.innerHTML = I18N[lang][key];
+        }
+      });
+
+      document.querySelectorAll('[data-i18n-ph]').forEach(el => {
+        const key = el.getAttribute('data-i18n-ph');
+        if (I18N[lang] && I18N[lang][key]) {
+          el.placeholder = I18N[lang][key];
+        }
+      });
+
+      renderAll();
+    }
+
+    /* ==========================================================================
+       1. FONCTION DE TRADUCTION AUTONOME EN TOUTE PREMIÈRE POSITION
+       ========================================================================== */
+    function t(key) {
+      const lang = (typeof db !== 'undefined' && db && db.lang) ? db.lang : 'fr';
+      if (typeof I18N !== 'undefined' && I18N[lang] && I18N[lang][key]) {
+        return I18N[lang][key];
+      }
+      if (typeof I18N !== 'undefined' && I18N.fr && I18N.fr[key]) {
+        return I18N.fr[key];
+      }
+      return key;
+    }
+
+    function catLabel(cat) {
+      const mapFR = {
+        energie: "Énergie & Eau",
+        nourriture: "Alimentation & Quotidien",
+        logement: "Logement & Assurances",
+        transports: "Carburant & Mobilité",
+        abonnements: "Télécoms & Numérique",
+        divers: "Biens & Services Divers"
+      };
+      const mapEN = {
+        energie: "Energy & Utilities",
+        nourriture: "Food & Daily Expenses",
+        logement: "Housing & Insurance",
+        transports: "Fuel & Transport",
+        abonnements: "Subscriptions & Telecom",
+        divers: "Gear & Miscellaneous"
+      };
+      const isEn = (typeof db !== 'undefined' && db && db.lang === 'en');
+      return (isEn ? mapEN[cat] : mapFR[cat]) || cat;
+    }
+
+    /* ==========================================================================
+       2. DÉCLARATION DU WORKER ET DES MATRICES D'INFLATION OFFICIELLES
        ========================================================================== */
     const WORKER_INFLATION_URL = 'https://klon-inflation.jeremy-delalande.workers.dev/';
 
@@ -896,7 +1100,6 @@
       transports: '🚗', abonnements: '📱', divers: '🛍️'
     };
 
-    /* COULEURS HARMONISÉES : DIVERS = VIOLET AMÉTHYSTE VIBRANT (#A855F7) */
     const CAT_COLORS = {
       energie: '#f97316',      /* Orange Ambré */
       nourriture: '#10b981',   /* Vert Émeraude */
@@ -907,182 +1110,9 @@
     };
     const CAT_ORDER = ["energie", "nourriture", "logement", "transports", "abonnements", "divers"];
 
-    const I18N = {
-      fr: {
-        subtitle: "L'avantage asymétrique du quotidien",
-        desc: "Réduis ton OPEX sans sacrifier ton confort, protège ton pouvoir d'achat contre l'inflation et réinjecte le FCF libéré dans ton capital.",
-        tab_input: "Saisie & Leviers",
-        tab_plan: "Plan KLON",
-        tab_eco: "Écosystème",
-        theme_dark: "🌙 Sombre",
-        theme_light: "☀️ Clair",
-        theme_cb: "👁️ Daltonien",
-        form_new_title: "🛠️ Nouveau Levier Récurrent",
-        ph_title: "Intitulé de l'optimisation",
-        cat_energie: "⚡ Énergie & Eau",
-        cat_nourriture: "🛒 Alimentation & Quotidien",
-        cat_logement: "🏠 Logement & Assurances",
-        cat_transports: "🚗 Carburant & Mobilité",
-        cat_abonnements: "📱 Télécoms & Numérique",
-        cat_divers: "🛍️ Biens & Services Divers",
-        lbl_gain: "Gain départ",
-        lbl_month: "Mois",
-        lbl_year: "Année",
-        ph_desc: "Note ou méthode appliquée (optionnel)...",
-        btn_submit: "Valider le levier",
-        btn_update: "Mettre à jour le levier",
-        btn_cancel: "Annuler",
-        filter_all: "Tous les secteurs",
-        data_mgmt_title: "💾 Gestion des Données",
-        btn_export: "💾 Exporter",
-        btn_import: "📂 Importer",
-        btn_reset: "Réinitialiser",
-        hero_fcf: "FCF RÉCURRENT INDEXÉ",
-        hero_cumul: "TRÉSORERIE CUMULÉE",
-        stat_cumul_sub: "Économies réelles à ce jour",
-        btn_rewards: "🏆 Voir les Récompenses ▾",
-        btn_rewards_hide: "🏆 Masquer les Récompenses ▴",
-        g_shield: "🛡️ Bouclier Inflation",
-        g_annuity: "⛽ Rente Passive (4%)",
-        g_capital: "🏛️ Capital Équivalent",
-        g_annual: "⚡ Gain Annuel Libéré",
-        sector_breakdown: "💧 Répartition du FCF par Secteur",
-        m_rec_title: "Pourquoi uniquement du récurrent ?",
-        m_rec_desc: "<strong>L'avantage asymétrique du Free Cash-Flow :</strong><br><br>Une économie ponctuelle (ex: revendre un objet) n'enrichit ton capital qu'une seule fois.<br><br>En revanche, **éradiquer ou réduire une dépense récurrente** (ex: forfait, électricité, courses) libère un flux perpétuel. Ce flux grandit chaque année avec l'inflation évitée et équivaut mathématiquement à détenir un actif financier qui te verse un dividende mensuel à vie.",
-        btn_understood: "Compris",
-        btn_close: "Fermer",
-        btn_awesome: "Génial !",
-        m_pie_title: "Répartition du FCF par Secteur",
-        m_lever_cur_title: "FCF MENSUEL RÉEL ACTUEL",
-        m_lever_cumul_lbl: "Trésorerie historique cumulée :",
-        m_lever_cap_lbl: "Capital équivalent à 4% :",
-        m_lever_age_lbl: "Ancienneté du levier :",
-        m_traj_header: "📈 Trajectoire d'Accumulation",
-        m_hover_tip: "Survolez les points",
-        m_nominal_legend: "Base nominale",
-        m_real_legend: "Réel indexé (Inflation absorbée)",
-        m_total_saved_lbl: "TRÉSORERIE SAUVÉE TOTALE",
-        m_since_first: "depuis le premier levier",
-        m_shield_total_lbl: "BOUCLIER INFLATION TOTAL",
-        m_shield_sub: "hausse des prix neutralisée",
-        m_compound_5y: "Projection à 5 ans réinvestie à 7% :",
-        m_passive_annuity_lbl: "Rente passive perpétuelle générée :",
-        eco_disclaimer: "<strong>🤝 Transparence & Parrainage :</strong> Les liens ci-dessous sont des liens d'affiliation et de parrainage. En ouvrant un compte via ces accès, vous pouvez bénéficier des bonus de bienvenue proposés par les plateformes tout en soutenant le développement gratuit de l'application.",
-        eco_brokers: "📈 Banques & Courtiers",
-        eco_crypto: "🪙 Crypto & Rendement Alternatif",
-        eco_portfolio: "🎯 Portefeuille & Performances",
-        eco_wikifolio: "Suivre le Wikifolio Alpha Picker",
-        eco_theses: "🔬 Analyses & Thèses",
-        eco_substack: "Suivre le Substack Alpha Picker",
-        eco_suite: "🧰 La Suite KLON",
-        eco_support: "☕ Soutenir le Projet",
-        eco_support_desc: "Si cet outil vous aide dans votre parcours d'autonomie financière et d'optimisation de vos flux, vous pouvez soutenir le projet via les liens ci-dessus ou par un don.",
-        eco_paypal: "Faire un don via PayPal",
-        footer_dev: "<strong>KLON Edge</strong> — Application gratuite & Open Source développée par <strong>Alpha Picker</strong> et hébergée sur GitHub Pages.",
-        footer_privacy: "🛡️ <strong>Confidentialité :</strong> Aucun cookie de suivi, aucune collecte de données. Toutes vos saisies restent exclusivement stockées dans votre navigateur.",
-        footer_disclaimer: "⚠️ <strong>Avertissement :</strong> Cet outil me sert de simulation personnelle et éducative. Il ne constitue en aucun cas un conseil en investissement ou une incitation financière."
-      },
-      en: {
-        subtitle: "Your asymmetric daily edge",
-        desc: "Cut your OPEX without sacrificing comfort, protect your purchasing power from inflation, and reinvest freed cash into your capital.",
-        tab_input: "Data & Levers",
-        tab_plan: "KLON Plan",
-        tab_eco: "Ecosystem",
-        theme_dark: "🌙 Dark",
-        theme_light: "☀️ Light",
-        theme_cb: "👁️ Colorblind",
-        form_new_title: "🛠️ New Recurring Lever",
-        ph_title: "Optimization name",
-        cat_energie: "⚡ Energy & Utilities",
-        cat_nourriture: "🛒 Food & Daily Expenses",
-        cat_logement: "🏠 Housing & Insurance",
-        cat_transports: "🚗 Fuel & Transport",
-        cat_abonnements: "📱 Subscriptions & Telecom",
-        cat_divers: "🛍️ Gear & Miscellaneous",
-        lbl_gain: "Starting gain",
-        lbl_month: "Month",
-        lbl_year: "Year",
-        ph_desc: "Method or note (optional)...",
-        btn_submit: "Save lever",
-        btn_update: "Update lever",
-        btn_cancel: "Cancel",
-        filter_all: "All sectors",
-        data_mgmt_title: "💾 Data Management",
-        btn_export: "💾 Export",
-        btn_import: "📂 Import",
-        btn_reset: "Reset",
-        hero_fcf: "REAL INDEXED FCF",
-        hero_cumul: "CUMULATIVE TREASURY",
-        stat_cumul_sub: "Real savings to date",
-        btn_rewards: "🏆 View Rewards ▾",
-        btn_rewards_hide: "🏆 Hide Rewards ▴",
-        g_shield: "🛡️ Inflation Shield",
-        g_annuity: "⛽ Passive Yield (4%)",
-        g_capital: "🏛️ Equivalent Capital",
-        g_annual: "⚡ Annual Unlocked Gain",
-        sector_breakdown: "💧 FCF Breakdown by Sector",
-        m_rec_title: "Why only recurring expenses?",
-        m_rec_desc: "<strong>The asymmetric edge of Free Cash-Flow:</strong><br><br>A one-off saving (like selling an item) only boosts your net worth once.<br><br>In contrast, **eradicating or cutting a recurring expense** (phone plan, energy, groceries) frees a permanent cash flow. That cash flow grows every year with beaten inflation and mathematically equals owning a financial asset that pays you a dividend every month for life.",
-        btn_understood: "Understood",
-        btn_close: "Close",
-        btn_awesome: "Awesome!",
-        m_pie_title: "FCF Breakdown by Sector",
-        m_lever_cur_title: "CURRENT REAL MONTHLY FCF",
-        m_lever_cumul_lbl: "Historical cumulative cash:",
-        m_lever_cap_lbl: "Equivalent capital at 4%:",
-        m_lever_age_lbl: "Lever age:",
-        m_traj_header: "📈 Wealth Accumulation Curve",
-        m_hover_tip: "Hover over points",
-        m_nominal_legend: "Nominal basis",
-        m_real_legend: "Real indexed (Inflation beaten)",
-        m_total_saved_lbl: "TOTAL TREASURY SAVED",
-        m_since_first: "since first lever",
-        m_shield_total_lbl: "TOTAL INFLATION SHIELD",
-        m_shield_sub: "price increases neutralized",
-        m_compound_5y: "5-year projection reinvested at 7%:",
-        m_passive_annuity_lbl: "Perpetual passive yield created:",
-        eco_disclaimer: "<strong>🤝 Transparency & Referrals:</strong> Referral links below provide welcome bonuses while supporting free development.",
-        eco_brokers: "📈 Banks & Brokers",
-        eco_crypto: "🪙 Crypto & Yield",
-        eco_portfolio: "🎯 Portfolio & Track Record",
-        eco_wikifolio: "Follow Alpha Picker Wikifolio",
-        eco_theses: "🔬 Theses & Analysis",
-        eco_substack: "Follow Alpha Picker Substack",
-        eco_suite: "🧰 The KLON Suite",
-        eco_support: "☕ Support the Project",
-        eco_support_desc: "If this tool helps you on your path to financial freedom and runway optimization, you can support development with a donation.",
-        eco_paypal: "Donate via PayPal",
-        footer_dev: "<strong>KLON Edge</strong> — Free & Open Source app developed by <strong>Alpha Picker</strong>.",
-        footer_privacy: "🛡️ <strong>Privacy:</strong> No tracking cookies, no data collection. All inputs remain exclusively stored in your browser.",
-        footer_disclaimer: "⚠️ <strong>Disclaimer:</strong> Educational and personal simulation only. Not financial advice."
-      }
-    };
-
-    function t(key) {
-      const lang = db.lang || 'fr';
-      return I18N[lang]?.[key] || I18N.fr?.[key] || key;
-    }
-
-    function applyLanguageUI() {
-      const curLang = db.lang || 'fr';
-      document.documentElement.setAttribute('lang', curLang);
-
-      document.querySelectorAll('[data-i18n]').forEach(el => {
-        const k = el.getAttribute('data-i18n');
-        if (k) el.innerHTML = t(k);
-      });
-      document.querySelectorAll('[data-i18n-ph]').forEach(el => {
-        const k = el.getAttribute('data-i18n-ph');
-        if (k) el.placeholder = t(k);
-      });
-
-      renderLibrary();
-      updateUserLabels();
-      if (document.getElementById('tab2').classList.contains('active')) {
-        renderPlan();
-      }
-    }
-
+    /* ==========================================================================
+       3. CHARGEMENT DE LA BASE LOCALE
+       ========================================================================== */
     let localData = JSON.parse(localStorage.getItem('klon_edge_db'));
     if (!localData || typeof localData !== 'object') {
       localData = {
@@ -1148,7 +1178,7 @@
         if (heroFcfLabel) heroFcfLabel.innerText = db.lang === 'en' ? `${uName.toUpperCase()}'S REAL FCF` : `FCF RÉCURRENT DE ${uName.toUpperCase()}`;
         if (heroCumulLabel) heroCumulLabel.innerText = db.lang === 'en' ? `${uName.toUpperCase()} HAS SAVED` : `${uName.toUpperCase()} A SAUVÉ`;
         if (invTitle) invTitle.innerText = db.lang === 'en' ? `📦 ${uName}'s Levers` : `📦 Leviers de ${uName}`;
-        if (planTitle) planTitle.innerText = db.lang === 'en' ? `🚀 ${uName}'s Levers` : `🚀 Leviers de ${uName}`;
+        if (planTitle) planTitle.innerText = db.lang === 'en' ? `🚀 Leviers de ${uName}` : `🚀 Leviers de ${uName}`;
       } else {
         if (heroFcfLabel) heroFcfLabel.innerText = t('hero_fcf');
         if (heroCumulLabel) heroCumulLabel.innerText = t('hero_cumul');
@@ -1196,10 +1226,6 @@
       if (activeEl) activeEl.classList.add('active');
       if (e && e.currentTarget) e.currentTarget.classList.add('active');
       if (tabId === 'tab2') renderPlan();
-    }
-
-    function catLabel(cat) {
-      return t("cat_" + cat);
     }
 
     function openRecurringHelpModal() {
@@ -1401,7 +1427,7 @@
     }
 
     /* ==========================================================================
-       CARTES D'INVENTAIRE ÉPURÉES (ONGLET 1)
+       CARTES D'INVENTAIRE SUR 2 LIGNES SPACIEUSES (ONGLET 1)
        ========================================================================== */
     function toggleCardExpandDirect(summaryEl, cardId, e) {
       if (e) e.stopPropagation();
@@ -1428,15 +1454,23 @@
       return `
         <div class="edge-card ${isExpanded ? 'expanded' : ''}" style="border-left: 4px solid ${catColor};">
           <div class="edge-summary-row" onclick="toggleCardExpandDirect(this, '${edge.id}', event)">
-            <div style="display:flex; align-items:center; gap:8px; flex:1; min-width:0;">
-              ${avatarContent}
-              <span class="edge-title-text">${edge.title}</span>
-              <span class="edge-cat-badge" style="background:${catColor}20; color:${catColor};">${catLabel(edge.cat)}</span>
-            </div>
-            <div style="display:flex; align-items:center; gap:8px; flex-shrink:0;">
-              <span style="font-size:0.85rem; font-weight:800; color:var(--brand-bright);">+${fmt(adjMonthly)}/m</span>
-              <span style="font-size:0.7rem; opacity:0.6;">(base: ${fmt(baseGain)})</span>
+            <div class="edge-line-top">
+              <div style="display:flex; align-items:center; gap:8px; flex:1; min-width:0;">
+                ${avatarContent}
+                <span class="edge-title-text">${edge.title}</span>
+              </div>
               <span class="edge-chevron-btn">▾</span>
+            </div>
+
+            <div class="edge-line-bottom">
+              <span class="edge-cat-badge" style="border-color: ${catColor}66;">
+                <span style="color:${catColor}; font-size:0.85rem;">${icon}</span>
+                <span>${catLabel(edge.cat)}</span>
+              </span>
+              <div style="display:flex; align-items:center; gap:6px;">
+                <span style="font-size:0.9rem; font-weight:800; color:var(--brand-bright);">+${fmt(adjMonthly)}/m</span>
+                <span style="font-size:0.7rem; opacity:0.6;">(base: ${fmt(baseGain)})</span>
+              </div>
             </div>
           </div>
 
@@ -1459,9 +1493,6 @@
       let list = db.customEdges;
       if (cat !== "all") list = list.filter(e => e.cat === cat);
 
-      const countBadge = document.getElementById('items-count-badge');
-      if (countBadge) countBadge.innerText = `${list.length} ${db.lang === 'en' ? (list.length > 1 ? 'levers' : 'lever') : (list.length > 1 ? 'leviers' : 'levier')}`;
-
       const container = document.getElementById("library-list");
       if (list.length === 0) {
         container.innerHTML = `<div style="font-size:0.82rem; opacity:0.6; text-align:center; padding:16px;">${db.lang === 'en' ? 'No levers recorded yet.' : 'Aucun levier enregistré pour le moment.'}</div>`;
@@ -1471,7 +1502,7 @@
     }
 
     /* ==========================================================================
-       CARTES DU PLAN KLON : SANS TRI POLLUANT (ORDRE LIBRE)
+       CARTES DU PLAN KLON (ONGLET 2)
        ========================================================================== */
     function renderPlanCards() {
       const container = document.getElementById('plan-cards-container');
@@ -1479,7 +1510,6 @@
 
       let edges = [...db.customEdges];
 
-      // Application de l'ordre personnalisé glisser-déposer
       if (db.cardsOrder && db.cardsOrder.length > 0) {
         edges.sort((a, b) => {
           let idxA = db.cardsOrder.indexOf(a.id);
@@ -1739,7 +1769,7 @@
     }
 
     /* ==========================================================================
-       MODALE DÉTAIL D'UN LEVIER (CORRIGÉE DU SYMBOLE € EN DUR)
+       MODALE DÉTAIL D'UN LEVIER
        ========================================================================== */
     function openLeverDetailModal(leverId) {
       const edge = db.customEdges.find(e => e.id === leverId);
@@ -1752,13 +1782,12 @@
       const capVal = (adjVal * 12) / 0.04;
       const ageMonths = getLeverAgeInMonths(edge);
       const catColor = CAT_COLORS[edge.cat] || 'var(--brand)';
+      const icon = CAT_ICONS[edge.cat] || '💡';
 
       document.getElementById('m-lever-title').innerText = edge.title;
       const badgeEl = document.getElementById('m-lever-badge');
-      badgeEl.innerText = catLabel(edge.cat);
-      badgeEl.style.background = `${catColor}20`;
-      badgeEl.style.color = catColor;
-      badgeEl.style.border = `1px solid ${catColor}`;
+      badgeEl.innerHTML = `<span style="color:${catColor}; font-size:0.85rem;">${icon}</span> <span>${catLabel(edge.cat)}</span>`;
+      badgeEl.style.borderColor = `${catColor}66`;
 
       document.getElementById('m-lever-real-val').innerText = `+${fmt(adjVal)} / mois`;
       document.getElementById('m-lever-gain-breakdown').innerHTML = db.lang === 'en'
@@ -2168,7 +2197,7 @@
     function copyFortuneoCode() {
       const code = "12874482";
       const btn = document.getElementById('fortuneo-btn');
-      if (navigator.clipboard) navigator.clipboard.writeText(code);
+      if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(code);
       if (btn) btn.innerText = db.lang === 'en' ? "✅ Code copied!" : "✅ Code copié !";
       window.open("https://www.fortuneo.fr", "_blank");
       setTimeout(() => { if (btn) btn.innerText = "Fortuneo (Code Parrain : 12874482)"; }, 1800);
