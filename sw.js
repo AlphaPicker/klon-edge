@@ -1,5 +1,4 @@
-// 1. Définissez la nouvelle version du cache
-const CACHE_NAME = 'klon-edge-v7'; // <-- À incrémenter à chaque mise à jour (v2, v3, etc.)
+const CACHE_NAME = 'klon-edge-v8'; // Ingrémenté pour purger l'ancien cache bloqué
 
 const ASSETS = [
   './',
@@ -9,14 +8,12 @@ const ASSETS = [
 ];
 
 self.addEventListener('install', (e) => {
-  // Force le Service Worker en attente à devenir le Service Worker actif immédiatement
   self.skipWaiting();
   e.waitUntil(
     caches.open(CACHE_NAME).then((cache) => cache.addAll(ASSETS))
   );
 });
 
-// 2. Supprime automatiquement l'ancien cache ('klon-edge=-v1', etc.) dès que la v2 s'active
 self.addEventListener('activate', (e) => {
   e.waitUntil(
     caches.keys().then((keys) => {
@@ -27,12 +24,30 @@ self.addEventListener('activate', (e) => {
           }
         })
       );
-    }).then(() => self.clients.claim()) // Prend immédiatement le contrôle des pages ouvertes
+    }).then(() => self.clients.claim())
   );
 });
 
+// Stratégie Network First (Réseau d'abord, sinon Cache)
 self.addEventListener('fetch', (e) => {
+  // Ignorer les requêtes hors HTTP/HTTPS (ex: extensions)
+  if (!e.request.url.startsWith('http')) return;
+
   e.respondWith(
-    caches.match(e.request).then((res) => res || fetch(e.request))
+    fetch(e.request)
+      .then((networkResponse) => {
+        // Si le réseau répond, on met à jour le cache en arrière-plan
+        if (networkResponse && networkResponse.status === 200 && networkResponse.type === 'basic') {
+          const responseToCache = networkResponse.clone();
+          caches.open(CACHE_NAME).then((cache) => {
+            cache.put(e.request, responseToCache);
+          });
+        }
+        return networkResponse;
+      })
+      .catch(() => {
+        // En cas de panne de réseau / hors-ligne, on utilise le cache
+        return caches.match(e.request);
+      })
   );
 });
