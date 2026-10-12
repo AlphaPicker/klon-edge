@@ -4,7 +4,7 @@
   "name": "KLON Edge",
   "short_name": "KLON Edge",
   "description": "L'avantage asymétrique du quotidien",
-  "start_url": "./index.html",
+  "start_url": "/klon-edge/index.html",
   "display_override": ["fullscreen", "standalone"],
   "display": "fullscreen",
   "background_color": "#0d1117",
