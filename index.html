@@ -251,13 +251,13 @@
 
     /* BADGE DE SECTEUR PROPRE SANS EFFET SURLIGNÉ BAVEUX */
     .edge-cat-badge {
-      font-size: 0.72rem;
-      padding: 3px 8px;
+      font-size: 0.7rem;
+      padding: 2px 8px;
       border-radius: 6px;
       font-weight: 600;
       white-space: nowrap;
-      background: var(--card-inner);
-      color: var(--text-bright);
+      background: transparent;
+      color: var(--text-main);
       border: 1px solid var(--border-color);
       display: inline-flex;
       align-items: center;
@@ -830,7 +830,7 @@
           </div>
         </div>
 
-        <div id="m-lever-desc-box" style="background: var(--bg-color); border: 1px solid var(--border-color); border-radius: 8px; padding: 10px; font-size: 0.78rem; line-height: 1.45; opacity: 0.9;">
+        <div id="m-lever-desc-box" style="background: var(--bg-color); border: 1px solid var(--border-color); border-radius: 8px; padding: 10px; font-size: 0.78rem; line-height: 1.45; opacity: 0.9; word-break: break-word; overflow-wrap: anywhere; white-space: pre-wrap;">
           Note...
         </div>
       </div>
@@ -1551,8 +1551,7 @@
             </div>
 
             <div class="edge-line-bottom">
-              <span class="edge-cat-badge" style="border-color: ${catColor}66;">
-                <span style="color:${catColor}; font-size:0.85rem;">${icon}</span>
+              <span class="edge-cat-badge" style="border-color: ${catColor}88;">
                 <span>${catLabel(edge.cat)}</span>
               </span>
               <div style="display:flex; align-items:center; gap:6px;">
@@ -1570,7 +1569,7 @@
                 <button class="btn-danger" style="padding:4px 8px;" onclick="deleteCustom('${edge.id}', event)">🗑️</button>
               </div>
             </div>
-            ${edge.desc ? `<div style="font-size:0.75rem; opacity:0.85; border-top:1px dashed var(--border-color); padding-top:4px;">${edge.desc}</div>` : ''}
+            ${edge.desc ? `<div style="font-size:0.75rem; opacity:0.85; border-top:1px dashed var(--border-color); padding-top:4px; word-break: break-word; overflow-wrap: anywhere; white-space: pre-wrap;">${edge.desc}</div>` : ''}
           </div>
         </div>
       `;
@@ -1874,7 +1873,7 @@
 
       document.getElementById('m-lever-title').innerText = edge.title;
       const badgeEl = document.getElementById('m-lever-badge');
-      badgeEl.innerHTML = `<span style="color:${catColor}; font-size:0.85rem;">${icon}</span> <span>${catLabel(edge.cat)}</span>`;
+      badgeEl.innerHTML = `<span>${catLabel(edge.cat)}</span>`;
       badgeEl.style.borderColor = `${catColor}66`;
 
       document.getElementById('m-lever-real-val').innerText = `+${fmt(adjVal)} / mois`;
@@ -2526,7 +2525,7 @@
   <script>
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('./sw.js', { scope: '/klon-edge/' }).then((reg) => {
+        navigator.serviceWorker.register('./sw.js').then((reg) => {
           reg.update();
         });
       });
