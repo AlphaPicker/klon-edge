@@ -1,4 +1,4 @@
-const CACHE_NAME = 'klon-edge-v9'; // Ingrémenté pour purger l'ancien cache bloqué
+const CACHE_NAME = 'klon-edge-v10'; // Ingrémenté pour purger l'ancien cache bloqué
 
 const ASSETS = [
   './',
